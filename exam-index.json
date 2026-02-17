@@ -1,8 +1,8 @@
 {
-  "indexed_at": "2025-02-16T12:00:00.000Z",
-  "total_papers": 1,
-  "total_questions": 28,
-  "topics": [
+"indexed_at": "2025-02-17T12:00:00.000Z",
+"total_papers": 2,
+"total_questions": 56,
+   "topics": [
     "Algebra",
     "Arithmetic Sequences",
     "Asymptotes",
@@ -13,10 +13,14 @@
     "Exponential Equations",
     "Exponential Functions",
     "Factor Theorem",
+    "Functions",
+    "Geometric Sequences",
     "Implicit Differentiation",
     "Inequalities",
     "Integration",
+    "Inverse Functions",
     "Inverse Trigonometric Functions",
+    "Limits",
     "Logarithms",
     "Matrices",
     "Parametric Equations",
@@ -24,9 +28,11 @@
     "Proof",
     "Proof by Induction",
     "Quadratic Equations",
+    "Rate of Change",
     "Rational Functions",
     "Recurrence Relations",
     "Sequences",
+    "Simultaneous Equations",
     "Trigonometry"
   ],
   "questions": [
@@ -253,6 +259,415 @@
       "concepts": ["Geometric applications", "Circle area"],
       "description": "Use integration to derive formula for area of circle",
       "paper": {"year": 2011, "level": "Higher Level", "paper": "Paper 1"}
+    },
+	{
+      "questionNumber": "1(a)",
+      "topics": ["Inequalities", "Algebra"],
+      "difficulty": "Easy",
+      "concepts": ["Absolute value inequalities"],
+      "description": "Solve absolute value inequality |x - 3| ≤ 12",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "1(b)",
+      "topics": ["Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Expanding brackets", "Surds", "Simplification"],
+      "description": "Multiply out and simplify (4x - 10√x)(2x + 5√x - 7)",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "1(c)",
+      "topics": ["Factor Theorem", "Polynomials"],
+      "difficulty": "Medium",
+      "concepts": ["Cubic polynomials", "Factorisation", "Finding roots"],
+      "description": "Use given factor (2x + 3) to find all three roots of 4x³ - 12x² - 7x + 30 = 0",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "2(a)(i)",
+      "topics": ["Differentiation", "Trigonometry", "Calculus"],
+      "difficulty": "Easy",
+      "concepts": ["Differentiation of trig functions", "Standard derivatives"],
+      "description": "Find f'(x) for f(x) = 6 + x² + sin 4x",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "2(a)(ii)",
+      "topics": ["Differentiation", "Calculus"],
+      "difficulty": "Medium",
+      "concepts": ["Equation of tangent", "Tangent to a curve"],
+      "description": "Find equation of tangent to y = f(x) at x = 0, in the form ax + by + c = 0",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "2(b)(i)",
+      "topics": ["Differentiation", "Functions", "Calculus"],
+      "difficulty": "Easy",
+      "concepts": ["Gradient from graph", "Derivative from graph"],
+      "description": "State the range of x values for which g'(x) > 2, using the graph of g(x)",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "2(b)(ii)",
+      "topics": ["Functions"],
+      "difficulty": "Medium",
+      "concepts": ["Composite functions", "Reading graphs"],
+      "description": "Find the value of g(g(3)) from the graph of g(x)",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "2(b)(iii)",
+      "topics": ["Functions", "Inverse Functions"],
+      "difficulty": "Medium",
+      "concepts": ["Inverse function", "Reflection in y = x"],
+      "description": "Draw and label the graph of y = g⁻¹(x) as reflection of g(x) in the line y = x",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "3(a)",
+      "topics": ["Differentiation", "Calculus"],
+      "difficulty": "Easy",
+      "concepts": ["Chain rule", "Composite functions"],
+      "description": "Find f'(x) for f(x) = (3x⁵ - 4)²⁸ using the chain rule",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "3(b)",
+      "topics": ["Differentiation", "Rational Functions", "Calculus"],
+      "difficulty": "Medium",
+      "concepts": ["Quotient rule", "No local max/min proof"],
+      "description": "Show that g(x) = 3/(2x - 7) has no local maximum or minimum by finding g'(x)",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "3(c)",
+      "topics": ["Integration", "Exponential Functions", "Calculus"],
+      "difficulty": "Hard",
+      "concepts": ["Definite integration", "Exponential integration", "Solving for constant"],
+      "description": "Given ∫₀ᵏ e^(5x) dx = 9, find k in the form ln(a)/b",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "4(a)",
+      "topics": ["Complex Numbers"],
+      "difficulty": "Easy",
+      "concepts": ["Complex division", "Conjugate", "Standard form a + bi"],
+      "description": "Write (2 + 3i)/(4 - 5i) in the form a + bi",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "4(b)",
+      "topics": ["Complex Numbers", "Trigonometry", "Proof"],
+      "difficulty": "Medium",
+      "concepts": ["De Moivre's theorem", "Double angle formula", "Proof"],
+      "description": "Use de Moivre's theorem and (cosθ + i sinθ)² to prove cos 2θ = cos²θ - sin²θ",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "4(c)",
+      "topics": ["Complex Numbers"],
+      "difficulty": "Hard",
+      "concepts": ["De Moivre's theorem", "Complex roots", "Surd form"],
+      "description": "Use de Moivre's theorem to find two values of z for which z⁶ = -64i",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "5(a)",
+      "topics": ["Quadratic Equations", "Algebra"],
+      "difficulty": "Easy",
+      "concepts": ["Completing the square", "Vertex form"],
+      "description": "Write g(x) = 5x² + 20x - 12 in the form a(x + h)² + k",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "5(b)",
+      "topics": ["Logarithms", "Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Laws of logarithms", "Simplification"],
+      "description": "Use laws of logs to write ln[(e³p)⁵] in the form c + d ln p",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "5(c)",
+      "topics": ["Simultaneous Equations", "Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Simultaneous equations", "Point on y-axis", "Finding constant"],
+      "description": "Find constant n in simultaneous equations given one solution lies on the y-axis",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "6(a)",
+      "topics": ["Binomial Theorem", "Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Binomial expansion", "First three terms"],
+      "description": "Write down the first 3 terms in descending powers of p in the expansion of (2p + 3)⁷",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "6(b)(i)",
+      "topics": ["Quadratic Equations", "Algebra", "Proof"],
+      "difficulty": "Medium",
+      "concepts": ["Discriminant", "Exactly one solution", "Proof"],
+      "description": "Show that h(x) = 6mx² - 4rx + 54m having exactly one solution implies r = 9m",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "6(b)(ii)",
+      "topics": ["Quadratic Equations", "Algebra"],
+      "difficulty": "Easy",
+      "concepts": ["Solving quadratics", "Substitution"],
+      "description": "Use r = 9m to find the value of x that solves h(x) = 0",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(a)(i)",
+      "topics": ["Arithmetic Sequences", "Sequences"],
+      "difficulty": "Easy",
+      "concepts": ["Arithmetic sequences", "Common difference"],
+      "description": "Show A(2) = 22 and find A(3) for arithmetic sequence of extra silk lengths",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(a)(ii)",
+      "topics": ["Arithmetic Sequences", "Sequences"],
+      "difficulty": "Easy",
+      "concepts": ["nth term formula", "Arithmetic sequence"],
+      "description": "Find an expression in n for A(n), the nth term of an arithmetic sequence",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(a)(iii)",
+      "topics": ["Arithmetic Sequences", "Sequences"],
+      "difficulty": "Easy",
+      "concepts": ["nth term evaluation"],
+      "description": "Find the value of A(100) using the expression for A(n)",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(a)(iv)",
+      "topics": ["Arithmetic Sequences", "Sequences"],
+      "difficulty": "Medium",
+      "concepts": ["Sum of arithmetic series", "Proof"],
+      "description": "Show that S(n) = 3.1n² + 12.7n using the sum formula for an arithmetic series",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(a)(v)",
+      "topics": ["Arithmetic Sequences", "Sequences", "Quadratic Equations"],
+      "difficulty": "Hard",
+      "concepts": ["Solving quadratic inequality", "Real-world application"],
+      "description": "Find the first stage k where total silk length exceeds 11 metres using S(n) expression",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(b)(i)",
+      "topics": ["Geometric Sequences", "Sequences"],
+      "difficulty": "Easy",
+      "concepts": ["Common ratio", "Geometric sequence"],
+      "description": "Find the length of O₃ given O₁ = 0.5 and O₂ = 0.53 in a geometric sequence",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(b)(ii)",
+      "topics": ["Geometric Sequences", "Sequences"],
+      "difficulty": "Medium",
+      "concepts": ["Sum of geometric series"],
+      "description": "Write an expression in n for the total length of the first n orbitals of the web",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(b)(iii)",
+      "topics": ["Geometric Sequences", "Sequences"],
+      "difficulty": "Hard",
+      "concepts": ["Sum of geometric series", "Multiple laps", "Expression in k"],
+      "description": "Write an expression in k for the total length of the first k laps, with 18 orbitals per lap",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(a)",
+      "topics": ["Algebra"],
+      "difficulty": "Easy",
+      "concepts": ["Percentage reduction", "Successive discounts"],
+      "description": "Find price of kayak after 15% sale reduction and further 10% loyalty discount from €870",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(b)",
+      "topics": ["Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Exchange rates", "Forming equations"],
+      "description": "Find exchange rate d given paddle costs €1.02 more than expected at $95",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(c)",
+      "topics": ["Calculus"],
+      "difficulty": "Easy",
+      "concepts": ["Speed, distance, time", "Pythagoras"],
+      "description": "Find total time to kayak from S to A then run from A to F given distances and speeds",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(d)",
+      "topics": ["Calculus"],
+      "difficulty": "Easy",
+      "concepts": ["Speed, distance, time", "Pythagoras", "Direct route"],
+      "description": "Find time to kayak directly from S to F, correct to nearest minute",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(e)(i)",
+      "topics": ["Calculus", "Differentiation"],
+      "difficulty": "Medium",
+      "concepts": ["Forming expressions", "Speed, distance, time"],
+      "description": "Find expression in x for total time T to kayak from S to B then run from B to F",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(e)(ii)",
+      "topics": ["Differentiation", "Calculus"],
+      "difficulty": "Hard",
+      "concepts": ["Minimisation", "Solving T'(x) = 0"],
+      "description": "Solve T'(x) = x/(6√(x²+4)) - 1/12 = 0 to find the value of x that minimises T",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(e)(iii)",
+      "topics": ["Differentiation", "Calculus", "Functions"],
+      "difficulty": "Hard",
+      "concepts": ["Graph interpretation", "Justification of correct graph"],
+      "description": "Identify which of four graphs represents T(x) on [0, 8] and fully justify the answer",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(a)(i)",
+      "topics": ["Functions", "Calculus"],
+      "difficulty": "Easy",
+      "concepts": ["Function evaluation", "Fuel consumption"],
+      "description": "Show fuel consumption F(c) = 0.05c² - 8.5c + 800 is equal at c = 60 and c = 110",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(a)(ii)",
+      "topics": ["Differentiation", "Calculus"],
+      "difficulty": "Easy",
+      "concepts": ["Rate of change", "Differentiation of polynomial"],
+      "description": "Find dF/dc, the rate of change of fuel consumption with respect to speed",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(a)(iii)",
+      "topics": ["Differentiation", "Calculus", "Rate of Change"],
+      "difficulty": "Hard",
+      "concepts": ["Chain rule", "Logarithmic differentiation", "Rate of change at a point"],
+      "description": "Find dF/dt when t = 7, given c = 78 + 9 ln(t²) and dF/dc from previous part",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(a)(iv)",
+      "topics": ["Differentiation", "Calculus", "Logarithms"],
+      "difficulty": "Medium",
+      "concepts": ["Differentiation of logarithms", "Proof"],
+      "description": "Show that dc/dt = 18/t given c = 78 + 9 ln(t²)",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(a)(v)",
+      "topics": ["Differentiation", "Calculus", "Rate of Change"],
+      "difficulty": "Hard",
+      "concepts": ["Chain rule", "Related rates"],
+      "description": "Find rate of change of fuel consumption F with respect to time at t = 7 minutes",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(b)(i)",
+      "topics": ["Exponential Functions", "Functions", "Calculus"],
+      "difficulty": "Medium",
+      "concepts": ["Piecewise functions", "Evaluating functions"],
+      "description": "Complete table of values for piecewise speed function v(t) for t = 0 to 8",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(b)(ii)",
+      "topics": ["Functions", "Calculus"],
+      "difficulty": "Easy",
+      "concepts": ["Graphing piecewise functions"],
+      "description": "Draw graph of piecewise function y = v(t) for 0 ≤ t ≤ 8",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(b)(iii)",
+      "topics": ["Integration", "Calculus"],
+      "difficulty": "Medium",
+      "concepts": ["Average value of a function", "Definite integration"],
+      "description": "Use integration to find average speed of car for 4 < t ≤ 8 using v(t) = -t² + 24t - 48.4",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(a)",
+      "topics": ["Sequences", "Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Coordinate geometry", "Pattern recognition"],
+      "description": "Complete Pattern 4 on a coordinate diagram by drawing the missing dots",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(b)",
+      "topics": ["Sequences", "Algebra"],
+      "difficulty": "Easy",
+      "concepts": ["Coordinate geometry", "Pattern recognition"],
+      "description": "Write coordinates of 4 points in Pattern 2000 that are 2000 units from the origin",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(c)",
+      "topics": ["Sequences", "Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Pattern recognition", "Finding smallest n"],
+      "description": "Find the smallest n ∈ ℕ for which the point (4, 4) is in Pattern n",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(d)(i)",
+      "topics": ["Algebra"],
+      "difficulty": "Easy",
+      "concepts": ["Rearranging formulae"],
+      "description": "Rearrange t = 2n + 1 to write n in terms of t",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(d)(ii)",
+      "topics": ["Algebra", "Proof"],
+      "difficulty": "Medium",
+      "concepts": ["Algebraic substitution", "Simplification", "Proof"],
+      "description": "Substitute expression for n into Q(n) = (n+1)²/(2n+1)² to show Q(n) = (t²+2t+1)/4t²",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(d)(iii)",
+      "topics": ["Limits", "Calculus"],
+      "difficulty": "Medium",
+      "concepts": ["Limit as t → ∞", "Rational functions"],
+      "description": "Find Q∞ = lim(t→∞) of (t² + 2t + 1)/4t²",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(e)(i)",
+      "topics": ["Sequences"],
+      "difficulty": "Easy",
+      "concepts": ["Pattern recognition", "Counting dots"],
+      "description": "Write down the value of H(1), the number of dots in Pattern 1",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(e)(ii)",
+      "topics": ["Proof by Induction", "Proof", "Sequences"],
+      "difficulty": "Hard",
+      "concepts": ["Mathematical induction", "Recurrence relation", "Proof"],
+      "description": "Use proof by induction to prove H(n) = (n+1)² for all n ∈ ℕ, given H(n+1) = H(n) + 2n + 3",
+      "paper": {"year": 2025, "level": "Higher Level", "paper": "Paper 1"}
     }
+	
   ]
 }
