@@ -376,7 +376,7 @@ def display_past_paper_list(questions):
 # -----------------------------
 # PAGE CONFIG
 # -----------------------------
-st.set_page_config(page_title="LC Maths Tutor", layout="centered")
+#st.set_page_config(page_title="LC Maths Tutor", layout="centered")
 
 # REMOVE LEFT SIDEBAR COMPLETELY
 st.markdown("""
