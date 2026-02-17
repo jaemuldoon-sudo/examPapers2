@@ -456,7 +456,7 @@ with main_tab1:
     # -----------------------------
     # WORKSHEET BUTTONS (MOBILE‑FIRST)
     # -----------------------------
-    st.markdown("### Generate Exam Paper")
+    st.markdown("### Generate Exam Questions")
 
     # Row 1 — Difficulty
     c1, c2, c3 = st.columns(3)
@@ -477,24 +477,24 @@ with main_tab1:
             st.session_state.questions = generate_worksheet(topic, subtopics, "Hard")
 
     # Row 2 — Random / Balanced / Exam Style
-    c4, c5, c6 = st.columns(3)
+  #  c4, c5, c6 = st.columns(3)
 
-    with c4:
-        if st.button("Random", use_container_width=True):
-            import random
-            diff = random.choice(["Easy", "Medium", "Hard"])
-            st.session_state.difficulty = diff
-            st.session_state.questions = generate_worksheet(topic, subtopics, diff)
+   # with c4:
+   #     if st.button("Random", use_container_width=True):
+   #         import random
+   #         diff = random.choice(["Easy", "Medium", "Hard"])
+   #         st.session_state.difficulty = diff
+   #         st.session_state.questions = generate_worksheet(topic, subtopics, diff)
 
-    with c5:
-        if st.button("Balanced", use_container_width=True):
-            st.session_state.difficulty = "Balanced"
-            st.session_state.questions = generate_balanced_worksheet(topic, subtopics)
+   # with c5:
+   #     if st.button("Balanced", use_container_width=True):
+   #         st.session_state.difficulty = "Balanced"
+   #         st.session_state.questions = generate_balanced_worksheet(topic, subtopics)
 
-    with c6:
-        if st.button("Exam Style", use_container_width=True):
-            st.session_state.difficulty = "Exam Style"
-            st.session_state.questions = generate_exam_style_worksheet(topic, subtopics)
+   # with c6:
+   #     if st.button("Exam Style", use_container_width=True):
+   #         st.session_state.difficulty = "Exam Style"
+   #         st.session_state.questions = generate_exam_style_worksheet(topic, subtopics)
 
     st.markdown("---")
 
