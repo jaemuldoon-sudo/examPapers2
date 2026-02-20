@@ -424,7 +424,8 @@ else:
 # -----------------------------
 # MAIN NAVIGATION TABS
 # -----------------------------
-main_tab1, main_tab2 = st.tabs(["🎯 Generate New Questions"])
+main_tab1 = st.tabs(["🎯 Generate New Questions"])
+#main_tab1, main_tab2 = st.tabs(["🎯 Generate New Questions"])
 
 with main_tab1:
     # -----------------------------
