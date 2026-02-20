@@ -54,7 +54,7 @@ EXAM_INDEX = load_all_exam_indexes()
 # -----------------------------
 # TOPICS + SUBTOPICS
 # -----------------------------
-TOPICS = ["Probability", "Trigonometry", "Algebra", "Geometry of the Circle", "Calculus"]
+TOPICS = ["Probability", "Trigonometry", "Algebra", "Geometry of the Circle", "Statistics","Calculus"]
 
 SUBTOPICS = {
     "Probability": [
