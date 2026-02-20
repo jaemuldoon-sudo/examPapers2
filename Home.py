@@ -448,7 +448,7 @@ st.markdown(
 
 # Show index status
 if EXAM_INDEX:
-    st.success(f"✅ Exam Index Loaded: {EXAM_INDEX.get('total_questions', 0)} questions from {EXAM_INDEX.get('total_papers', 0)} past papers")
+    st.success(f"✅ Exam Index Loaded: {EXAM_INDEX.get('total_questions', 0)}")
 else:
     st.warning("⚠️ Exam index not loaded - questions will be generated without LC past paper templates")
 
