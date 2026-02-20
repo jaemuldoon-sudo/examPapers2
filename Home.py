@@ -54,7 +54,7 @@ EXAM_INDEX = load_all_exam_indexes()
 # -----------------------------
 # TOPICS + SUBTOPICS
 # -----------------------------
-TOPICS = ["Probability", "Trigonometry", "Algebra", "Geometry of the Circle", "Geometry of the Line", "Statistics", "Enlargements", "Calculus"]
+TOPICS = ["Probability", "Trigonometry", "Algebra", "Geometry of the Circle", "Geometry of the Line", "Statistics", "Enlargements", "Calculus", "Complex Numbers"]
 
 SUBTOPICS = {
     "Probability": [
@@ -133,7 +133,13 @@ SUBTOPICS = {
         "Rotations",
         "Enlargement"
     ],
-  
+    "Complex Numbers": [
+        "Addition and Subtraction of Complex Numbers",
+        "Multiplication of Complex Numbers",
+        "Division of Complex Numbers",
+        "Polar Form of Complex Numbers",
+        "De Moivres Theorem"
+    ],
 }
 
 # -----------------------------
