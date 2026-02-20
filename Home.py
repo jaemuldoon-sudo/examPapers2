@@ -126,7 +126,7 @@ SUBTOPICS = {
         "Central Limit Theroem",
         "Confidence Interval",
         "Hypothesis Testing"
-    ]
+    ],
     "Enlargements": [
         "Translation",
         "Central Symmetry",
