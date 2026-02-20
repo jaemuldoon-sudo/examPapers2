@@ -98,7 +98,7 @@ SUBTOPICS = {
     "Statistics": [
         "Scatter Graphs",
         "Correlation Coefficient",
-        "Mean, Mode, Median ",
+        "Mean, Mode, Median",
         "Range , Quartiles and Interquatile Range",
         "Standard Deviation",
         "z-scores",
