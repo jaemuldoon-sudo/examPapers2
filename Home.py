@@ -377,18 +377,24 @@ def display_past_paper_list(questions):
         st.info("No questions at this difficulty level")
         return
     
-    for i, q in enumerate(questions):
-        with st.expander(f"Q{q.get('questionNumber', 'N/A')} - {q.get('description', 'No description')[:60]}..."):
-            st.markdown(f"**Question:** {q.get('questionNumber', 'N/A')}")
-            st.markdown(f"**Paper:** {q.get('paper', {}).get('year', 'N/A')} {q.get('paper', {}).get('paper', '')}")
+    for q in questions:
+        # Build a unique key from the question's own data — guaranteed no clashes
+        q_number = q.get('questionNumber', 'N/A')
+        q_year = q.get('paper', {}).get('year', 'N/A')
+        q_paper = q.get('paper', {}).get('paper', 'N/A').replace(' ', '')
+        unique_key = f"past_{q_year}_{q_paper}_{q_number}"
+
+        with st.expander(f"Q{q_number} - {q.get('description', 'No description')[:60]}..."):
+            st.markdown(f"**Question:** {q_number}")
+            st.markdown(f"**Paper:** {q_year} {q.get('paper', {}).get('paper', '')}")
             st.markdown(f"**Topics:** {', '.join(q.get('topics', []))}")
             st.markdown(f"**Difficulty:** {q.get('difficulty', 'N/A')}")
             st.markdown(f"**Concepts:** {', '.join(q.get('concepts', []))}")
             st.markdown(f"\n**Description:**")
             st.info(q.get('description', 'No description available'))
             
-            # Generate similar button
-            if st.button(f"Generate Similar Question", key=f"past_{i}"):
+            # Generate similar button — unique key derived from question data
+            if st.button(f"Generate Similar Question", key=unique_key):
                 similar = generate_similar_question(
                     q.get('description', ''),
                     ', '.join(q.get('topics', [])),
