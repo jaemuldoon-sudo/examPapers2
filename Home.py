@@ -68,7 +68,6 @@ SUBTOPICS = {
     ],
     "Trigonometry": [
         "Trigonometric identities",
-        "Trig equations",
         "Graphs",
         "Radians",
         "Sine rule / Cosine rule",
@@ -91,7 +90,11 @@ SUBTOPICS = {
         "Center (h,k) and radius r",
         "Equations of the form x^2 +y^2 + 2gx + 2gy + c = 0",
         "Points outside, inside or on the Circle",
-        "Intersection of a line and circle"
+        "Intersection of a Line and Circle",
+        "Equation of Tangent to a point on the Circle",
+        "Equtaion of Tangents from point outside hte Circle",
+        "Touching Circles",
+        "Problems in g,f and c"
     ],    
     "Geometry of the Line": [
         "Area of a Triangle",
