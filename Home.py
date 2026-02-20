@@ -49,7 +49,7 @@ def load_all_exam_indexes():
     }
 
 
-EXAM_INDEX = load_exam_index()
+EXAM_INDEX = load_all_exam_indexes()
 
 # -----------------------------
 # TOPICS + SUBTOPICS
