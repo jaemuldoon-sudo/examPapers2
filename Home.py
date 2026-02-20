@@ -54,7 +54,7 @@ EXAM_INDEX = load_all_exam_indexes()
 # -----------------------------
 # TOPICS + SUBTOPICS
 # -----------------------------
-TOPICS = ["Probability", "Trigonometry", "Algebra", "Geometry of the Circle", "Geometry of the Line", "Statistics","Calculus"]
+TOPICS = ["Probability", "Trigonometry", "Algebra", "Geometry of the Circle", "Geometry of the Line", "Statistics", ",Enlargements", "Calculus"]
 
 SUBTOPICS = {
     "Probability": [
@@ -83,7 +83,14 @@ SUBTOPICS = {
         "Functions",
         "Logs",
         "Sequences & series",
-        "Inequalities"
+        "Inequalities",
+        "Sum and Difference of 2 Cubes",
+        "Algebraic Fractions",
+        "Simultaneous Equations in 2 Variables",
+        "Simultaneous Equations in 3 Variables",
+        "Simultaneous Equations with linear and non-linear Equations",
+        "Manipulation of Formulae",
+        "Surds"
     ],
     "Geometry of the Circle": [
         "Center (0,0) and radius r",
@@ -92,7 +99,7 @@ SUBTOPICS = {
         "Points outside, inside or on the Circle",
         "Intersection of a Line and Circle",
         "Equation of Tangent to a point on the Circle",
-        "Equtaion of Tangents from point outside hte Circle",
+        "Equtaion of Tangents from point outside the Circle",
         "Touching Circles",
         "Problems in g,f and c"
     ],    
@@ -120,6 +127,13 @@ SUBTOPICS = {
         "Confidence Interval",
         "Hypothesis Testing"
     ]
+    "Enlargements": [
+        "Translation",
+        "Central Symmetry",
+        "Rotations",
+        "Enlargement"
+    ]
+  
 }
 
 # -----------------------------
