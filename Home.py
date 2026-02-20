@@ -94,7 +94,7 @@ SUBTOPICS = {
         "Rates of change",
         "Area under curves",
         "Product/Quotient/Chain rule"
-    ]
+    ],
     "Statistics": [
         "Scatter Graphs",
         "Correlation Coefficient",
