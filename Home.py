@@ -15,14 +15,39 @@ client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 # LOAD EXAM INDEX
 # -----------------------------
 # Load the exam index from file
-def load_exam_index():
-    """Load the exam index JSON file"""
-    try:
-        with open('exam-index.json', 'r') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        st.warning("⚠️ exam-index.json not found. Upload it to your Railway deployment.")
-        return None
+#def load_exam_index():
+#    """Load the exam index JSON file"""
+#    try:
+#        with open('exam-index.json', 'r') as f:
+#            return json.load(f)
+#    except FileNotFoundError:
+#        st.warning("⚠️ exam-index.json not found. Upload it to your Railway deployment.")
+#        return None
+
+
+def load_all_exam_indexes():
+    files = [
+        'JSON Files/exam-index1.json',
+        'JSON Files/exam-index2.json',
+    ]
+    all_questions = []
+    all_topics = set()
+
+    for filename in files:
+        try:
+            with open(filename, 'r') as f:
+                data = json.load(f)
+                all_questions.extend(data['questions'])
+                all_topics.update(data['topics'])
+        except FileNotFoundError:
+            st.warning(f"⚠️ {filename} not found.")
+
+    return {
+        "total_questions": len(all_questions),
+        "topics": sorted(list(all_topics)),
+        "questions": all_questions
+    }
+
 
 EXAM_INDEX = load_exam_index()
 
