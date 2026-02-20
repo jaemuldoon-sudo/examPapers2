@@ -81,13 +81,13 @@ SUBTOPICS = {
         "Sequences & series",
         "Inequalities"
     ],
-    "Circle": [
+    "Geometry of the Circle": [
         "Center (0,0) and radius r",
         "Center (h,k) and radius r",
         "Equations of the form x^2 +y^2 + 2gx + 2gy + c = 0",
         "Points outside, inside or on the Circle",
         "Intersection of a line and circle"
-    ],
+    ],    
     "Calculus": [
         "Differentiation",
         "Integration",
