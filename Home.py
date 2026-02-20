@@ -54,7 +54,7 @@ EXAM_INDEX = load_all_exam_indexes()
 # -----------------------------
 # TOPICS + SUBTOPICS
 # -----------------------------
-TOPICS = ["Probability", "Trigonometry", "Algebra", "Geometry of the Circle", "Statistics","Calculus"]
+TOPICS = ["Probability", "Trigonometry", "Algebra", "Geometry of the Circle", "Geometry of the Line", "Statistics","Calculus"]
 
 SUBTOPICS = {
     "Probability": [
@@ -87,6 +87,11 @@ SUBTOPICS = {
         "Equations of the form x^2 +y^2 + 2gx + 2gy + c = 0",
         "Points outside, inside or on the Circle",
         "Intersection of a line and circle"
+    ],    
+    "Geometry of the Line": [
+        "Area of a Triangle",
+        "Perpendicular Distance from a point to a Line",
+        "Angle between 2 Lines"
     ],    
     "Calculus": [
         "Differentiation",
