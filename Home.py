@@ -4,7 +4,7 @@ import json
 from anthropic import Anthropic
 
 #PAGE CONFIG (MUST BE FIRST ST COMMAND)
-st.set_page_config(page_title="LC Maths Tutor", layout="centered")
+st.set_page_config(page_title="Leaving Certificate Honours Maths", layout="centered")
 
 #st.write("API Key exists:", "ANTHROPIC_API_KEY" in os.environ)
 #st.write("API Key value:", os.environ.get("ANTHROPIC_API_KEY", "NOT FOUND")[:20] + "...")
