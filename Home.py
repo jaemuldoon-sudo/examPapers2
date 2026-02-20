@@ -72,7 +72,12 @@ SUBTOPICS = {
         "Graphs",
         "Radians",
         "Sine rule / Cosine rule",
-        "Unit Circle"
+        "Unit Circle",
+        "Pytharagos Theorem",
+        "Angles of Elevation and Depression",
+        "Reference Angles",
+        "Trigonometric Equations",
+        "Trigonometric Functions"
     ],
     "Algebra": [
         "Quadratics",
