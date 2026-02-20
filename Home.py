@@ -95,6 +95,18 @@ SUBTOPICS = {
         "Area under curves",
         "Product/Quotient/Chain rule"
     ]
+    "Statistics": [
+        "Scatter Graphs",
+        "Correlation Coefficient",
+        "Mean, Mode, Median ",
+        "Range , Quartiles and Interquatile Range",
+        "Standard Deviation",
+        "z-scores",
+        "Emperical Rule",
+        "Central Limit Theroem",
+        "Confidence Interval",
+        "Hypothesis Testing"
+    ]
 }
 
 # -----------------------------
