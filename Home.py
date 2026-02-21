@@ -30,6 +30,7 @@ def load_all_exam_indexes():
         'JSON Files/exam-index1.json',
         'JSON Files/exam-index2.json',
         'JSON Files/exam-index3.json',
+        'JSON Files/exam-index4.json',
     ]
     all_questions = []
     all_topics = set()

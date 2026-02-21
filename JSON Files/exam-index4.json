@@ -1,0 +1,445 @@
+{
+  "indexed_at": "2026-02-21T12:00:00.000Z",
+  "total_papers": 1,
+  "total_questions": 37,
+  "topics": [
+    "Algebra",
+    "Calculus",
+    "Complex Numbers",
+    "Differentiation",
+    "Exponential Functions",
+    "Factor Theorem",
+    "Financial Maths",
+    "Functions",
+    "Geometric Sequences",
+    "Integration",
+    "Limits",
+    "Logarithms",
+    "Number Theory",
+    "Polynomials",
+    "Proof",
+    "Quadratic Equations",
+    "Rate of Change",
+    "Rational Functions",
+    "Sequences",
+    "Transformations"
+  ],
+  "questions": [
+    {
+      "questionNumber": "1(a)",
+      "topics": ["Algebra"],
+      "difficulty": "Easy",
+      "concepts": ["Absolute value equations", "Modulus"],
+      "description": "Find the two values of m ∈ ℝ for which |5 + 3m| = 11",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "1(b)",
+      "topics": ["Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Rearranging formulae", "Algebraic fractions"],
+      "description": "Given 1/h = k/(j + k), express k in terms of h and j",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "1(c)",
+      "topics": ["Factor Theorem", "Polynomials"],
+      "difficulty": "Hard",
+      "concepts": ["Polynomial division", "Finding constants", "Factor theorem"],
+      "description": "Given x² − px + 1 is a factor of x³ − 2x − 3r (p < 0), find the values of p and r",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "2(a)",
+      "topics": ["Quadratic Equations", "Differentiation", "Calculus"],
+      "difficulty": "Medium",
+      "concepts": ["Local minimum", "Vertex of quadratic", "Finding constants"],
+      "description": "Find b and c in f(x) = x² + bx + c given a local minimum at (3, −1)",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "2(b)",
+      "topics": ["Limits", "Sequences"],
+      "difficulty": "Hard",
+      "concepts": ["Limit as n → ∞", "Geometric sequences", "Rational expressions"],
+      "description": "Find the value of lim(n→∞) [n/(n+1) + (n+1000)/n + (1/3)ⁿ]",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "2(c)(i)",
+      "topics": ["Functions", "Transformations"],
+      "difficulty": "Easy",
+      "concepts": ["Vertical translation", "Graph transformations"],
+      "description": "Draw the graph of g(x) − 2 on as large a domain as possible",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "2(c)(ii)",
+      "topics": ["Functions", "Transformations"],
+      "difficulty": "Easy",
+      "concepts": ["Horizontal translation", "Graph transformations"],
+      "description": "Draw the graph of g(x + 3) on as large a domain as possible",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "3(a)",
+      "topics": ["Proof"],
+      "difficulty": "Hard",
+      "concepts": ["Proof by contradiction", "Irrational numbers"],
+      "description": "Prove that √2 is not a rational number",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "3(b)",
+      "topics": ["Logarithms", "Algebra"],
+      "difficulty": "Hard",
+      "concepts": ["Change of base formula", "Logarithm equations", "Solving for t"],
+      "description": "Given log₃t + log₉t + log₂₇t + log₈₁t = 10, find t in the form 3ʳ where r ∈ ℚ",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "3(c)(i)",
+      "topics": ["Logarithms"],
+      "difficulty": "Easy",
+      "concepts": ["Definition of logarithm"],
+      "description": "Explain what log₆m means where m is a positive real number",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "3(c)(ii)",
+      "topics": ["Logarithms", "Algebra"],
+      "difficulty": "Easy",
+      "concepts": ["Logarithm inequalities", "Properties of logarithms"],
+      "description": "State what m > 6 implies about the value of log₆m",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "4(a)",
+      "topics": ["Complex Numbers"],
+      "difficulty": "Medium",
+      "concepts": ["Roots of complex equations", "Finding complex constants"],
+      "description": "Given z₁ = 1 + i is a root of z² + (3 − 2i)z + p = 0, find p = a + bi where a, b ∈ ℤ",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "4(b)",
+      "topics": ["Complex Numbers"],
+      "difficulty": "Hard",
+      "concepts": ["De Moivre's theorem", "Square roots of complex numbers"],
+      "description": "Use De Moivre's theorem to find the values of w for which w² = −1 + √3i; give each in the form a + bi",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "4(c)(i)",
+      "topics": ["Complex Numbers"],
+      "difficulty": "Medium",
+      "concepts": ["Multiplication by i", "Complex conjugate"],
+      "description": "Write iu and the conjugate of iu in simplest form in terms of a and b, where u = a + bi",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "4(c)(ii)",
+      "topics": ["Complex Numbers"],
+      "difficulty": "Easy",
+      "concepts": ["Argand diagram", "Plotting complex numbers"],
+      "description": "Plot and label iu and its conjugate on an Argand diagram",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "4(c)(iii)",
+      "topics": ["Complex Numbers", "Transformations"],
+      "difficulty": "Medium",
+      "concepts": ["Geometric transformations", "Rotation", "Reflection"],
+      "description": "State a transformation (no translation) that sends u to iu on the Argand diagram",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "5(a)",
+      "topics": ["Differentiation", "Calculus", "Rational Functions"],
+      "difficulty": "Medium",
+      "concepts": ["Quotient rule", "Differentiating rational functions"],
+      "description": "Find f′(x) in simplest form for f(x) = 1/(5x² + 7)",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "5(b)",
+      "topics": ["Differentiation", "Calculus", "Logarithms"],
+      "difficulty": "Hard",
+      "concepts": ["Product rule", "Differentiating tan and ln", "Evaluating derivatives"],
+      "description": "Find g′(π/2) for g(x) = tan(x/2) · ln(x); give answer in the form a + ln b",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "5(c)(i)",
+      "topics": ["Functions"],
+      "difficulty": "Easy",
+      "concepts": ["Composite functions", "Function diagrams"],
+      "description": "Find the value of g(f(3)) from a function diagram showing f: A → B and g: B → C",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "5(c)(ii)",
+      "topics": ["Functions"],
+      "difficulty": "Medium",
+      "concepts": ["Injective functions", "Surjective functions", "Function properties"],
+      "description": "Explain why g: B → C is injective but not surjective, given #A = #C = 4 and #B = 3",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "6(a)(i)",
+      "topics": ["Algebra", "Quadratic Equations"],
+      "difficulty": "Easy",
+      "concepts": ["Intersection of functions", "Solving quadratics"],
+      "description": "Find the two values of x for which f(x) = g(x), where f(x) = x + 4 and g(x) = x² − 2",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "6(a)(ii)",
+      "topics": ["Integration", "Calculus"],
+      "difficulty": "Medium",
+      "concepts": ["Area between curves", "Definite integration"],
+      "description": "Find the area of the region between f(x) = x + 4 and g(x) = x² − 2 from x = −1 to x = 2",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "6(b)",
+      "topics": ["Integration", "Calculus", "Exponential Functions"],
+      "difficulty": "Hard",
+      "concepts": ["Definite integration of exponentials", "Solving for constant b"],
+      "description": "Find the value of b > 0 given ∫₀¹ be^(bx) dx = e^b",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(a)",
+      "topics": ["Functions", "Calculus"],
+      "difficulty": "Easy",
+      "concepts": ["Evaluating functions", "Speed functions"],
+      "description": "Work out Fiona's speed when she passes point A, given v(t) = (2/3)t³ − 6t² + 13t + 109",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(b)",
+      "topics": ["Differentiation", "Calculus", "Rate of Change"],
+      "difficulty": "Medium",
+      "concepts": ["Acceleration", "Second derivative", "Rate of change"],
+      "description": "Find Fiona's acceleration 5 minutes after passing point A, in km/hour per minute",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(c)",
+      "topics": ["Differentiation", "Calculus"],
+      "difficulty": "Medium",
+      "concepts": ["Maximum speed", "Setting derivative to zero"],
+      "description": "Find the time t at which Fiona reaches maximum speed in the first 4 minutes, correct to 2 d.p.",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(d)",
+      "topics": ["Integration", "Calculus"],
+      "difficulty": "Medium",
+      "concepts": ["Average value of a function", "Definite integration"],
+      "description": "Use integration to find Fiona's average speed over 5 minutes, correct to 2 d.p.",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(e)",
+      "topics": ["Differentiation", "Calculus", "Functions"],
+      "difficulty": "Medium",
+      "concepts": ["First and second derivative", "Graph interpretation", "Concavity"],
+      "description": "Identify which of four graphs matches v(t) near t = 1, given v′(1) > 0 and v″(1) < 0; justify using both conditions",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(f)",
+      "topics": ["Calculus", "Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Average speed", "Distance-time calculations"],
+      "description": "Find the minimum time (in minutes) to travel 10 km from A to B without exceeding 100 km/h",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(g)",
+      "topics": ["Calculus", "Algebra"],
+      "difficulty": "Hard",
+      "concepts": ["Constant deceleration", "Average speed", "Distance-time calculations"],
+      "description": "Find Rohan's deceleration (km/hour per minute) given he drives 2 min at 120 km/h then decelerates to reach B with average speed 100 km/h",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(a)",
+      "topics": ["Financial Maths"],
+      "difficulty": "Easy",
+      "concepts": ["Compound interest", "Annual interest"],
+      "description": "Find the amount in Olga's account after 5 years with €3000 at 2.4% annual interest, correct to nearest cent",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(b)(i)",
+      "topics": ["Financial Maths"],
+      "difficulty": "Easy",
+      "concepts": ["Present value", "Time value of money"],
+      "description": "Explain what is meant by the 'present value' of a payment of €1000 in 1 year's time at a given interest rate",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(b)(ii)",
+      "topics": ["Financial Maths"],
+      "difficulty": "Medium",
+      "concepts": ["Present value", "Compound interest", "Reverse calculation"],
+      "description": "Find how much Chen initially deposited to have €4000 after 6 years at 2.4% annual interest",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(c)",
+      "topics": ["Financial Maths"],
+      "difficulty": "Medium",
+      "concepts": ["Equivalent interest rates", "Quarterly compounding", "APR"],
+      "description": "Find the quarterly interest rate equivalent to an APR of 2.4%, correct to 2 d.p.",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(d)(i)",
+      "topics": ["Financial Maths", "Geometric Sequences"],
+      "difficulty": "Medium",
+      "concepts": ["Geometric series", "Regular savings", "Monthly compounding"],
+      "description": "Write a geometric series in €A for the total amount in Rohan's account after 36 monthly deposits at 0.11% monthly interest",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(d)(ii)",
+      "topics": ["Financial Maths", "Geometric Sequences"],
+      "difficulty": "Hard",
+      "concepts": ["Sum of geometric series", "Solving for monthly payment"],
+      "description": "Find the monthly deposit €A needed to accumulate €12,000 after 36 months at 0.11% monthly interest",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(e)",
+      "topics": ["Financial Maths", "Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Expected value", "Weighted average", "Solving equations"],
+      "description": "Find the adult ticket price x given expected ticket price is €13.85, with child (€11, 52%), student (x−5, 15%), adult (x, 33%)",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(f)",
+      "topics": ["Financial Maths", "Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Mark up", "Margin", "Profit calculations"],
+      "description": "Find the mark up percentage for an item sold with a margin of 18%, correct to nearest percent",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(a)(i)",
+      "topics": ["Number Theory"],
+      "difficulty": "Easy",
+      "concepts": ["Factors", "Powers of primes"],
+      "description": "List the 5 different factors of 2⁴, writing each as a power of 2",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(a)(ii)",
+      "topics": ["Number Theory"],
+      "difficulty": "Easy",
+      "concepts": ["Number of factors", "Powers of primes"],
+      "description": "Work out how many different factors 3⁷ has",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(a)(iii)",
+      "topics": ["Number Theory"],
+      "difficulty": "Medium",
+      "concepts": ["Number of factors", "Product of prime powers"],
+      "description": "Work out how many different factors 2¹⁰ × 3¹² has",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(b)(i)",
+      "topics": ["Number Theory", "Algebra"],
+      "difficulty": "Easy",
+      "concepts": ["Factor pairs", "Completing a table"],
+      "description": "Complete a table showing the 6 pairs of factors (x, y) of 12 where xy = 12",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(b)(ii)",
+      "topics": ["Functions", "Algebra"],
+      "difficulty": "Easy",
+      "concepts": ["Plotting points", "Rational functions"],
+      "description": "Plot the 6 factor pairs of 12 on a co-ordinate diagram",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(b)(iii)",
+      "topics": ["Functions", "Rational Functions"],
+      "difficulty": "Easy",
+      "concepts": ["Graphing rational functions", "Hyperbola"],
+      "description": "Draw the graph of y = 12/x for x ∈ ℝ in the domain 1 ≤ x ≤ 12",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(c)(i)",
+      "topics": ["Differentiation", "Calculus", "Rational Functions"],
+      "difficulty": "Hard",
+      "concepts": ["Equation of tangent", "Differentiation of rational functions", "Proof"],
+      "description": "Show that the tangent to y = 12/x at the point (p, 12/p) has equation y = −(12/p²)x + 24/p",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(c)(ii)",
+      "topics": ["Integration", "Calculus", "Algebra"],
+      "difficulty": "Hard",
+      "concepts": ["Area of triangle", "Intercepts", "Constant area"],
+      "description": "Show that the area of the triangle formed by the x-axis, y-axis, and the tangent y = −(12/p²)x + 24/p is always k square units; find k",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(a)",
+      "topics": ["Sequences"],
+      "difficulty": "Easy",
+      "concepts": ["Pattern recognition", "Rectangle sequences"],
+      "description": "Draw T₄, the shape made of 4 equal-height rectangles that covers a triangle of base 2 and height 8",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(b)",
+      "topics": ["Sequences", "Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Area of rectangles", "Verification"],
+      "description": "Show that the total area of the three rectangles in T₃ is 32/3 square units",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(c)",
+      "topics": ["Sequences", "Algebra", "Integration"],
+      "difficulty": "Hard",
+      "concepts": ["General term", "Area formula in terms of n"],
+      "description": "Find the total area of the n rectangles in Tₙ in terms of n, in simplest form",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(d)",
+      "topics": ["Sequences", "Algebra"],
+      "difficulty": "Hard",
+      "concepts": ["Solving inequalities", "Finding first n satisfying a condition"],
+      "description": "Find the first value of n for which Aₙ = 8(n−1)/n is greater than 95% of the triangle's area",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(e)(i)",
+      "topics": ["Integration", "Calculus", "Volumes and Mensuration"],
+      "difficulty": "Hard",
+      "concepts": ["Volume by integration", "Square cross-sections", "Pyramid volume"],
+      "description": "Use integration of S(x) = x²c²/h² to find the volume of a square-based pyramid in terms of c and h",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(e)(ii)",
+      "topics": ["Rate of Change", "Differentiation", "Calculus"],
+      "difficulty": "Hard",
+      "concepts": ["Related rates", "Chain rule", "Rate of change of area"],
+      "description": "Find the rate of change of S(x) = x²c²/h² with respect to time when x = h/2, given dx/dt = 3; give answer in terms of c and h",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 1"}
+    }
+  ]
+}
