@@ -1,0 +1,768 @@
+{
+  "indexed_at": "2026-02-21T12:00:00.000Z",
+  "total_papers": 2,
+  "total_questions": 68,
+  "topics": [
+    "Algebra",
+    "Arithmetic Sequences",
+    "Calculus",
+    "Complex Numbers",
+    "Coordinate Geometry",
+    "Differentiation",
+    "Exponential Functions",
+    "Factor Theorem",
+    "Financial Maths",
+    "Functions",
+    "Geometric Sequences",
+    "Integration",
+    "Logarithms",
+    "Polynomials",
+    "Probability",
+    "Proof",
+    "Quadratic Equations",
+    "Rate of Change",
+    "Sequences",
+    "Simultaneous Equations",
+    "Statistics",
+    "Trigonometry",
+    "Volumes and Mensuration"
+  ],
+  "questions": [
+    {
+      "questionNumber": "1(a)",
+      "topics": ["Algebra", "Quadratic Equations"],
+      "difficulty": "Medium",
+      "concepts": ["Radical equations", "Solving equations in ℕ"],
+      "description": "Solve the equation n − 3 = √(3n + 1) for n ∈ ℕ",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "1(b)",
+      "topics": ["Algebra"],
+      "difficulty": "Easy",
+      "concepts": ["Fraction operations", "Algebraic fractions"],
+      "description": "Write 4/(2t + 1) − 7/(12t) as a single fraction in terms of t",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "1(c)",
+      "topics": ["Simultaneous Equations", "Algebra"],
+      "difficulty": "Hard",
+      "concepts": ["Three-variable simultaneous equations", "Integer solutions"],
+      "description": "Solve the system x + 2y = 143, y + 3w = −74, 4x + 5w = 4 for x, y, w ∈ ℤ",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "2(a)",
+      "topics": ["Complex Numbers"],
+      "difficulty": "Medium",
+      "concepts": ["Quadratic equations with complex roots", "Standard form a + bi"],
+      "description": "Find the two complex solutions of z² + 12z + 261 = 0 in the form a + bi",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "2(b)",
+      "topics": ["Complex Numbers"],
+      "difficulty": "Hard",
+      "concepts": ["De Moivre's theorem", "Powers of complex numbers"],
+      "description": "Use de Moivre's theorem to write (1 − √3 i)⁹ in the form a + bi",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "2(c)(i)",
+      "topics": ["Complex Numbers"],
+      "difficulty": "Easy",
+      "concepts": ["Polar/trigonometric form", "Argand diagram"],
+      "description": "Plot and label u = 4(cos(π/6) + i sin(π/6)) on an Argand diagram",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "2(c)(ii)",
+      "topics": ["Complex Numbers", "Trigonometry"],
+      "difficulty": "Medium",
+      "concepts": ["Argument of complex numbers", "Angle between complex numbers"],
+      "description": "Find the angle ∠wou in radians, where w = −2 + 2i, o = 0, u = 4(cos(π/6) + i sin(π/6))",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "3(a)",
+      "topics": ["Integration", "Calculus", "Trigonometry"],
+      "difficulty": "Easy",
+      "concepts": ["Indefinite integration", "Trigonometric integrals"],
+      "description": "Find the integral ∫ cos 6x dx",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "3(b)(i)",
+      "topics": ["Differentiation", "Calculus"],
+      "difficulty": "Medium",
+      "concepts": ["Equation of tangent", "Polynomial differentiation"],
+      "description": "Find the equation of the tangent to f(x) = 2x³ − 9x² + 5x − 11 at x = 2",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "3(b)(ii)",
+      "topics": ["Differentiation", "Calculus"],
+      "difficulty": "Medium",
+      "concepts": ["Point of inflection", "Second derivative"],
+      "description": "Find the x co-ordinate of the point of inflection of f(x) = 2x³ − 9x² + 5x − 11",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "3(c)",
+      "topics": ["Differentiation", "Calculus", "Functions"],
+      "difficulty": "Hard",
+      "concepts": ["Geometric interpretation of derivative", "Parallel slopes", "Graph reading"],
+      "description": "Estimate the two values of x where p′(x) = l′(x) using a diagram showing curve y = p(x) and line y = l(x)",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "4(a)",
+      "topics": ["Differentiation", "Calculus"],
+      "difficulty": "Medium",
+      "concepts": ["Differentiation from first principles"],
+      "description": "Differentiate f(x) = x² − 7x − 10 from first principles with respect to x",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "4(b)",
+      "topics": ["Differentiation", "Calculus"],
+      "difficulty": "Hard",
+      "concepts": ["Quotient rule", "Evaluating derivatives"],
+      "description": "Find g′(−2) for g(x) = (6x + 1)/(x⁴ + 3)",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "4(c)",
+      "topics": ["Calculus", "Functions"],
+      "difficulty": "Easy",
+      "concepts": ["Local minimum", "True or false reasoning"],
+      "description": "Determine whether a local minimum at (0, 5) implies h(x) ≥ 5 for all real x; justify the answer",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "5(a)",
+      "topics": ["Arithmetic Sequences", "Sequences"],
+      "difficulty": "Easy",
+      "concepts": ["Common difference", "Finding parameter"],
+      "description": "Find the value of p given the first three terms of an arithmetic sequence: 2p+1, 5p−3, 6p+7",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "5(b)",
+      "topics": ["Geometric Sequences", "Sequences"],
+      "difficulty": "Medium",
+      "concepts": ["Common ratio", "Geometric sequence terms"],
+      "description": "Find the two possible values of r given G₇ = 6 and G₁₁ = 3/8 in a geometric sequence",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "5(c)(i)",
+      "topics": ["Differentiation", "Sequences", "Calculus"],
+      "difficulty": "Easy",
+      "concepts": ["Repeated differentiation", "Power rule"],
+      "description": "Write F₁ and F₂ in terms of x, where F₀ = x²⁰²⁴ and each Fₙ is the derivative of Fₙ₋₁",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "5(c)(ii)",
+      "topics": ["Differentiation", "Sequences", "Calculus"],
+      "difficulty": "Medium",
+      "concepts": ["Repeated differentiation", "Zero derivative"],
+      "description": "Find the first value of n for which Fₙ = 0, given F₀ = x²⁰²⁴",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "6(a)",
+      "topics": ["Factor Theorem", "Polynomials"],
+      "difficulty": "Easy",
+      "concepts": ["Factor theorem", "Finding constants"],
+      "description": "Find the value of b for which (x − 4) is a factor of h(x) = x² + b − 12",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "6(b)(i)",
+      "topics": ["Exponential Functions", "Functions"],
+      "difficulty": "Easy",
+      "concepts": ["Evaluating exponential functions", "Standard form"],
+      "description": "Find f(1.2) for f(x) = e^(9x), giving the answer in the form a × 10ⁿ",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "6(b)(ii)",
+      "topics": ["Logarithms", "Functions"],
+      "difficulty": "Easy",
+      "concepts": ["Solving logarithmic equations", "Natural logarithm"],
+      "description": "Find x such that g(x) = 3.5 where g(x) = ln(√x); give your answer in the form e^p",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "6(b)(iii)",
+      "topics": ["Functions", "Logarithms", "Exponential Functions"],
+      "difficulty": "Medium",
+      "concepts": ["Composite functions", "Simplification"],
+      "description": "Write the composite function g(f(x)) in its simplest form, where f(x) = e^(9x) and g(x) = ln(√x)",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(a)",
+      "topics": ["Financial Maths", "Algebra"],
+      "difficulty": "Easy",
+      "concepts": ["Income tax", "Tax credits", "Net pay"],
+      "description": "Calculate Fiadh's net annual pay given gross salary of €54,000, tax bands, and a €1,775 tax credit",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(b)(i)",
+      "topics": ["Financial Maths", "Sequences"],
+      "difficulty": "Medium",
+      "concepts": ["Present value", "Mortgage repayments", "Geometric series"],
+      "description": "Write the present value of the first three monthly mortgage repayments as fractions",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(b)(ii)",
+      "topics": ["Financial Maths", "Sequences"],
+      "difficulty": "Hard",
+      "concepts": ["Sum of geometric series", "Mortgage principal"],
+      "description": "Work out the amount borrowed for a 25-year mortgage with monthly rate 0.279% and repayments of €1,647.75",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(c)(i)",
+      "topics": ["Differentiation", "Calculus", "Exponential Functions"],
+      "difficulty": "Medium",
+      "concepts": ["Rate of change", "Differentiating exponentials"],
+      "description": "Use differentiation to find the rate of increase of F(t) = 5000e^(0.04t) after 3.5 years",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(c)(ii)",
+      "topics": ["Integration", "Calculus", "Exponential Functions"],
+      "difficulty": "Hard",
+      "concepts": ["Average value of a function", "Definite integration"],
+      "description": "Use integration to find the average value of F(t) = 5000e^(0.04t) over the first 5 years",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "7(c)(iii)",
+      "topics": ["Financial Maths", "Exponential Functions"],
+      "difficulty": "Medium",
+      "concepts": ["Annual equivalent rate (AER)", "Percentage increase"],
+      "description": "Find the AER for a savings account modelled by F(t) = 5000e^(0.04t), correct to 2 decimal places",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(a)(i)",
+      "topics": ["Functions", "Calculus"],
+      "difficulty": "Easy",
+      "concepts": ["Evaluating functions", "Table of values"],
+      "description": "Complete a table of values for T(x) = ((x − 240)/60)³ + 70 at x = 0, 60, 120, 180, 240, 300, 360",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(a)(ii)",
+      "topics": ["Functions", "Calculus"],
+      "difficulty": "Easy",
+      "concepts": ["Graphing functions", "Cubic curves"],
+      "description": "Draw the graph of y = T(x) = ((x − 240)/60)³ + 70 for 0 ≤ x ≤ 360",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(b)",
+      "topics": ["Trigonometry", "Functions"],
+      "difficulty": "Easy",
+      "concepts": ["Periodic functions", "Maximum and minimum of cosine"],
+      "description": "Find the maximum and minimum daily sales from S(t) = 21 + 19cos(2πt/365) without differentiation",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(c)",
+      "topics": ["Algebra", "Functions"],
+      "difficulty": "Easy",
+      "concepts": ["Setting functions equal", "Solving linear equations"],
+      "description": "Find the value of t for which S(t) = C(t), where C(t) = S(t) − 2.4 + 0.03t",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(d)",
+      "topics": ["Functions"],
+      "difficulty": "Medium",
+      "concepts": ["Graph interpretation", "Periodic functions with linear trend"],
+      "description": "Identify which of three graphs represents C(t) = S(t) − 2.4 + 0.03t over a number of years; justify the answer",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "8(e)",
+      "topics": ["Differentiation", "Trigonometry", "Calculus"],
+      "difficulty": "Hard",
+      "concepts": ["Finding local maximum", "Solving trigonometric equations"],
+      "description": "Find the first value of t where C′(t) = 0.03 − (38π/365)sin(2πt/365) = 0, correct to the nearest day",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(a)",
+      "topics": ["Volumes and Mensuration"],
+      "difficulty": "Easy",
+      "concepts": ["Spherical cap volume", "Substitution"],
+      "description": "Find the volume of a spherical cap using C = πk²(3R − k)/3, with R = 13 and k = 4; give answer in terms of π",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(b)(i)",
+      "topics": ["Algebra", "Volumes and Mensuration"],
+      "difficulty": "Medium",
+      "concepts": ["Forming equations", "Algebraic proof"],
+      "description": "Show that the cap height y of a sphere of radius 8 with cap volume 36πy satisfies y/3 × (24 − y) = 36",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(b)(ii)",
+      "topics": ["Algebra", "Quadratic Equations"],
+      "difficulty": "Medium",
+      "concepts": ["Expanding and solving quadratics", "Real-world context"],
+      "description": "Solve y/3 × (24 − y) = 36 to find the height of the spherical cap",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(c)",
+      "topics": ["Volumes and Mensuration", "Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Hemisphere volume", "Unit conversion", "Solving cubic"],
+      "description": "Find the diameter x of a hemisphere with volume 3 litres, given V(x) = (π/12)x³; correct to 1 d.p.",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(d)",
+      "topics": ["Rate of Change", "Differentiation", "Calculus"],
+      "difficulty": "Hard",
+      "concepts": ["Related rates", "Chain rule"],
+      "description": "Find the rate of change of diameter x when x = 20 cm, given volume increases at 450 cm³/s",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "9(e)",
+      "topics": ["Algebra", "Volumes and Mensuration"],
+      "difficulty": "Medium",
+      "concepts": ["Rearranging formulae", "Surds"],
+      "description": "Rearrange S = πr√(r² + h²) to write h in the form √((S² − arⁿ)/b)",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(a)(i)",
+      "topics": ["Functions", "Calculus"],
+      "difficulty": "Easy",
+      "concepts": ["Evaluating polynomial functions"],
+      "description": "Estimate the height of a water spinach plant after 15 days using W(x) = 0.667x + 1.5x² − 0.025x³",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(a)(ii)",
+      "topics": ["Differentiation", "Calculus"],
+      "difficulty": "Easy",
+      "concepts": ["Differentiating polynomials"],
+      "description": "Write down W′(x) for W(x) = 0.667x + 1.5x² − 0.025x³",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(b)",
+      "topics": ["Differentiation", "Calculus", "Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Solving quadratic inequalities", "Range of values"],
+      "description": "Find the range of x values for which P′(x) = 1.1 + 2.73x − 0.078x² > 24",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(c)(i)",
+      "topics": ["Integration", "Calculus"],
+      "difficulty": "Hard",
+      "concepts": ["Area between curves", "Definite integration"],
+      "description": "Use integration to find the area of a logo bounded by c(x) = x², s(x) = 2x − x², and k(x) = s(−x)",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(c)(ii)",
+      "topics": ["Functions", "Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Axial symmetry", "Finding function constants"],
+      "description": "Find constants b and c in k(x) = −x² + bx + c, the reflection of s(x) = 2x − x² in the y-axis",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "10(d)",
+      "topics": ["Algebra"],
+      "difficulty": "Medium",
+      "concepts": ["Successive discounts", "Comparing options", "Algebraic proof"],
+      "description": "Determine which of two discount options (10% then €r off, or €r off then 10%) is cheaper, writing each price in terms of p and r",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 1"}
+    },
+    {
+      "questionNumber": "1(a)(i)",
+      "topics": ["Statistics"],
+      "difficulty": "Easy",
+      "concepts": ["Mode", "Stem and leaf plots"],
+      "description": "Use the mode (34 m) to find the value of a in an ordered stem and leaf plot",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "1(a)(ii)",
+      "topics": ["Statistics"],
+      "difficulty": "Easy",
+      "concepts": ["Range", "Stem and leaf plots"],
+      "description": "Use the range (49 m) to find the values of b and c in an ordered stem and leaf plot",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "1(a)(iii)",
+      "topics": ["Statistics"],
+      "difficulty": "Easy",
+      "concepts": ["Median", "Stem and leaf plots"],
+      "description": "Use the median (43.5 m) to find the value of d in an ordered stem and leaf plot",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "1(b)",
+      "topics": ["Statistics"],
+      "difficulty": "Easy",
+      "concepts": ["Scatter plots", "Describing trends"],
+      "description": "Describe how swimming distances changed from initial test to re-test for seven students who took lessons",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "1(c)",
+      "topics": ["Statistics"],
+      "difficulty": "Medium",
+      "concepts": ["Correlation coefficient"],
+      "description": "Find the correlation coefficient r between initial and re-test swimming distances for seven students, correct to 4 d.p.",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "2(a)",
+      "topics": ["Probability"],
+      "difficulty": "Medium",
+      "concepts": ["Expected value", "Fair game"],
+      "description": "Find x given a fair game with prizes None, 2, x−10, x at probabilities 30%, 40%, 28%, 2% and cost €10",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "2(b)",
+      "topics": ["Probability"],
+      "difficulty": "Easy",
+      "concepts": ["Mutually exclusive events", "Union and intersection"],
+      "description": "Find P(A ∩ B) and P(A ∪ B) for mutually exclusive events with P(A) = 0.1, P(B) = 0.4",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "2(c)",
+      "topics": ["Probability"],
+      "difficulty": "Medium",
+      "concepts": ["Complement", "Maximum probability"],
+      "description": "Find the maximum value of P[(C ∪ D)′] given P(C) = 0.5 and P(D) = 0.7",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "2(d)",
+      "topics": ["Probability"],
+      "difficulty": "Easy",
+      "concepts": ["Independence", "Real-world reasoning"],
+      "description": "Explain why the events 'raining tomorrow' and 'wearing a coat' cannot reasonably be assumed independent",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "3(a)",
+      "topics": ["Trigonometry"],
+      "difficulty": "Medium",
+      "concepts": ["Area of a parallelogram", "Sine rule"],
+      "description": "Find the area of parallelogram ABCD with |AB| = 10 cm, |BC| = 13 cm, ∠ABC = 110°",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "3(b)",
+      "topics": ["Trigonometry"],
+      "difficulty": "Medium",
+      "concepts": ["Double angle formula", "Cosine equation", "Multiple solutions"],
+      "description": "Find all values of X in [0°, 360°] satisfying cos(2X) = √3/2",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "3(c)",
+      "topics": ["Trigonometry"],
+      "difficulty": "Hard",
+      "concepts": ["Sine rule", "Ambiguous case"],
+      "description": "Find the two possible values of θ = ∠LMK in triangle KLM with |KL| = 15√3, |LM| = 45, ∠KLM = 25°",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "4(a)",
+      "topics": ["Coordinate Geometry"],
+      "difficulty": "Medium",
+      "concepts": ["Centroid construction", "Geometric construction"],
+      "description": "Construct the centroid of triangle PQR, showing all construction lines and measurements",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "4(b)",
+      "topics": ["Proof", "Coordinate Geometry"],
+      "difficulty": "Hard",
+      "concepts": ["Parallel lines", "Intercept theorem", "Geometric proof"],
+      "description": "Prove that if three parallel lines cut equal segments on one transversal, they cut equal segments on any other transversal",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "5(a)(i)",
+      "topics": ["Coordinate Geometry"],
+      "difficulty": "Easy",
+      "concepts": ["Circle equation", "Centre and radius"],
+      "description": "Find the centre and radius of the circle x² + y² + 4x − 6y + 5 = 0",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "5(a)(ii)",
+      "topics": ["Coordinate Geometry"],
+      "difficulty": "Hard",
+      "concepts": ["Internally touching circles", "Distance between centres"],
+      "description": "Show that circles x² + y² + 4x − 6y + 5 = 0 and (x − 2)² + (y + 1)² = 72 touch internally",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "5(b)",
+      "topics": ["Coordinate Geometry"],
+      "difficulty": "Hard",
+      "concepts": ["Finding circle equation", "Equal distance from centre"],
+      "description": "Find the equation of a circle with centre on x = 9 passing through (7, 10) and (12, 8)",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "6(a)",
+      "topics": ["Coordinate Geometry"],
+      "difficulty": "Medium",
+      "concepts": ["Section formula", "Internal division"],
+      "description": "Find point B if C(6, 11) divides [AB] internally in ratio 1:3 and A = (1, 13)",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "6(b)",
+      "topics": ["Coordinate Geometry"],
+      "difficulty": "Medium",
+      "concepts": ["Perpendicular distance from a point to a line"],
+      "description": "Find the perpendicular distance from (5, −2) to the line y = (4/3)x − 11",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "6(c)(i)",
+      "topics": ["Probability", "Algebra"],
+      "difficulty": "Easy",
+      "concepts": ["Combinations", "Counting pairs"],
+      "description": "Find the number of different pairs that can be chosen from 16 lattice points",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "6(c)(ii)",
+      "topics": ["Probability"],
+      "difficulty": "Medium",
+      "concepts": ["Geometric probability", "Horizontal lines"],
+      "description": "Find the probability that a randomly chosen pair of lattice points (m, n), m, n ≤ 4 forms a horizontal line",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "7(a)(i)",
+      "topics": ["Statistics"],
+      "difficulty": "Medium",
+      "concepts": ["Normal distribution", "Standardisation"],
+      "description": "Find the probability a randomly selected PK Hotel guest is less than 50 years old, given mean 48.2 and s.d. 10.6",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "7(a)(ii)",
+      "topics": ["Statistics"],
+      "difficulty": "Medium",
+      "concepts": ["Normal distribution", "Inverse normal"],
+      "description": "Find the age A such that 10% of PK Hotel guests are at least A years old",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "7(b)(i)",
+      "topics": ["Probability"],
+      "difficulty": "Medium",
+      "concepts": ["Binomial distribution", "Exact probability"],
+      "description": "Find the probability that exactly 2 out of 6 randomly chosen PK Hotel customers used the pool (p = 1/5)",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "7(b)(ii)",
+      "topics": ["Probability"],
+      "difficulty": "Hard",
+      "concepts": ["Binomial distribution", "Solving for n"],
+      "description": "Find n such that P(none of n customers used the pool) = 0.0047, given p = 1/5",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "7(c)",
+      "topics": ["Probability"],
+      "difficulty": "Hard",
+      "concepts": ["Conditional probability", "Bayes' theorem"],
+      "description": "Find the probability a booking came via the new system, given conditional booking rates for old and new systems",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "7(d)",
+      "topics": ["Statistics"],
+      "difficulty": "Hard",
+      "concepts": ["Hypothesis testing", "Proportion test", "5% significance level"],
+      "description": "Carry out a hypothesis test at 5% significance to determine if the proportion rating PK Hotels best changed from 75% (765 out of 1000 in sample)",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "8(a)",
+      "topics": ["Volumes and Mensuration"],
+      "difficulty": "Easy",
+      "concepts": ["Net of a cylinder", "Circumference"],
+      "description": "Find the dimensions of the rectangular net of an open cylinder with height 15 cm and radius 5 cm",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "8(b)",
+      "topics": ["Volumes and Mensuration", "Trigonometry"],
+      "difficulty": "Medium",
+      "concepts": ["Cylinder inscribed in sphere", "Theorem of Pythagoras", "Sphere volume"],
+      "description": "Find the volume of a sphere containing an inscribed cylinder of height 22 cm and diameter 12 cm",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "8(c)(i)",
+      "topics": ["Trigonometry", "Proof"],
+      "difficulty": "Easy",
+      "concepts": ["Angle in a semicircle", "Symmetry"],
+      "description": "State why ∠CBD = 90° using the symmetry of the diagram about line DC",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "8(c)(ii)",
+      "topics": ["Proof", "Trigonometry"],
+      "difficulty": "Hard",
+      "concepts": ["Similar triangles", "Geometric proof"],
+      "description": "Prove that triangles BCE and DBE are similar, giving reasons for each step",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "8(c)(iii)",
+      "topics": ["Trigonometry", "Algebra"],
+      "difficulty": "Hard",
+      "concepts": ["Similar triangles", "Algebraic proof"],
+      "description": "Use similar triangles BCE and DBE to show that r² = 20h − h² for a cone of radius r and height h in a sphere of radius 10",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "8(c)(iv)",
+      "topics": ["Differentiation", "Calculus", "Volumes and Mensuration"],
+      "difficulty": "Hard",
+      "concepts": ["Maximising volume", "Cone volume", "Differentiation"],
+      "description": "Write cone volume in terms of h and π using r² = 20h − h², then find h for maximum volume",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "9(a)(i)",
+      "topics": ["Coordinate Geometry"],
+      "difficulty": "Easy",
+      "concepts": ["Equation of a circle"],
+      "description": "Write down the equation of circle s with centre C(1, 17) and radius 12",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "9(a)(ii)",
+      "topics": ["Coordinate Geometry"],
+      "difficulty": "Medium",
+      "concepts": ["Point on a circle", "Surd form"],
+      "description": "Find the value of a (in surd form) such that (a, 8) lies on circle s with centre (1, 17) and radius 12",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "9(a)(iii)",
+      "topics": ["Coordinate Geometry"],
+      "difficulty": "Medium",
+      "concepts": ["Distance from point to circle", "Shortest distance"],
+      "description": "Find the shortest distance from P(10, 6) to the circle s (centre (1,17), radius 12), to the nearest metre",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "9(b)",
+      "topics": ["Coordinate Geometry"],
+      "difficulty": "Easy",
+      "concepts": ["Tangent to a circle", "Vertical tangent"],
+      "description": "Write the equation of the vertical tangent to circle s (radius 12, centre (1,17)) in the first quadrant",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "9(c)",
+      "topics": ["Coordinate Geometry"],
+      "difficulty": "Medium",
+      "concepts": ["Perpendicular from a point to a line", "Closest point"],
+      "description": "Find the point on road w (x − 3y = 9) closest to P(10, 6)",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "9(d)",
+      "topics": ["Coordinate Geometry", "Trigonometry"],
+      "difficulty": "Hard",
+      "concepts": ["Distance along a line", "Direction vector", "Coordinates from distance"],
+      "description": "Find the coordinates of the point 1200 m from F(9, 0) along road w (x − 3y = 9) in the first quadrant",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "10(a)(i)",
+      "topics": ["Trigonometry", "Volumes and Mensuration"],
+      "difficulty": "Medium",
+      "concepts": ["Pythagoras", "Right-angled triangles"],
+      "description": "Show that |OB| = 120 cm for a wiper blade rotating inside a 180 × 100 cm rectangle",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "10(a)(ii)",
+      "topics": ["Trigonometry"],
+      "difficulty": "Medium",
+      "concepts": ["Finding angles", "Inverse trigonometry"],
+      "description": "Show that ∠BOA = 41.4° for the wiper blade configuration, correct to 1 d.p.",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "10(a)(iii)",
+      "topics": ["Trigonometry", "Volumes and Mensuration"],
+      "difficulty": "Hard",
+      "concepts": ["Area of sector", "Annular sector"],
+      "description": "Find the area of the cleaned region ABB′A′ (sector OBB′ minus sector OAA′), correct to nearest cm²",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "10(b)",
+      "topics": ["Trigonometry", "Algebra"],
+      "difficulty": "Hard",
+      "concepts": ["Cosine rule", "Solving quadratic in x"],
+      "description": "Use the cosine rule in triangle OEE′ with ∠E′OE = 105° to find |OE|, correct to 1 d.p.",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "10(c)(i)",
+      "topics": ["Probability"],
+      "difficulty": "Easy",
+      "concepts": ["Fundamental counting principle"],
+      "description": "Find the total number of colour patterns possible for five traffic lights, each R, G, or O",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "10(c)(ii)",
+      "topics": ["Probability"],
+      "difficulty": "Medium",
+      "concepts": ["Counting with restrictions", "Fundamental counting principle"],
+      "description": "Count patterns for five traffic lights where the first is red and the fifth is not red",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "10(c)(iii)",
+      "topics": ["Probability"],
+      "difficulty": "Hard",
+      "concepts": ["Counting with restrictions", "No two consecutive same colour"],
+      "description": "Count patterns for five traffic lights where no two consecutive lights are the same colour",
+      "paper": {"year": 2024, "level": "Higher Level", "paper": "Paper 2"}
+    }
+  ]
+}

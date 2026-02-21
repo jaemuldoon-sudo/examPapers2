@@ -29,6 +29,7 @@ def load_all_exam_indexes():
     files = [
         'JSON Files/exam-index1.json',
         'JSON Files/exam-index2.json',
+        'JSON Files/exam-index3.json',
     ]
     all_questions = []
     all_topics = set()
@@ -627,7 +628,7 @@ with main_tab1:
                     st.markdown(sim)
 
     else:
-        st.info("Choose a topic, pick subtopics, and select a worksheet mode to begin.")
+        st.info("Choose a topic, pick subtopics, and select mode to begin.")
 
 with main_tab2:
     # -----------------------------
