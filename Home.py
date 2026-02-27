@@ -118,38 +118,56 @@ SUBTOPICS = {
 # -----------------------------
 def clean_latex_for_pdf(text):
     """Convert LaTeX expressions to readable plain text for PDF output."""
+
+    SUPERSCRIPT_MAP = {
+        '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
+        '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
+        '+': '⁺', '-': '⁻', 'n': 'ⁿ', 'x': 'ˣ', 'a': 'ᵃ',
+    }
+
+    def convert_superscript(match):
+        exp = match.group(1)
+        return ''.join(SUPERSCRIPT_MAP.get(ch, ch) for ch in exp)
+
+    # Handle fractions FIRST (before removing braces)
+    for _ in range(3):
+        text = re.sub(r'\\frac\{([^{}]+)\}\{([^{}]+)\}', r'(\1)/(\2)', text)
+    # sqrt
+    text = re.sub(r'\\sqrt\{([^}]+)\}', r'√(\1)', text)
+    text = re.sub(r'\\sqrt', r'√', text)
+    # Superscripts - convert to unicode superscript characters
+    text = re.sub(r'\^\{([^}]+)\}', convert_superscript, text)
+    text = re.sub(r'\^([0-9a-z])', convert_superscript, text)
+    # Subscripts
+    text = re.sub(r'_\{([^}]+)\}', r'_\1', text)
+    # Symbol replacements
+    symbols = [
+        (r'\\times', '×'), (r'\\div', '÷'), (r'\\pm', '±'),
+        (r'\\leq', '≤'), (r'\\geq', '≥'), (r'\\neq', '≠'),
+        (r'\\approx', '≈'), (r'\\pi', 'π'), (r'\\theta', 'θ'),
+        (r'\\alpha', 'α'), (r'\\beta', 'β'), (r'\\gamma', 'γ'),
+        (r'\\lambda', 'λ'), (r'\\mu', 'μ'), (r'\\sigma', 'σ'),
+        (r'\\infty', '∞'), (r'\\sin', 'sin'), (r'\\cos', 'cos'),
+        (r'\\tan', 'tan'), (r'\\log', 'log'), (r'\\ln', 'ln'),
+        (r'\\left\(', '('), (r'\\right\)', ')'),
+        (r'\\left\[', '['), (r'\\right\]', ']'),
+        (r'\\cdot', '·'), (r'\\ldots', '...'), (r'\\to', '→'),
+        (r'\\in', ' ∈ '), (r'\\cup', '∪'), (r'\\cap', '∩'),
+    ]
+    for pattern, replacement in symbols:
+        text = re.sub(pattern, replacement, text)
     # Remove $ delimiters
+    text = re.sub(r'\$\$([^$]+)\$\$', r'\1', text)
     text = re.sub(r'\$([^$]+)\$', r'\1', text)
-    # Common LaTeX conversions
-    text = re.sub(r'\\frac\{([^}]+)\}\{([^}]+)\}', r'(\1)/(\2)', text)
-    text = re.sub(r'\\sqrt\{([^}]+)\}', r'sqrt(\1)', text)
-    text = re.sub(r'\\sqrt', r'sqrt', text)
-    text = re.sub(r'\^(\{[^}]+\})', lambda m: '^' + m.group(1).strip('{}'), text)
-    text = re.sub(r'_(\{[^}]+\})', lambda m: '_' + m.group(1).strip('{}'), text)
-    text = text.replace(r'\times', '×')
-    text = text.replace(r'\div', '÷')
-    text = text.replace(r'\pm', '±')
-    text = text.replace(r'\leq', '≤')
-    text = text.replace(r'\geq', '≥')
-    text = text.replace(r'\neq', '≠')
-    text = text.replace(r'\pi', 'π')
-    text = text.replace(r'\theta', 'θ')
-    text = text.replace(r'\alpha', 'α')
-    text = text.replace(r'\beta', 'β')
-    text = text.replace(r'\infty', '∞')
-    text = text.replace(r'\sin', 'sin')
-    text = text.replace(r'\cos', 'cos')
-    text = text.replace(r'\tan', 'tan')
-    text = text.replace(r'\log', 'log')
-    text = text.replace(r'\ln', 'ln')
-    text = text.replace(r'\left(', '(')
-    text = text.replace(r'\right)', ')')
-    text = text.replace(r'\left[', '[')
-    text = text.replace(r'\right]', ']')
-    text = text.replace(r'\{', '{')
-    text = text.replace(r'\}', '}')
-    text = re.sub(r'\\[a-zA-Z]+', '', text)  # Remove any remaining LaTeX commands
+    # Remove remaining curly braces
+    text = re.sub(r'\{([^{}]*)\}', r'\1', text)
+    text = re.sub(r'[{}]', '', text)
+    # Remove any remaining LaTeX commands
+    text = re.sub(r'\\[a-zA-Z]+\*?', '', text)
+    # Clean whitespace
+    text = re.sub(r'  +', ' ', text)
     return text.strip()
+
 
 # -----------------------------
 # PDF GENERATOR
