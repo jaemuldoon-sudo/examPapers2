@@ -212,7 +212,7 @@ def generate_worksheet(topic, subtopics, difficulty):
 
     system_prompt = (
         "You are a Leaving Cert Higher Level Maths tutor. "
-        "Generate exactly 15 unique exam‑style questions that match REAL Leaving Cert exam style. "
+        "Generate exactly 6 unique exam‑style questions that match REAL Leaving Cert exam style. "
         f"Difficulty level: {difficulty}. "
         f"Focus ONLY on these subtopics: {chosen}. "
         "Use LaTeX formatting for ALL mathematical expressions. "
@@ -230,7 +230,7 @@ def generate_worksheet(topic, subtopics, difficulty):
     user_prompt = (
         f"Create a {difficulty} worksheet on {topic}. "
         f"Subtopics: {chosen}. "
-        "Generate 10 NEW questions that match the LC exam style shown in the examples. "
+        "Generate 6 NEW questions that match the LC exam style shown in the examples. "
         "Ensure ALL maths is in LaTeX wrapped in $ ... $."
     )
 
