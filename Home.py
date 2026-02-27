@@ -146,6 +146,13 @@ SUBTOPICS = {
 }
 
 # -----------------------------
+# LUCKY DIP HELPER
+# -----------------------------
+def get_subtopics(topic):
+    """Return subtopics for a topic with Lucky Dip always at the top."""
+    return ["🎲 Lucky Dip"] + SUBTOPICS.get(topic, [])
+
+# -----------------------------
 # EXAM INDEX HELPERS
 # -----------------------------
 def find_template_questions(topic, difficulty=None):
@@ -203,15 +210,8 @@ def call_claude(system_prompt, user_prompt):
 # ENHANCED WORKSHEET GENERATORS
 # -----------------------------
 def generate_worksheet(topic, subtopics, difficulty):
-
-    # Handle Lucky Dip — swap out for all real subtopics
-    if "🎲 Lucky Dip" in subtopics:
-        chosen = ", ".join(SUBTOPICS.get(topic, []))
-        lucky_note = "Spread questions across ALL subtopics of this topic. "
-    else:
-        chosen = ", ".join(subtopics)
-        lucky_note = ""
-
+    chosen = ", ".join(subtopics)
+    
     # Get template questions from exam index
     templates = find_template_questions(topic, difficulty)
     template_context = format_template_for_prompt(templates)
@@ -227,14 +227,14 @@ def generate_worksheet(topic, subtopics, difficulty):
         "Never output plain text maths such as x^2, 1/6, sqrt(x), etc. "
         "Every mathematical expression must be inside $ ... $. "
         "Return the questions as a numbered list, one per line, no solutions. "
-        "\nIMPORTANT: The examples below are from REAL LC papers. "
+        "\n"
+        "IMPORTANT: The examples below are from REAL LC papers. "
         "Study their style, structure, and difficulty level, then create NEW questions inspired by this format."
         f"{template_context}"
     )
 
     user_prompt = (
         f"Create a {difficulty} worksheet on {topic}. "
-        f"{lucky_note}"
         f"Subtopics: {chosen}. "
         "Generate 10 NEW questions that match the LC exam style shown in the examples. "
         "Ensure ALL maths is in LaTeX wrapped in $ ... $."
@@ -523,7 +523,7 @@ with main_tab1:
     st.markdown("### Choose Subtopics")
     subtopics = st.multiselect(
         "",
-        SUBTOPICS.get(topic, []),
+        get_subtopics(topic),
         placeholder="Pick 1–5 subtopics",
         key="gen_subtopics"
     )
