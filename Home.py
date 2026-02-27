@@ -573,27 +573,30 @@ with main_tab1:
                 answers=answers
             )
 
-        st.success("✅ PDFs ready to download!")
-        col_q, col_a = st.columns(2)
-        with col_q:
-            st.download_button(
-                label="⬇️ Download Questions PDF",
-                data=questions_pdf,
-                file_name=f"LC_Maths_{topic}_{difficulty}_Questions.pdf",
-                mime="application/pdf",
-                use_container_width=True
-            )
-        with col_a:
-            st.download_button(
-                label="⬇️ Download Answers PDF",
-                data=answers_pdf,
-                file_name=f"LC_Maths_{topic}_{difficulty}_Answers.pdf",
-                mime="application/pdf",
-                use_container_width=True
-            )
-
-        # Reset flag
+        st.session_state.questions_pdf = questions_pdf
+        st.session_state.answers_pdf = answers_pdf
         st.session_state.generate_pdf = False
+
+        # Show download buttons from session state (persists across rerenders)
+        if st.session_state.get("questions_pdf") and st.session_state.get("answers_pdf"):
+            st.success("✅ PDFs ready to download!")
+            col_q, col_a = st.columns(2)
+            with col_q:
+                st.download_button(
+                    label="⬇️ Download Questions PDF",
+                    data=st.session_state.questions_pdf,
+                    file_name=f"LC_Maths_{topic}_{st.session_state.difficulty}_Questions.pdf",
+                    mime="application/pdf",
+                    use_container_width=True
+                )
+            with col_a:
+                st.download_button(
+                    label="⬇️ Download Answers PDF",
+                    data=st.session_state.answers_pdf,
+                    file_name=f"LC_Maths_{topic}_{st.session_state.difficulty}_Answers.pdf",
+                    mime="application/pdf",
+                    use_container_width=True
+                )
 
     st.markdown("---")
 
