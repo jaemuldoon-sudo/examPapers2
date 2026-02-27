@@ -304,39 +304,62 @@ def generate_similar_question(question, topic, difficulty):
 
 
 def generate_exam_style_worksheet(topic, subtopics):
-    chosen = ", ".join(subtopics)
-    
+
+    # Handle Lucky Dip — use all subtopics
+    if "🎲 Lucky Dip" in subtopics:
+        all_subtopics = [s for s in SUBTOPICS.get(topic, []) if s != "🎲 Lucky Dip"]
+        chosen = ", ".join(all_subtopics)
+        lucky_dip = True
+    else:
+        chosen = ", ".join(subtopics)
+        lucky_dip = False
+
     # Get exam templates
     templates = find_template_questions(topic)
     template_context = format_template_for_prompt(templates)
 
     system_prompt = (
-        "You are a Leaving Cert Higher Level Maths examiner. "
-        "Generate questions that EXACTLY match the style, structure, tone, and difficulty "
-        "of REAL LC Higher Level exam papers (see examples below). "
-        "Base your style on typical LC question formats, multi‑part structure, "
-        "mark‑style progression, and the level of mathematical rigor expected. "
-        "You may include multi‑part questions (a), (b), (c). "
-        "You may include diagrams described in words. "
-        "Do NOT quote or reproduce any past exam paper. "
-        "Only create new, original questions inspired by the LC style shown in examples. "
-        "Use LaTeX formatting for ALL mathematical expressions, wrapped in $ ... $. "
-        "Use ONLY inline LaTeX with single dollar signs: $ ... $. "
-        "Never use $$ ... $$ under any circumstances. "
-        "Never output plain text maths such as x^2, 1/6, sqrt(x), etc. "
-        "Every mathematical expression must be inside $ ... $. "
-        "Return exactly 3 exam‑style questions, each possibly multi‑part, no solutions."
+        "You are a Leaving Certificate Higher Level Maths examiner. "
+        "Generate NEW, original questions that EXACTLY match the style, structure, tone, and difficulty "
+        "of REAL Leaving Certificate Higher Level exam papers. "
+        "\n\nFollow these rules strictly:"
+        "\n- Generate EXACTLY 3 questions, each with multiple parts (a), (b), (c) — just like a real LC paper"
+        "\n- Each question should build in difficulty across its parts, e.g. part (a) accessible, part (c) challenging"
+        "\n- Include realistic LC‑style contexts (e.g. real-world scenarios, diagrams described in words)"
+        "\n- Include marks for each part, e.g. '(a) [5 marks]', '(b) [10 marks]'"
+        "\n- Questions should require multi-step mathematical reasoning"
+        "\n- Do NOT include solutions or worked answers"
+        "\n- Do NOT copy, quote or paraphrase any real past exam paper"
+        "\n- Separate each question with a blank line"
+        + (
+            "\n- This is a Lucky Dip — spread the 3 questions across different subtopics"
+            if lucky_dip else ""
+        ) +
+        "\n\nLaTeX rules (strictly enforced):"
+        "\n- Use ONLY inline LaTeX with single dollar signs: $ ... $"
+        "\n- Never use $$ ... $$ under any circumstances"
+        "\n- Never write plain text maths like x^2, 1/6, sqrt(x)"
+        "\n- Every mathematical expression must be inside $ ... $"
+        "\n- Use $\\frac{a}{b}$ for fractions, $x^{2}$ for powers, $\\sqrt{x}$ for roots"
         f"{template_context}"
     )
 
     user_prompt = (
         f"Topic: {topic}\n"
-        f"Subtopics: {chosen}\n"
-        "Generate 3 NEW exam‑style questions matching the LC format shown in examples."
+        f"Subtopics: {chosen}\n\n"
+        + (
+            "Lucky Dip — spread the 3 questions across different subtopics.\n\n"
+            if lucky_dip else ""
+        ) +
+        "Generate exactly 3 Leaving Certificate Higher Level exam‑style questions. "
+        "Each must have multiple parts (a), (b), (c) with marks shown. "
+        "Use $ ... $ for all maths. Separate questions with a blank line."
     )
 
     text = call_claude(system_prompt, user_prompt)
-    return [q.strip() for q in text.split("\n") if q.strip()]
+    # Split on blank lines to keep multi-part questions together
+    questions = [q.strip() for q in text.split("\n\n") if q.strip()]
+    return questions[:3]
 
 
 def generate_examPaper(topic, subtopics):
