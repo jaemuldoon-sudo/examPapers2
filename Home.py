@@ -3,6 +3,7 @@ import os
 import json
 import io
 import re
+import zipfile
 from datetime import date
 from anthropic import Anthropic
 from reportlab.lib.pagesizes import A4
@@ -270,6 +271,18 @@ def generate_pdf(title, topic, subtopics, difficulty, questions, include_answers
     buffer.seek(0)
     return buffer.getvalue()
 
+
+# -----------------------------
+# ZIP GENERATOR
+# -----------------------------
+def generate_zip(questions_pdf, answers_pdf, topic, difficulty):
+    """Bundle both PDFs into a single zip file and return as bytes."""
+    zip_buffer = io.BytesIO()
+    with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zf:
+        zf.writestr(f"LC_Maths_{topic}_{difficulty}_Questions.pdf", questions_pdf)
+        zf.writestr(f"LC_Maths_{topic}_{difficulty}_Answers.pdf", answers_pdf)
+    zip_buffer.seek(0)
+    return zip_buffer.getvalue()
 
 # -----------------------------
 # EXAM INDEX HELPERS
@@ -573,30 +586,19 @@ with main_tab1:
                 answers=answers
             )
 
-        st.session_state.questions_pdf = questions_pdf
-        st.session_state.answers_pdf = answers_pdf
-        st.session_state.generate_pdf = False
+            zip_file = generate_zip(questions_pdf, answers_pdf, topic, difficulty)
+            st.session_state.worksheet_zip = zip_file
+            st.session_state.generate_pdf = False
 
-        # Show download buttons from session state (persists across rerenders)
-        if st.session_state.get("questions_pdf") and st.session_state.get("answers_pdf"):
-            st.success("✅ PDFs ready to download!")
-            col_q, col_a = st.columns(2)
-            with col_q:
-                st.download_button(
-                    label="⬇️ Download Questions PDF",
-                    data=st.session_state.questions_pdf,
-                    file_name=f"LC_Maths_{topic}_{st.session_state.difficulty}_Questions.pdf",
-                    mime="application/pdf",
-                    use_container_width=True
-                )
-            with col_a:
-                st.download_button(
-                    label="⬇️ Download Answers PDF",
-                    data=st.session_state.answers_pdf,
-                    file_name=f"LC_Maths_{topic}_{st.session_state.difficulty}_Answers.pdf",
-                    mime="application/pdf",
-                    use_container_width=True
-                )
+    if st.session_state.get("worksheet_zip"):
+        st.success("✅ Worksheet ready — contains Questions PDF + Answers PDF!")
+        st.download_button(
+            label="⬇️ Download Worksheet (Questions + Answers)",
+            data=st.session_state.worksheet_zip,
+            file_name=f"LC_Maths_{topic}_{st.session_state.difficulty}_Worksheet.zip",
+            mime="application/zip",
+            use_container_width=True
+        )
 
     st.markdown("---")
 
@@ -655,39 +657,25 @@ with main_tab1:
                 answers = generate_all_answers(questions, topic, difficulty)
                 questions_pdf = generate_pdf(
                     title="Worksheet — Questions",
-                    topic=topic,
-                    subtopics=subtopics,
-                    difficulty=difficulty,
-                    questions=questions,
-                    include_answers=False
+                    topic=topic, subtopics=subtopics, difficulty=difficulty,
+                    questions=questions, include_answers=False
                 )
                 answers_pdf = generate_pdf(
                     title="Worksheet — Worked Answers",
-                    topic=topic,
-                    subtopics=subtopics,
-                    difficulty=difficulty,
-                    questions=questions,
-                    include_answers=True,
-                    answers=answers
+                    topic=topic, subtopics=subtopics, difficulty=difficulty,
+                    questions=questions, include_answers=True, answers=answers
                 )
-            st.success("✅ PDFs ready!")
-            col_q, col_a = st.columns(2)
-            with col_q:
-                st.download_button(
-                    label="⬇️ Download Questions PDF",
-                    data=questions_pdf,
-                    file_name=f"LC_Maths_{topic}_{difficulty}_Questions.pdf",
-                    mime="application/pdf",
-                    use_container_width=True
-                )
-            with col_a:
-                st.download_button(
-                    label="⬇️ Download Answers PDF",
-                    data=answers_pdf,
-                    file_name=f"LC_Maths_{topic}_{difficulty}_Answers.pdf",
-                    mime="application/pdf",
-                    use_container_width=True
-                )
+                st.session_state.screen_zip = generate_zip(questions_pdf, answers_pdf, topic, difficulty)
+
+        if st.session_state.get("screen_zip"):
+            st.success("✅ Worksheet ready — contains Questions PDF + Answers PDF!")
+            st.download_button(
+                label="⬇️ Download Worksheet (Questions + Answers)",
+                data=st.session_state.screen_zip,
+                file_name=f"LC_Maths_{topic}_{difficulty}_Worksheet.zip",
+                mime="application/zip",
+                use_container_width=True
+            )
     else:
         st.info("Choose a topic, pick subtopics, and select mode to begin.")
 
