@@ -67,7 +67,8 @@ SUBTOPICS = {
         "Permutations and combinations",
         "Binomial distribution",
         "Bernoulli Trials",
-        "Normal Distribution"
+        "Normal Distribution",
+        "Lucky Dip"
     ],
     "Trigonometry": [
         "Trigonometric identities",
