@@ -534,7 +534,7 @@ with main_tab1:
     subtopics = st.multiselect(
         "",
         get_subtopics(topic),
-        placeholder="Pick 1–5 subtopics",
+        placeholder="Pick Subtopics",
         key="gen_subtopics"
     )
 
