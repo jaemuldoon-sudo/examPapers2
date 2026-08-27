@@ -1,0 +1,670 @@
+{
+  "indexed_at": "2025-06-09T09:30:00.000Z",
+  "total_papers": 1,
+  "total_questions": 26,
+  "topics": [
+    "Binomial Distribution",
+    "Circle Geometry",
+    "Combinatorics",
+    "Confidence Intervals",
+    "Congruent Triangles",
+    "Coordinate Geometry of the Circle",
+    "Coordinate Geometry of the Line",
+    "Enlargements",
+    "Expected Value",
+    "Geometry Proofs",
+    "Hypothesis Testing",
+    "Mensuration",
+    "Normal Distribution",
+    "Percentage Error",
+    "Probability",
+    "Pythagoras Theorem",
+    "Sine Rule",
+    "Cosine Rule",
+    "Statistics",
+    "Stratified Sampling",
+    "Trigonometric Equations",
+    "Trigonometric Functions",
+    "Venn Diagrams",
+    "3D Geometry"
+  ],
+  "questions": [
+    {
+      "questionNumber": "1(a)",
+      "topics": ["Coordinate Geometry of the Line", "Substitution"],
+      "difficulty": "Easy",
+      "concepts": ["Substituting a point into a line equation", "Solving linear equations"],
+      "description": "Find the value of p given that (p, 5) lies on the line 3x − 2y + 28 = 0",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "1(b)",
+      "topics": ["Coordinate Geometry of the Line", "Trigonometry"],
+      "difficulty": "Medium",
+      "concepts": ["Slope from equation", "Angle between two lines formula"],
+      "description": "Find the acute angle between lines l: y = −(1/3)x + 11 and h: 2x − 5y + 10 = 0, correct to the nearest degree",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "1(c)",
+      "topics": ["Coordinate Geometry of the Line", "Mensuration"],
+      "difficulty": "Hard",
+      "concepts": ["Intercept form of a line", "Area of a triangle", "Two solutions"],
+      "description": "Find equations of two lines with slope −2/3 that enclose a triangle of area 12 sq units with the coordinate axes",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "2(a)(i)",
+      "topics": ["Coordinate Geometry of the Circle"],
+      "difficulty": "Easy",
+      "concepts": ["Standard form of a circle", "Reading centre and radius"],
+      "description": "Write down the centre and radius of circle s: (x − 4)² + (y + 2)² = 45",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "2(a)(ii)",
+      "topics": ["Coordinate Geometry of the Circle", "Coordinate Geometry of the Line"],
+      "difficulty": "Medium",
+      "concepts": ["Tangent to a circle", "Radius perpendicular to tangent", "Equation of a line"],
+      "description": "Find the equation of the tangent to circle s at the point (−2, −5), in the form y = mx + c",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "2(b)",
+      "topics": ["Coordinate Geometry of the Circle"],
+      "difficulty": "Hard",
+      "concepts": ["General form of a circle", "Tangent condition", "Distance from centre equals radius"],
+      "description": "Find the two possible values of k such that y = k is a tangent to x² + y² + 28x − 46y + k = 0",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "3(a)(i)",
+      "topics": ["Probability", "Venn Diagrams"],
+      "difficulty": "Easy",
+      "concepts": ["Reading Venn diagrams", "Basic probability"],
+      "description": "Show that P(A) = 1/4 using values from a three-set Venn diagram of 240 people",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "3(a)(ii)",
+      "topics": ["Probability", "Venn Diagrams"],
+      "difficulty": "Medium",
+      "concepts": ["Addition rule for probability", "Verification"],
+      "description": "Verify the addition rule P(A ∪ C) = P(A) + P(C) − P(A ∩ C) using Venn diagram values",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "3(a)(iii)",
+      "topics": ["Probability", "Independence"],
+      "difficulty": "Medium",
+      "concepts": ["Independent events", "P(A∩B) = P(A)·P(B) test"],
+      "description": "Determine whether events A and B are independent using calculations from the Venn diagram",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "3(b)",
+      "topics": ["Probability", "Combinatorics"],
+      "difficulty": "Hard",
+      "concepts": ["Probability without replacement", "Selecting 2 people", "Simplifying fractions"],
+      "description": "Find the probability that one of two randomly chosen people visited all three countries and the other visited none, as a simplified fraction",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "4(a)(i)",
+      "topics": ["Statistics"],
+      "difficulty": "Easy",
+      "concepts": ["Median of an even data set", "Finding unknown value"],
+      "description": "Find the value of x in a list of 12 ages given that the median is 17.5",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "4(a)(ii)",
+      "topics": ["Statistics"],
+      "difficulty": "Easy",
+      "concepts": ["Quartiles", "Interquartile range"],
+      "description": "Find the interquartile range of 12 ages given Q1 = 13",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "4(b)",
+      "topics": ["Statistics"],
+      "difficulty": "Medium",
+      "concepts": ["Effect of changing a data value on mean and median", "Conceptual understanding"],
+      "description": "Determine whether increasing the largest value in a list of 10 numbers changes the mean, median, or both, with full justification",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "4(c)",
+      "topics": ["Statistics"],
+      "difficulty": "Medium",
+      "concepts": ["Grouped frequency tables", "Mid-interval values", "Mean from grouped data"],
+      "description": "Find k in a grouped frequency table given that the mean age is 40.4, using mid-interval values",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "5(a)",
+      "topics": ["Geometry Proofs", "Congruent Triangles"],
+      "difficulty": "Hard",
+      "concepts": ["ASA / AAS congruence", "Parallel lines and alternate angles", "Midpoint theorem"],
+      "description": "Prove triangles ACD and BCE are congruent given C is midpoint of AB and AD is parallel to EB",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "5(b)(i)",
+      "topics": ["Enlargements"],
+      "difficulty": "Easy",
+      "concepts": ["Scale factor of enlargement", "Ratio of distances from centre"],
+      "description": "Show that the scale factor of enlargement is 1.5 given |XQ| = 8 cm and |QQ'| = 4 cm",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "5(b)(ii)",
+      "topics": ["Enlargements", "Mensuration"],
+      "difficulty": "Hard",
+      "concepts": ["Area scale factor", "Ratio of areas of similar figures", "Overlapping regions"],
+      "description": "Find the area of shaded region P'QRY given area of PQRS = 20 cm², scale factor 1.5, and |XP| = 3 cm",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "6(a)",
+      "topics": ["Trigonometric Equations"],
+      "difficulty": "Medium",
+      "concepts": ["General solutions of sin", "Extended domain −360° to 720°"],
+      "description": "Find all six solutions to sin A = 1/2 for −360° ≤ A ≤ 720°",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "6(b)",
+      "topics": ["Trigonometric Functions"],
+      "difficulty": "Medium",
+      "concepts": ["Period of transformed trig functions", "Absolute value transformation", "Range of functions"],
+      "description": "Write down the period and range of f(x) = |4 sin x| − 1",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "6(c)",
+      "topics": ["Cosine Rule", "Trigonometry"],
+      "difficulty": "Hard",
+      "concepts": ["Cosine rule", "Finding an angle", "Exact values of tan", "Surd form"],
+      "description": "Use the Cosine Rule to find tan∠CBA in triangle ABC with sides 2, 3, 4 — answer in form √n/m, without a calculator",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "7(a)(i)",
+      "topics": ["Mensuration"],
+      "difficulty": "Easy",
+      "concepts": ["Measurement from scaled diagram", "Reading lengths to nearest cm"],
+      "description": "Measure lengths r, d, and h on a scaled diagram of a submarine to the nearest cm",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "7(a)(ii)",
+      "topics": ["Mensuration"],
+      "difficulty": "Easy",
+      "concepts": ["Scale factor", "Converting diagram lengths to actual lengths"],
+      "description": "Use scale from diagram to find actual lengths of r, d, and h given total actual length = 90 m",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "7(b)",
+      "topics": ["Mensuration"],
+      "difficulty": "Hard",
+      "concepts": ["Volume of hemisphere", "Volume of cylinder", "Volume of cone", "Solving cubic equations"],
+      "description": "Find total length of a submarine (hemisphere + cylinder 7x + cone 4x, all radius x) given volume = 6738 m³",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "7(c)(i)",
+      "topics": ["Coordinate Geometry of the Circle"],
+      "difficulty": "Easy",
+      "concepts": ["Equation of a circle from centre and radius"],
+      "description": "Write down the equation of circle s with centre B(20, 0) and radius √178",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "7(c)(ii)",
+      "topics": ["Coordinate Geometry of the Circle"],
+      "difficulty": "Easy",
+      "concepts": ["Verifying a point lies on a circle", "Substitution"],
+      "description": "Verify that the point (7, 3) lies on circle s",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "7(c)(iii)",
+      "topics": ["Coordinate Geometry of the Circle", "Mensuration"],
+      "difficulty": "Medium",
+      "concepts": ["Area of a triangle from coordinates", "Intersection points of circles"],
+      "description": "Find the area of triangle ACD using intersection points C(7,3) and D(7,−3) of circles k and s",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "7(c)(iv)",
+      "topics": ["Coordinate Geometry of the Circle", "Trigonometry"],
+      "difficulty": "Medium",
+      "concepts": ["Angle at centre from chord", "Trigonometric ratios"],
+      "description": "Find the size of acute angle ∠CAD, correct to the nearest degree",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "7(c)(v)",
+      "topics": ["Circle Geometry", "Mensuration"],
+      "difficulty": "Hard",
+      "concepts": ["Area of circular segment", "Area of sector minus triangle", "Area of intersection of two circles"],
+      "description": "Find the area of region R inside both circles k and s using sector area 23.4837 km² and triangle ACD area 21 km²",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "8(a)(i)",
+      "topics": ["3D Geometry", "Pythagoras Theorem"],
+      "difficulty": "Medium",
+      "concepts": ["Diagonals of a square", "Pythagoras in 3D", "Surd form"],
+      "description": "Show |OB| = 3√2 m for a square-based pyramid with side 6 m, then find vertical height |OP| in surd form",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "8(a)(ii)",
+      "topics": ["3D Geometry", "Sine Rule", "Mensuration"],
+      "difficulty": "Medium",
+      "concepts": ["Area of triangle using ½ab sin C", "Congruent faces", "Total surface area"],
+      "description": "Find total area of four triangular faces of pyramid given |AP| = |BP| = 11 m and ∠PAB = 74.2°",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "8(a)(iii)",
+      "topics": ["3D Geometry", "Geometry Proofs"],
+      "difficulty": "Hard",
+      "concepts": ["Net of a pyramid", "Geometric construction", "Scale drawing"],
+      "description": "Construct the remaining faces of the net of a square-based pyramid on a given partial scaled diagram",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "8(b)",
+      "topics": ["Trigonometry", "Percentage Error"],
+      "difficulty": "Medium",
+      "concepts": ["Angle of elevation", "Inverse trigonometric functions", "Percentage error formula"],
+      "description": "Find the percentage error in Ally's measurement of ∠CAB as 52° given |AB| = 15 m and |BC| = 17.5 m",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "8(c)(i)",
+      "topics": ["Sine Rule", "Trigonometry"],
+      "difficulty": "Hard",
+      "concepts": ["Sine rule in non-right triangles", "Angles of elevation", "Derived triangle"],
+      "description": "Use the Sine Rule to show x = 25.5 m from two angles of elevation (22° and 35°) measured 10 m apart",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "8(c)(ii)",
+      "topics": ["Trigonometry", "Mensuration"],
+      "difficulty": "Medium",
+      "concepts": ["Finding height from angle of elevation", "Right-angled trigonometry"],
+      "description": "Find the total height h of a round tower using x = 25.5 m and angle of elevation 35°, measured from height 1.25 m",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "9(a)(i)",
+      "topics": ["Probability"],
+      "difficulty": "Easy",
+      "concepts": ["Tree diagrams", "Conditional probability branches"],
+      "description": "Complete the branch proportions on a tree diagram for a diabetes test (6.7% prevalence, 99% true positive, 7.8% false positive)",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "9(a)(ii)",
+      "topics": ["Probability"],
+      "difficulty": "Easy",
+      "concepts": ["Multiplying along branches", "Four outcome probabilities"],
+      "description": "Calculate all four outcome probabilities from the diabetes test tree diagram, correct to 4 decimal places",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "9(a)(iii)",
+      "topics": ["Probability"],
+      "difficulty": "Medium",
+      "concepts": ["Total probability", "Summing across branches"],
+      "description": "Find the probability that a randomly picked person tests positive for diabetes",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "9(a)(iv)",
+      "topics": ["Probability"],
+      "difficulty": "Hard",
+      "concepts": ["Bayes' theorem", "Conditional probability given positive test"],
+      "description": "Given a positive test result, find the probability the person actually has diabetes",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "9(b)",
+      "topics": ["Binomial Distribution"],
+      "difficulty": "Hard",
+      "concepts": ["Binomial probability", "P(X ≥ 2)", "Complement rule"],
+      "description": "Find the probability that 2 or more of 5 randomly selected people in Ireland have diabetes (p = 0.067)",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "9(c)(i)",
+      "topics": ["Combinatorics"],
+      "difficulty": "Medium",
+      "concepts": ["Combinations", "Choosing r from n"],
+      "description": "Find the number of ways to choose 10 people from 20 for group A",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "9(c)(ii)",
+      "topics": ["Combinatorics"],
+      "difficulty": "Hard",
+      "concepts": ["Permutations", "Pairing members of two groups", "Counting arrangements"],
+      "description": "Find the number of different sets of 10 pairs that can be made between group A and group B",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "9(d)",
+      "topics": ["Combinatorics"],
+      "difficulty": "Hard",
+      "concepts": ["Pairing with unequal groups", "Multinomial counting", "Scientific notation"],
+      "description": "Find the number of ways to pair 8 people (group X) each with 2 from 16 (group Y), answer in form a × 10ⁿ",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "10(a)(i)",
+      "topics": ["Normal Distribution"],
+      "difficulty": "Easy",
+      "concepts": ["Empirical rule", "68-95-99.7 rule", "Normal distribution diagram"],
+      "description": "Use the empirical rule to fill in four missing values on a normal distribution diagram (mean=400, SD=60, one value 520 given)",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "10(a)(ii)",
+      "topics": ["Normal Distribution"],
+      "difficulty": "Medium",
+      "concepts": ["Standardising to z-score", "Reading normal distribution tables", "Proportion above a value"],
+      "description": "Find the proportion of students scoring above 420 on a test with mean 400 and SD 60, correct to 2 decimal places",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "10(b)",
+      "topics": ["Confidence Intervals"],
+      "difficulty": "Medium",
+      "concepts": ["95% confidence interval", "Standard error", "Sample mean and standard deviation"],
+      "description": "Construct a 95% confidence interval for the population mean score of Country X (mean=387, SD=66.2, n=2161)",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "10(c)(i)",
+      "topics": ["Hypothesis Testing"],
+      "difficulty": "Medium",
+      "concepts": ["z-test statistic", "Sample mean vs population mean", "Standard error"],
+      "description": "Calculate the z-score test statistic for Country Y sample (mean=403, SD=70.6, n=2724) testing H₀: μ = 400",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "10(c)(ii)",
+      "topics": ["Hypothesis Testing"],
+      "difficulty": "Hard",
+      "concepts": ["p-value from z-score", "Two-tailed test", "Conclusion at 5% significance level"],
+      "description": "Find the p-value for the hypothesis test for Country Y and state the conclusion in context",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "10(d)",
+      "topics": ["Stratified Sampling"],
+      "difficulty": "Medium",
+      "concepts": ["Stratified random sampling", "Proportional allocation", "Relevance of stratification"],
+      "description": "Describe how to take a stratified random sample of 2520 students from Country Z by pet ownership, and explain why this stratification is probably not useful for maths scores",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    },
+    {
+      "questionNumber": "10(e)",
+      "topics": ["Expected Value", "Probability"],
+      "difficulty": "Hard",
+      "concepts": ["Expected value formula", "Optimisation under constraints", "Probability distributions"],
+      "description": "Find the largest possible expected value of a mark (0–3) given proportions 0.19, p, 2r, r summing to 1",
+      "paper": {
+        "year": 2025,
+        "level": "Higher Level",
+        "paper": "Paper 2",
+        "filename": "2025_Paper2_HL.pdf"
+      }
+    }
+  ]
+}

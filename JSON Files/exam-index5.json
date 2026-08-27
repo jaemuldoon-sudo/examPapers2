@@ -1,0 +1,369 @@
+{
+  "indexed_at": "2026-02-23T12:00:00.000Z",
+  "total_papers": 1,
+  "total_questions": 45,
+  "topics": [
+    "Circles",
+    "Combinatorics",
+    "Coordinate Geometry",
+    "Geometry",
+    "Mensuration",
+    "Probability",
+    "Statistics",
+    "Trigonometry"
+  ],
+  "questions": [
+    {
+      "questionNumber": "1(a)",
+      "topics": ["Probability"],
+      "difficulty": "Easy",
+      "concepts": ["Independent events", "Multiplication rule", "Spinner probability"],
+      "description": "Find the probability of getting €6, then €9, then €6 on a 12-sector spinner in three successive spins, correct to 4 decimal places",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "1(b)",
+      "topics": ["Probability"],
+      "difficulty": "Hard",
+      "concepts": ["Negative binomial distribution", "r-th success on n-th trial"],
+      "description": "Find the probability that Rohan gets €9 for the 3rd time on the 8th spin of the game, correct to 4 decimal places",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "1(c)",
+      "topics": ["Probability"],
+      "difficulty": "Hard",
+      "concepts": ["Sample space enumeration", "Total probability", "Combined outcomes"],
+      "description": "Find the probability that Olga gets less than €16 in total from playing the spinner game twice, correct to 4 decimal places",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "2(a)",
+      "topics": ["Trigonometry"],
+      "difficulty": "Hard",
+      "concepts": ["Compound angle proof", "Sin(A+B) formula", "Geometric proof"],
+      "description": "Prove that sin(A + B) = sinA cosB + cosA sinB",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "2(b)",
+      "topics": ["Trigonometry"],
+      "difficulty": "Medium",
+      "concepts": ["Compound angle formula", "Surd form", "Exact values", "sin 75°"],
+      "description": "Using the compound angle formula, find the exact value of sin 75° in surd form without a calculator",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "2(c)",
+      "topics": ["Trigonometry"],
+      "difficulty": "Hard",
+      "concepts": ["Trigonometric equations", "Double angle formula", "sin t = sin 2t", "Multiple solutions"],
+      "description": "Find all solutions of sin t = sin(2t) for 0° ≤ t ≤ 360°",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "3(a)",
+      "topics": ["Coordinate Geometry"],
+      "difficulty": "Medium",
+      "concepts": ["Area of triangle", "Coordinate geometry", "Shoelace formula"],
+      "description": "Find the area of the triangle with vertices (4, 6), (−3, −1), and (0, 11)",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "3(b)(i)",
+      "topics": ["Coordinate Geometry"],
+      "difficulty": "Easy",
+      "concepts": ["Midpoint formula", "Proof", "Algebraic manipulation"],
+      "description": "Show that the midpoint of [AB] where A(−1, k) and B(5, l) is (2, (k+l)/2)",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "3(b)(ii)",
+      "topics": ["Coordinate Geometry"],
+      "difficulty": "Medium",
+      "concepts": ["Perpendicular bisector", "Slope conditions", "Simultaneous equations"],
+      "description": "Given the perpendicular bisector of [AB] is 3x + 2y − 14 = 0, find the values of k and l",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "4(a)(i)",
+      "topics": ["Circles"],
+      "difficulty": "Easy",
+      "concepts": ["Circle equation", "Centre and radius", "Standard form"],
+      "description": "Write down the centre and radius of the circle (x − h)² + (y + 3)² = 12 in terms of h",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "4(a)(ii)",
+      "topics": ["Circles", "Coordinate Geometry"],
+      "difficulty": "Hard",
+      "concepts": ["Perpendicular distance from point to line", "Surd form", "Two possible values"],
+      "description": "Given the perpendicular distance from x − 4y + 7 = 0 to the centre of circle c is 5 units, find the two possible values of h in surd form",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "4(b)",
+      "topics": ["Circles"],
+      "difficulty": "Hard",
+      "concepts": ["Circle through three points", "Symmetry", "Radius condition", "Circle equation"],
+      "description": "Find the equation of circle s passing through (8,1), (a,3), and (a,−5) with radius √20 where 0 < a < 5",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "5(a)(i)",
+      "topics": ["Statistics"],
+      "difficulty": "Easy",
+      "concepts": ["Mean", "Standard deviation", "Small dataset"],
+      "description": "Find the mean and standard deviation of the number of red cubes per trial for 7 trials, correct to 1 decimal place",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "5(a)(ii)",
+      "topics": ["Statistics"],
+      "difficulty": "Medium",
+      "concepts": ["Correlation coefficient", "Bivariate data", "Pearson r"],
+      "description": "Calculate the correlation coefficient between the number of red cubes and green cubes per trial for 7 trials, correct to 3 decimal places",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "5(a)(iii)",
+      "topics": ["Statistics"],
+      "difficulty": "Medium",
+      "concepts": ["Correlation", "Negative correlation", "Conceptual reasoning"],
+      "description": "Explain why you would expect the correlation between number of red and green cubes to be negative over many trials",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "5(b)",
+      "topics": ["Combinatorics"],
+      "difficulty": "Medium",
+      "concepts": ["3D spatial reasoning", "Cuboid face counting", "Corner, edge, face, interior cubes"],
+      "description": "For a 5×3×4 cuboid made of unit cubes, find the number of small cubes with 3, 2, 1, and 0 faces on the outside",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "6(a)",
+      "topics": ["Geometry"],
+      "difficulty": "Easy",
+      "concepts": ["Vertically opposite angles", "Biconditional statement", "True or false justification"],
+      "description": "State and justify whether it is true that two angles are vertically opposite if and only if they are equal in size",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "6(b)(i)",
+      "topics": ["Geometry"],
+      "difficulty": "Hard",
+      "concepts": ["Congruent triangles", "Geometric proof", "Equal lengths"],
+      "description": "Prove that |FE| = |EH| in Diagram B using congruent triangles, giving a reason for each statement",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "6(b)(ii)",
+      "topics": ["Geometry", "Trigonometry"],
+      "difficulty": "Hard",
+      "concepts": ["Angle finding", "Rectangle geometry", "Trigonometric ratios"],
+      "description": "Using the result from 6(b)(i), find the size of angle θ to the nearest degree given rectangle ACEG with |AB|=20, |BC|=30, |AG|=90",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "7(a)",
+      "topics": ["Trigonometry", "Mensuration"],
+      "difficulty": "Easy",
+      "concepts": ["Gradient as percentage", "Pythagoras", "Right triangle"],
+      "description": "Find the gradient of road [AB] as a percentage given |BC| = 9m and |AB| = 70m, correct to nearest percent",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "7(b)",
+      "topics": ["Trigonometry"],
+      "difficulty": "Hard",
+      "concepts": ["Sine rule", "Angle of elevation", "3D measurement", "Multi-step trigonometry"],
+      "description": "Find the vertical height |OH| of a hill given two ground points R and P are 20m apart with measured angles of 87°, 88°, and 17°",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "7(c)",
+      "topics": ["Trigonometry"],
+      "difficulty": "Easy",
+      "concepts": ["Cosine function", "Amplitude", "Minimum and maximum values"],
+      "description": "Find the minimum value a and maximum value b of V(t) = 2 − 0.4cos(π/2 · t)",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "7(d)",
+      "topics": ["Trigonometry"],
+      "difficulty": "Medium",
+      "concepts": ["Derivative interpretation", "Rate of change", "Breathing model"],
+      "description": "Explain the connection between V'(t) and whether Olga is breathing in or breathing out",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "7(e)(i)",
+      "topics": ["Trigonometry"],
+      "difficulty": "Easy",
+      "concepts": ["Evaluating cosine function", "Substitution", "Lung volume model"],
+      "description": "Find the volume of air in Olga's lungs half a second after t = 0 using V(t) = 2 − 0.4cos(π/2 · t), correct to 3 decimal places",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "7(e)(ii)",
+      "topics": ["Trigonometry"],
+      "difficulty": "Medium",
+      "concepts": ["Derivative of cosine", "Rate of change", "Evaluating derivative"],
+      "description": "Find the rate at which the volume of air is increasing half a second after t = 0, correct to 3 decimal places",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "7(f)",
+      "topics": ["Trigonometry"],
+      "difficulty": "Hard",
+      "concepts": ["Modelling with trigonometry", "Amplitude and period", "Constructing cosine function"],
+      "description": "Write a formula E(t) = a + b·cos(ct) for lung volume during gentle exercise given max 3.6L, min 1.3L, and double the breathing rate",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "8(a)",
+      "topics": ["Statistics"],
+      "difficulty": "Easy",
+      "concepts": ["Normal distribution", "Standardisation", "z-score", "Probability from tables"],
+      "description": "Find the probability that a randomly selected Irish player has a score less than 3.5 given mean 3.87 and standard deviation 0.36",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "8(b)(i)",
+      "topics": ["Statistics"],
+      "difficulty": "Medium",
+      "concepts": ["Confidence interval", "95% CI", "Sample mean", "Standard error"],
+      "description": "Construct a 95% confidence interval for the mean score of Galway players using a sample of 64 with mean 3.74 and SD 0.36",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "8(b)(ii)",
+      "topics": ["Statistics"],
+      "difficulty": "Hard",
+      "concepts": ["Hypothesis testing", "Two-tailed test", "5% significance level", "z-test"],
+      "description": "Carry out a hypothesis test at 5% significance to test whether Galway players have a different mean score to Irish players overall",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "8(c)",
+      "topics": ["Statistics"],
+      "difficulty": "Hard",
+      "concepts": ["Confidence interval for proportion", "Margin of error", "Finding sample size n"],
+      "description": "Given a 95% CI of 26.5% ≤ p ≤ 43.5% for 35% of teenagers playing daily, work out the sample size n",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "8(d)(i)",
+      "topics": ["Probability"],
+      "difficulty": "Medium",
+      "concepts": ["Tree diagram", "Conditional probability", "Multi-day probability model"],
+      "description": "Complete the tree diagram for 360,000 players over 3 days given 80% win rate, 90% return if win, 25% return if lose",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "8(d)(ii)",
+      "topics": ["Probability"],
+      "difficulty": "Hard",
+      "concepts": ["Conditional probability", "Complementary events", "Multi-day tree diagram"],
+      "description": "Find the probability that a randomly selected player who played all three days lost on 1st June or 2nd June (or both)",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "9(a)(i)",
+      "topics": ["Mensuration"],
+      "difficulty": "Easy",
+      "concepts": ["Area of square", "Side length from area"],
+      "description": "Find the side length of a square tile with area 140 cm², correct to 1 decimal place",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "9(a)(ii)",
+      "topics": ["Mensuration", "Trigonometry"],
+      "difficulty": "Medium",
+      "concepts": ["Area of regular hexagon", "Equilateral triangles", "Side length from area"],
+      "description": "Find the side length x of a regular hexagonal tile with area 140 cm², correct to 1 decimal place",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "9(b)(i)",
+      "topics": ["Trigonometry"],
+      "difficulty": "Medium",
+      "concepts": ["Cosine rule", "Proving angle expression", "Inverse cosine"],
+      "description": "Given |AD|=8, |AE|=6, |ED|=4, show that α = cos⁻¹(7/8) where α = ∠DAE",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "9(b)(ii)",
+      "topics": ["Trigonometry", "Mensuration"],
+      "difficulty": "Hard",
+      "concepts": ["Area of quadrilateral", "Right angles", "Sine of angle", "Symmetry"],
+      "description": "Find the total area of quadrilateral ABCD given |∠ADC| = |∠ABC| = 90° and using the result from 9(b)(i), correct to 2 decimal places",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "9(c)(i)",
+      "topics": ["Circles", "Coordinate Geometry"],
+      "difficulty": "Medium",
+      "concepts": ["Unit circle", "Angle in standard position", "Coordinates on circle"],
+      "description": "Show that point Q has coordinates (−1/√2, 1/√2) given ∠QOP = 45° and O is the origin on the unit circle",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "9(c)(ii)",
+      "topics": ["Circles", "Coordinate Geometry"],
+      "difficulty": "Hard",
+      "concepts": ["Tangent to circle", "Centre of circle", "Intersection of tangents", "Surd form"],
+      "description": "Find the centre and radius of circle s in surd form, given its centre lies on the tangent to c at P and the tangent to c at Q",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "10(a)(i)",
+      "topics": ["Mensuration"],
+      "difficulty": "Medium",
+      "concepts": ["Similar triangles", "Cone geometry", "Slant height", "Proof"],
+      "description": "Show that |BE| = 40 cm for a conical basin with original cone radius 15 cm, basin slant height |CE| = 10 cm and base radius 12 cm",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "10(a)(ii)",
+      "topics": ["Mensuration"],
+      "difficulty": "Hard",
+      "concepts": ["Curved surface area", "Frustum", "Lateral surface area of cone", "Total surface area"],
+      "description": "Find the total internal surface area of the conical basin correct to 1 decimal place",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "10(a)(iii)",
+      "topics": ["Mensuration"],
+      "difficulty": "Hard",
+      "concepts": ["Net of frustum", "Sector", "Arc length", "Cone net construction"],
+      "description": "Draw a labelled net of the curved surface of the conical basin with sufficient measurements to construct it using ruler, compass and protractor",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "10(b)(i)",
+      "topics": ["Combinatorics"],
+      "difficulty": "Easy",
+      "concepts": ["Permutations", "4-digit PIN", "No repeated digits"],
+      "description": "Find how many 4-digit PIN codes are possible using exactly 4 different digits from 1 to 9",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "10(b)(ii)",
+      "topics": ["Combinatorics"],
+      "difficulty": "Medium",
+      "concepts": ["Permutations", "Counting with a fixed digit", "PIN codes containing digit 2"],
+      "description": "Find how many of the 4-digit PIN codes from 10(b)(i) contain the digit 2",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    },
+    {
+      "questionNumber": "10(b)(iii)",
+      "topics": ["Combinatorics"],
+      "difficulty": "Hard",
+      "concepts": ["Constrained counting", "Sum condition", "Systematic enumeration"],
+      "description": "Find how many of the PIN codes from 10(b)(i) have the sum of their first three digits equal to their fourth digit",
+      "paper": {"year": 2023, "level": "Higher Level", "paper": "Paper 2"}
+    }
+  ]
+}

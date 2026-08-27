@@ -1,0 +1,61 @@
+{
+  "indexed_at": "2026-03-24T12:00:00.000Z",
+  "total_papers": 1,
+  "total_questions": 4,
+  "topics": [
+    "Bernoulli Trials",
+    "Binomial Distribution",
+    "Probability",
+	"Algebra"
+  ],
+  "questions": [
+    {
+      "questionNumber": "1(a)",
+      "topics": ["Probability", "Bernoulli Trials", "Binomial Distribution"],
+      "difficulty": "Easy",
+      "concepts": ["Independent events", "Probability of failure", "Repeated trials"],
+      "description": "Find the probability that Anne misses all 6 calls given she answers each call with probability 3/4",
+      "paper": {"year": 2026, "level": "Higher Level", "paper": "Practice Paper 1"}
+    },
+    {
+      "questionNumber": "1(b)",
+      "topics": ["Probability", "Bernoulli Trials"],
+      "difficulty": "Easy",
+      "concepts": ["Independent events", "Fixed sequence of outcomes", "Multiplication rule"],
+      "description": "Find the probability that Anne misses the first two calls and answers the remaining four",
+      "paper": {"year": 2026, "level": "Higher Level", "paper": "Practice Paper 1"}
+    },
+    {
+      "questionNumber": "1(c)",
+      "topics": ["Probability", "Binomial Distribution", "Bernoulli Trials"],
+      "difficulty": "Medium",
+      "concepts": ["Binomial distribution", "Exactly k successes", "nCr"],
+      "description": "Find the probability that Anne answers exactly one of the 6 calls using the binomial distribution",
+      "paper": {"year": 2026, "level": "Higher Level", "paper": "Practice Paper 1"}
+    },
+    {
+      "questionNumber": "1(d)",
+      "topics": ["Probability", "Binomial Distribution", "Bernoulli Trials"],
+      "difficulty": "Hard",
+      "concepts": ["Binomial distribution", "At least k successes", "Complement rule"],
+      "description": "Find the probability that Anne answers at least two of the 6 calls using the complement rule",
+      "paper": {"year": 2026, "level": "Higher Level", "paper": "Practice Paper 1"}
+    },
+	{
+      "questionNumber": "2(a)",
+      "topics": ["Algebra", "Algebraic Fractions"],
+      "difficulty": "Medium",
+      "concepts": ["Common denominator", "Combining fractions", "Expanding brackets"],
+      "description": "Simplify x/(3+x) - 1/(x+2) by writing as a single fraction",
+      "paper": {"year": 2026, "level": "Higher Level", "paper": "Practice Paper 2"}
+    },
+    {
+      "questionNumber": "2(b)",
+      "topics": ["Algebra", "Algebraic Fractions"],
+      "difficulty": "Medium",
+      "concepts": ["Common denominator", "Multiplication rule", "Simplifying"],
+      "description": "Simplify 2/(x-1) + 3/(x+1) by writing as a single fraction",
+      "paper": {"year": 2026, "level": "Higher Level", "paper": "Practice Paper 2"}
+    }
+  ]
+}
