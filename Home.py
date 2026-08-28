@@ -2,9 +2,158 @@ import streamlit as st
 import os
 import json
 from anthropic import Anthropic
+import random
+from datetime import datetime, timezone, timedelta
+import requests
+from supabase import create_client
 
 #PAGE CONFIG (MUST BE FIRST ST COMMAND)
 st.set_page_config(page_title="Leaving Certificate Honours Maths", layout="centered")
+
+
+
+# ===========================================================================
+# LOGIN + PAYWALL GATE
+# Paste this block immediately AFTER st.set_page_config(...) and BEFORE the
+# rest of your app. Nothing below this block runs until the user is logged in
+# AND has paid. Works the same in all four apps (LCH/LCO/JCH/JCO).
+#
+# Required imports (add near the top of the file with your other imports):
+#     import random
+#     from datetime import datetime, timezone, timedelta
+#     import requests
+#     from supabase import create_client
+#
+# Required environment variables on this app's Railway service:
+#     SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_KEY,
+#     STRIPE_PAYMENT_LINK, ADMIN_EMAIL, ADMIN_NOTIFY_EMAIL,
+#     RESEND_API_KEY, ADMIN_CODE_FROM
+# ===========================================================================
+
+_SESSION_HOURS = 3
+
+_SUPABASE_URL = os.getenv("SUPABASE_URL")
+_SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY")
+_STRIPE_PAYMENT_LINK = os.getenv("STRIPE_PAYMENT_LINK")
+_ADMIN_EMAIL = (os.getenv("ADMIN_EMAIL") or "").strip().lower()
+_ADMIN_NOTIFY_EMAIL = os.getenv("ADMIN_NOTIFY_EMAIL")
+_RESEND_API_KEY = os.getenv("RESEND_API_KEY")
+_ADMIN_CODE_FROM = os.getenv("ADMIN_CODE_FROM", "noreply@aimaths.ie")
+
+_auth_supabase = create_client(_SUPABASE_URL, _SUPABASE_ANON_KEY)
+
+
+def _has_paid(email):
+    res = _auth_supabase.rpc("check_paid", {"user_email": email}).execute()
+    return bool(res.data)
+
+
+def _log_login(email):
+    _auth_supabase.rpc("record_login", {"user_email": email}).execute()
+
+
+def _auth_logout(message=None):
+    for k in ["email", "login_time", "code_sent", "pending_email",
+              "admin_unlocked", "admin_code", "admin_code_sent"]:
+        st.session_state.pop(k, None)
+    if message:
+        st.warning(message)
+
+
+def _send_admin_code(code):
+    try:
+        r = requests.post(
+            "https://api.resend.com/emails",
+            headers={"Authorization": f"Bearer {_RESEND_API_KEY}"},
+            json={
+                "from": f"aimaths.ie admin <{_ADMIN_CODE_FROM}>",
+                "to": [_ADMIN_NOTIFY_EMAIL],
+                "subject": "Your aimaths.ie admin unlock code",
+                "html": ("<p>Your admin unlock code is:</p>"
+                         f"<p style='font-size:28px;font-weight:bold;letter-spacing:4px;'>{code}</p>"
+                         "<p>If you didn't request this, someone is trying to open the admin panel.</p>"),
+            },
+            timeout=15,
+        )
+        return r.status_code in (200, 201)
+    except Exception:
+        return False
+
+
+st.session_state.setdefault("email", None)
+st.session_state.setdefault("code_sent", False)
+
+# session expiry
+if st.session_state.email is not None:
+    _lt = st.session_state.get("login_time")
+    if _lt is None or datetime.now(timezone.utc) - _lt > timedelta(hours=_SESSION_HOURS):
+        _auth_logout("Your session has expired. Please log in again.")
+        st.rerun()
+
+# LOGIN GATE
+if st.session_state.email is None:
+    st.title("Log in to aimaths.ie")
+    if not st.session_state.code_sent:
+        _email_input = st.text_input("Your email address")
+        if st.button("Send me a login code"):
+            if _email_input:
+                _clean = _email_input.strip().lower()
+                _auth_supabase.auth.sign_in_with_otp({"email": _clean})
+                st.session_state.pending_email = _clean
+                st.session_state.code_sent = True
+                st.rerun()
+            else:
+                st.error("Please enter your email.")
+    else:
+        st.info(f"We emailed a 6-digit code to {st.session_state.pending_email}")
+        _code = st.text_input("Enter the code")
+        if st.button("Verify"):
+            try:
+                _auth_supabase.auth.verify_otp({
+                    "email": st.session_state.pending_email,
+                    "token": _code.strip(),
+                    "type": "email",
+                })
+                st.session_state.email = st.session_state.pending_email
+                st.session_state.code_sent = False
+                st.session_state.login_time = datetime.now(timezone.utc)
+                _log_login(st.session_state.email)
+                st.rerun()
+            except Exception:
+                st.error("Invalid or expired code. Try again.")
+        if st.button("Use a different email"):
+            st.session_state.code_sent = False
+            st.rerun()
+    st.stop()
+
+# PAYWALL GATE
+if not _has_paid(st.session_state.email):
+    st.title("One-time access - EUR 50")
+    st.write("Get lifetime access to all of aimaths.ie (all four levels).")
+    _pay_url = f"{_STRIPE_PAYMENT_LINK}?prefilled_email={st.session_state.email}"
+    st.link_button("Pay EUR 50 to unlock", _pay_url)
+    st.caption("After paying, come back here and click refresh.")
+    if st.button("I've paid - refresh"):
+        st.rerun()
+    st.stop()
+
+# small logged-in bar
+_c1, _c2 = st.columns([4, 1])
+with _c2:
+    if st.button("Log out"):
+        _auth_logout()
+        st.rerun()
+# ===========================================================================
+# END GATE — your normal app runs below, only for logged-in + paid users
+# ===========================================================================
+
+
+
+
+
+
+
+
 
 #st.write("API Key exists:", "ANTHROPIC_API_KEY" in os.environ)
 #st.write("API Key value:", os.environ.get("ANTHROPIC_API_KEY", "NOT FOUND")[:20] + "...")
