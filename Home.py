@@ -32,7 +32,7 @@ st.set_page_config(page_title="Leaving Certificate Honours Maths", layout="cente
 
 _SESSION_HOURS = 3
 
-_SUPABASE_URL = os.getenv("SUPABASE_URLLL")
+_SUPABASE_URL = os.getenv("SUPABASE_URL")
 _SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY")
 _STRIPE_PAYMENT_LINK = os.getenv("STRIPE_PAYMENT_LINK")
 _ADMIN_EMAIL = (os.getenv("ADMIN_EMAIL") or "").strip().lower()
