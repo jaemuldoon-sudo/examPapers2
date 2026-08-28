@@ -15,19 +15,13 @@ Features:
 
 -------------------------------------------------------------------------------
 Environment variables (set on the Railway *Streamlit* service):
-    SUPABASE_URL           https://kvvdimmkbwudeftsgagc.supabase.co
-    SUPABASE_ANON_KEY      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2dmRpbW1rYnd1ZGVmdHNnYWdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyMTk3NjksImV4cCI6MjEwMjc5NTc2OX0.2VlgMJeILhxFX-AYU4XZqgDS-_VT_MCjfTCpmn8xnC8
-    SUPABASE_SERVICE_KEY   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2dmRpbW1rYnd1ZGVmdHNnYWdjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NzIxOTc2OSwiZXhwIjoyMTAyNzk1NzY5fQ.M1cuIY0s8nEER5mv1VRKHRnhPB_2qXeLhPK7ay_G2Lo
-
-
-
-
-    STRIPE_PAYMENT_LINK    https://buy.stripe.com/test_dRmeVdgag0Grfsi0qj3F602
-       
-    ADMIN_EMAIL            aimaths2026@gmail.com  (who may be admin)
-    ADMIN_NOTIFY_EMAIL     jaemuldoon@gmail.com
-      
-    ADMIN_CODE_FROM        noreply@aimaths.ie
+    SUPABASE_URL           
+    SUPABASE_ANON_KEY      
+    SUPABASE_SERVICE_KEY   
+    STRIPE_PAYMENT_LINK    
+    ADMIN_EMAIL            
+    ADMIN_NOTIFY_EMAIL     
+    ADMIN_CODE_FROM        
 
 The Stripe webhook that flags users as paid runs as a SEPARATE service
 (see webhook.py). This app only READS paid status.
@@ -175,7 +169,7 @@ if st.session_state.email is None:
 # PAYWALL GATE
 # ---------------------------------------------------------------------------
 if not has_paid(st.session_state.email):
-    st.title("One-time access - EUR 50")
+    st.title("One-time access - EUR 49")
     st.write("Get lifetime access to aimaths.ie.")
     pay_url = f"{STRIPE_PAYMENT_LINK}?prefilled_email={st.session_state.email}"
     st.link_button("Pay EUR 50 to unlock", pay_url)
