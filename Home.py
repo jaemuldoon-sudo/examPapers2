@@ -90,11 +90,58 @@ if st.session_state.email is not None:
         _auth_logout("Your session has expired. Please log in again.")
         st.rerun()
 
-# LOGIN GATE
+# ---------------------------------------------------------------------------
+# LOGIN GATE  (mobile-friendly, larger inputs & buttons)
+# Replaces the LOGIN GATE section of your gate block.
+# ---------------------------------------------------------------------------
 if st.session_state.email is None:
-    st.title("Log in to aimaths.ie")
+
+    # --- mobile-friendly styling for the login screen ---
+    st.markdown("""
+        <style>
+        /* bigger heading */
+        .login-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 1.2rem 0 0.4rem 0;
+        }
+        .login-sub {
+            font-size: 1.1rem;
+            text-align: center;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+        /* enlarge text inputs */
+        div[data-testid="stTextInput"] input {
+            font-size: 1.25rem !important;
+            padding: 0.9rem 1rem !important;
+            height: auto !important;
+        }
+        /* enlarge input labels */
+        div[data-testid="stTextInput"] label p {
+            font-size: 1.1rem !important;
+        }
+        /* enlarge buttons and make them full width & tappable */
+        div[data-testid="stButton"] button {
+            font-size: 1.2rem !important;
+            padding: 0.9rem 1rem !important;
+            width: 100% !important;
+            border-radius: 10px !important;
+        }
+        /* constrain width on desktop, full on mobile */
+        .block-container {
+            max-width: 480px;
+            padding-top: 1rem;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown('<div class="login-title">Log in to aimaths.ie</div>', unsafe_allow_html=True)
+
     if not st.session_state.code_sent:
-        _email_input = st.text_input("Your email address")
+        st.markdown('<div class="login-sub">Enter your email to get a login code</div>', unsafe_allow_html=True)
+        _email_input = st.text_input("Email address")
         if st.button("Send me a login code"):
             if _email_input:
                 _clean = _email_input.strip().lower()
@@ -105,8 +152,11 @@ if st.session_state.email is None:
             else:
                 st.error("Please enter your email.")
     else:
-        st.info(f"We emailed a 6-digit code to {st.session_state.pending_email}")
-        _code = st.text_input("Enter the code")
+        st.markdown(
+            f'<div class="login-sub">We emailed a 6-digit code to<br><b>{st.session_state.pending_email}</b></div>',
+            unsafe_allow_html=True,
+        )
+        _code = st.text_input("Enter the 6-digit code")
         if st.button("Verify"):
             try:
                 _auth_supabase.auth.verify_otp({
