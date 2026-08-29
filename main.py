@@ -3,7 +3,7 @@ aimaths.ie — Streamlit app
 -------------------------------------------------------------------------------
 Features:
   - Passwordless login via Supabase email OTP (6-digit code)
-  - One-time €50 paywall (checked via the check_paid RPC function)
+  - One-time €49 paywall (checked via the check_paid RPC function)
   - Login logging (via the record_login RPC function)
   - 3-hour session expiry
   - Two-factor admin dashboard:
@@ -172,7 +172,7 @@ if not has_paid(st.session_state.email):
     st.title("One-time access - EUR 49")
     st.write("Get lifetime access to aimaths.ie.")
     pay_url = f"{STRIPE_PAYMENT_LINK}?prefilled_email={st.session_state.email}"
-    st.link_button("Pay EUR 50 to unlock", pay_url)
+    st.link_button("Pay EUR 49 to unlock", pay_url)
     st.caption("After paying, come back here and click refresh.")
     if st.button("I've paid - refresh"):
         st.rerun()

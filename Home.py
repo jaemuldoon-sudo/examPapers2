@@ -128,10 +128,10 @@ if st.session_state.email is None:
 
 # PAYWALL GATE
 if not _has_paid(st.session_state.email):
-    st.title("One-time access - EUR 50")
+    st.title("One-time access - EUR 49")
     st.write("Get lifetime access to all of aimaths.ie (all four levels).")
     _pay_url = f"{_STRIPE_PAYMENT_LINK}?prefilled_email={st.session_state.email}"
-    st.link_button("Pay EUR 50 to unlock", _pay_url)
+    st.link_button("Pay EUR 49 to unlock", _pay_url)
     st.caption("After paying, come back here and click refresh.")
     if st.button("I've paid - refresh"):
         st.rerun()
