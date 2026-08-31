@@ -6,6 +6,7 @@ import random
 from datetime import datetime, timezone, timedelta
 import requests
 from supabase import create_client
+import re
 
 #PAGE CONFIG (MUST BE FIRST ST COMMAND)
 st.set_page_config(page_title="Leaving Certificate Honours Maths", layout="centered")
@@ -428,6 +429,78 @@ def resolve_subtopics(topic, subtopics):
         return SUBTOPICS.get(topic, [])
     return subtopics
 
+
+# ---------------------------------------------------------------------------
+# ROBUST QUESTION PARSER
+# Add this helper ONCE (put it near your other helpers, e.g. just above
+# generate_worksheet). Then use it to parse Claude's output instead of
+# splitting on every newline.
+# ---------------------------------------------------------------------------
+
+def parse_numbered_questions(text):
+    """
+    Turn Claude's raw output into a clean list of questions.
+
+    Handles:
+      - a title line (e.g. 'Probability Worksheet') -> skipped
+      - a difficulty/topic header line              -> skipped
+      - numbered questions '1. ...', '2) ...', 'Question 3: ...'
+      - multi-line questions (lines belonging to the same number are joined)
+      - blank lines
+    """
+    if not text:
+        return []
+
+    lines = text.split("\n")
+    questions = []
+    current = None
+
+    # a line that STARTS a new question: "1.", "1)", "Q1", "Question 1", etc.
+    start_re = re.compile(r'^\s*(?:question\s*)?(\d+)\s*[\.\):-]\s*(.*)', re.IGNORECASE)
+
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            continue
+
+        m = start_re.match(stripped)
+        if m:
+            # new numbered question begins
+            if current is not None:
+                questions.append(current.strip())
+            current = m.group(2).strip()
+        else:
+            # continuation of the current question (multi-line) — but only if
+            # we've already started one. Header lines BEFORE the first number
+            # are ignored.
+            if current is not None:
+                current += " " + stripped
+            # if current is None, this is a pre-question header line -> skip
+
+    if current is not None:
+        questions.append(current.strip())
+
+    # fallback: if nothing matched a number (Claude didn't number them),
+    # fall back to non-empty lines but drop an obvious title/header first
+    if not questions:
+        cleaned = [l.strip() for l in lines if l.strip()]
+        # drop lines that look like a title/header (contain 'worksheet',
+        # 'difficulty', or are all-caps topic lists)
+        cleaned = [
+            l for l in cleaned
+            if "worksheet" not in l.lower()
+            and "difficulty" not in l.lower()
+        ]
+        questions = cleaned
+
+    return questions
+
+
+
+
+
+
+
 # -----------------------------
 # ENHANCED WORKSHEET GENERATORS
 # -----------------------------
@@ -464,7 +537,7 @@ def generate_worksheet(topic, subtopics, difficulty):
     )
 
     text = call_claude(system_prompt, user_prompt)
-    return [q.strip() for q in text.split("\n") if q.strip()]
+    return parse_numbered_questions(text)
 
 
 def generate_balanced_worksheet(topic, subtopics):
@@ -491,7 +564,7 @@ def generate_balanced_worksheet(topic, subtopics):
     user_prompt = f"Topic: {topic}\nSubtopics: {chosen}\n\nCreate NEW questions matching LC exam style."
 
     text = call_claude(system_prompt, user_prompt)
-    return [q.strip() for q in text.split("\n") if q.strip()]
+    return parse_numbered_questions(text)
 
 
 def generate_answer(question, topic, difficulty):
@@ -568,7 +641,7 @@ def generate_exam_style_worksheet(topic, subtopics):
     )
 
     text = call_claude(system_prompt, user_prompt)
-    return [q.strip() for q in text.split("\n") if q.strip()]
+    return parse_numbered_questions(text)
 
 
 def generate_examPaper(topic, subtopics):
