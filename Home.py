@@ -1,4 +1,5 @@
 import streamlit as st
+import re
 import os
 import json
 from anthropic import Anthropic
@@ -6,7 +7,6 @@ import random
 from datetime import datetime, timezone, timedelta
 import requests
 from supabase import create_client
-import re
 
 #PAGE CONFIG (MUST BE FIRST ST COMMAND)
 st.set_page_config(page_title="Leaving Certificate Honours Maths", layout="centered")
@@ -146,10 +146,13 @@ if st.session_state.email is None:
         if st.button("Send me a login code"):
             if _email_input:
                 _clean = _email_input.strip().lower()
-                _auth_supabase.auth.sign_in_with_otp({"email": _clean})
-                st.session_state.pending_email = _clean
-                st.session_state.code_sent = True
-                st.rerun()
+                try:
+                    _auth_supabase.auth.sign_in_with_otp({"email": _clean})
+                    st.session_state.pending_email = _clean
+                    st.session_state.code_sent = True
+                    st.rerun()
+                except Exception:
+                    st.error("Sorry, something went wrong sending your code. Please try again in a moment.")
             else:
                 st.error("Please enter your email.")
     else:
@@ -429,81 +432,42 @@ def resolve_subtopics(topic, subtopics):
         return SUBTOPICS.get(topic, [])
     return subtopics
 
-
-# ---------------------------------------------------------------------------
-# ROBUST QUESTION PARSER
-# Add this helper ONCE (put it near your other helpers, e.g. just above
-# generate_worksheet). Then use it to parse Claude's output instead of
-# splitting on every newline.
-# ---------------------------------------------------------------------------
-
+# -----------------------------
+# ENHANCED WORKSHEET GENERATORS
+# -----------------------------
 def parse_numbered_questions(text):
     """
     Turn Claude's raw output into a clean list of questions.
-
-    Handles:
-      - a title line (e.g. 'Probability Worksheet') -> skipped
-      - a difficulty/topic header line              -> skipped
-      - numbered questions '1. ...', '2) ...', 'Question 3: ...'
-      - multi-line questions (lines belonging to the same number are joined)
-      - blank lines
+    Skips a title/header line, keeps numbered questions, joins multi-line ones.
     """
     if not text:
         return []
-
     lines = text.split("\n")
     questions = []
     current = None
-
-    # a line that STARTS a new question: "1.", "1)", "Q1", "Question 1", etc.
     start_re = re.compile(r'^\s*(?:question\s*)?(\d+)\s*[\.\):-]\s*(.*)', re.IGNORECASE)
-
     for line in lines:
         stripped = line.strip()
         if not stripped:
             continue
-
         m = start_re.match(stripped)
         if m:
-            # new numbered question begins
             if current is not None:
                 questions.append(current.strip())
             current = m.group(2).strip()
         else:
-            # continuation of the current question (multi-line) — but only if
-            # we've already started one. Header lines BEFORE the first number
-            # are ignored.
             if current is not None:
                 current += " " + stripped
-            # if current is None, this is a pre-question header line -> skip
-
     if current is not None:
         questions.append(current.strip())
-
-    # fallback: if nothing matched a number (Claude didn't number them),
-    # fall back to non-empty lines but drop an obvious title/header first
     if not questions:
         cleaned = [l.strip() for l in lines if l.strip()]
-        # drop lines that look like a title/header (contain 'worksheet',
-        # 'difficulty', or are all-caps topic lists)
-        cleaned = [
-            l for l in cleaned
-            if "worksheet" not in l.lower()
-            and "difficulty" not in l.lower()
-        ]
+        cleaned = [l for l in cleaned
+                   if "worksheet" not in l.lower() and "difficulty" not in l.lower()]
         questions = cleaned
-
     return questions
 
 
-
-
-
-
-
-# -----------------------------
-# ENHANCED WORKSHEET GENERATORS
-# -----------------------------
 def generate_worksheet(topic, subtopics, difficulty):
     subtopics = resolve_subtopics(topic, subtopics)
     chosen = ", ".join(subtopics)
