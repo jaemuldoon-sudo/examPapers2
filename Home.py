@@ -146,13 +146,20 @@ if st.session_state.email is None:
         if st.button("Send me a login code"):
             if _email_input:
                 _clean = _email_input.strip().lower()
+                # Always advance to the code-entry screen. The code often sends
+                # even when the client reports a transient error, so we move on
+                # regardless and let the user type whatever code they receive.
+                st.session_state.pending_email = _clean
+                st.session_state.code_sent = True
                 try:
                     _auth_supabase.auth.sign_in_with_otp({"email": _clean})
-                    st.session_state.pending_email = _clean
-                    st.session_state.code_sent = True
-                    st.rerun()
-                except Exception:
-                    st.error("Sorry, something went wrong sending your code. Please try again in a moment.")
+                except Exception as e:
+                    msg = str(e).lower()
+                    if "429" in msg or "rate" in msg or "too many" in msg:
+                        st.session_state.login_notice = "Note: if you've requested several codes, use the most recent one, or wait a minute before requesting another."
+                    else:
+                        st.session_state.login_notice = ""
+                st.rerun()
             else:
                 st.error("Please enter your email.")
     else:
@@ -160,6 +167,8 @@ if st.session_state.email is None:
             f'<div class="login-sub">We emailed a 6-digit code to<br><b>{st.session_state.pending_email}</b></div>',
             unsafe_allow_html=True,
         )
+        if st.session_state.get("login_notice"):
+            st.info(st.session_state.login_notice)
         _code = st.text_input("Enter the 6-digit code")
         if st.button("Verify"):
             try:
