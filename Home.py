@@ -363,7 +363,6 @@ SUBTOPICS = {
         "Product Rule",
         "Quotient Rule",
         "Natural Log Functions",
-        "Trigonometric Functions",
         "Inverse Trigonometric Functions",
         "Second Derivative",
         "Local Maximum and Minimum",
@@ -959,3 +958,186 @@ with main_tab1:
 
     else:
         st.info("Choose a topic, pick subtopics, and select mode to begin.")
+
+# ===========================================================================
+# ADMIN DASHBOARD  (two-factor: logged in as ADMIN_EMAIL + magic code to
+# ADMIN_NOTIFY_EMAIL). Uses the service-role key, created ONLY inside the
+# unlocked block. Provides: waitlist, user lookup, grant/revoke free access,
+# stats, and GDPR delete.
+# ===========================================================================
+import random as _admin_random
+from collections import Counter as _AdminCounter
+
+def _admin_service_client():
+    return create_client(_SUPABASE_URL, os.getenv("SUPABASE_SERVICE_KEY"))
+
+if st.session_state.get("email") == _ADMIN_EMAIL:
+    st.divider()
+    st.subheader("🔒 Admin")
+
+    st.session_state.setdefault("admin_unlocked", False)
+    st.session_state.setdefault("admin_code_sent", False)
+
+    # ---- two-factor unlock ----
+    if not st.session_state.admin_unlocked:
+        if not st.session_state.admin_code_sent:
+            if st.button("Unlock admin (send me a code)"):
+                _c = f"{_admin_random.randint(0, 999999):06d}"
+                if _send_admin_code(_c):
+                    st.session_state.admin_code = _c
+                    st.session_state.admin_code_sent = True
+                    st.rerun()
+                else:
+                    st.error("Couldn't send the admin code. Check Resend settings.")
+        else:
+            st.info("An unlock code was sent to your admin email.")
+            _entered = st.text_input("Enter admin code", key="admin_code_entry")
+            if st.button("Unlock"):
+                if _entered.strip() == st.session_state.get("admin_code"):
+                    st.session_state.admin_unlocked = True
+                    st.session_state.admin_code_sent = False
+                    st.session_state.pop("admin_code", None)
+                    st.rerun()
+                else:
+                    st.error("Incorrect code.")
+            if st.button("Resend / start over"):
+                st.session_state.admin_code_sent = False
+                st.session_state.pop("admin_code", None)
+                st.rerun()
+
+    # ---- unlocked: the five panels ----
+    else:
+        _db = _admin_service_client()
+
+        if st.button("Lock admin"):
+            st.session_state.admin_unlocked = False
+            st.rerun()
+
+        _tabs = st.tabs([
+            "📊 Stats", "🔎 Look up user", "🎁 Free access",
+            "📝 Waitlist", "🗑️ Delete user"
+        ])
+
+        # ---------- 1) STATS ----------
+        with _tabs[0]:
+            st.markdown("#### Overview")
+            try:
+                _users = _db.table("paid_users").select("*").execute().data or []
+                _events = _db.table("login_events").select("*").execute().data or []
+                _paid = sum(1 for u in _users if u.get("access_type", "paid") == "paid")
+                _free = sum(1 for u in _users if u.get("access_type") == "free")
+                c1, c2, c3, c4 = st.columns(4)
+                c1.metric("Total users", len(_users))
+                c2.metric("Paid", _paid)
+                c3.metric("Free", _free)
+                c4.metric("Total logins", len(_events))
+
+                # signups in last 7 days (by paid_at)
+                from datetime import datetime as _dt, timezone as _tz, timedelta as _td
+                _week_ago = _dt.now(_tz.utc) - _td(days=7)
+                _recent = 0
+                for u in _users:
+                    ts = u.get("paid_at")
+                    if ts:
+                        try:
+                            if _dt.fromisoformat(str(ts).replace("Z", "+00:00")) >= _week_ago:
+                                _recent += 1
+                        except Exception:
+                            pass
+                st.metric("New users (last 7 days)", _recent)
+            except Exception as e:
+                st.error(f"Couldn't load stats: {e}")
+
+        # ---------- 2) LOOK UP USER ----------
+        with _tabs[1]:
+            st.markdown("#### Look up a user by email")
+            _q = st.text_input("Email", key="lookup_email")
+            if st.button("Look up"):
+                _e = _q.strip().lower()
+                if _e:
+                    try:
+                        _u = _db.table("paid_users").select("*").eq("email", _e).execute().data
+                        if _u:
+                            row = _u[0]
+                            st.success(f"✅ {_e} has access ({row.get('access_type','paid')})")
+                            st.write(f"Since: {row.get('paid_at','—')}")
+                        else:
+                            st.warning(f"❌ {_e} has NOT paid / no access.")
+                        _logs = _db.table("login_events").select("*").eq("email", _e).execute().data or []
+                        st.write(f"Login count: {len(_logs)}")
+                        if _logs:
+                            _last = max(l.get("logged_in_at","") for l in _logs)
+                            st.write(f"Last login: {_last}")
+                    except Exception as e:
+                        st.error(f"Lookup failed: {e}")
+                else:
+                    st.error("Enter an email.")
+
+        # ---------- 3) GRANT / REVOKE FREE ACCESS ----------
+        with _tabs[2]:
+            st.markdown("#### Grant free access")
+            _fe = st.text_input("Email to grant free access", key="grant_email")
+            if st.button("Grant free access"):
+                _e = _fe.strip().lower()
+                if _e:
+                    try:
+                        _db.table("paid_users").upsert(
+                            {"email": _e, "access_type": "free"}
+                        ).execute()
+                        st.success(f"Granted free access to {_e}")
+                    except Exception as e:
+                        st.error(f"Failed: {e}")
+                else:
+                    st.error("Enter an email.")
+
+            st.markdown("#### Revoke access")
+            _re = st.text_input("Email to revoke access", key="revoke_email")
+            if st.button("Revoke access"):
+                _e = _re.strip().lower()
+                if _e:
+                    try:
+                        _db.table("paid_users").delete().eq("email", _e).execute()
+                        st.success(f"Revoked access for {_e}")
+                    except Exception as e:
+                        st.error(f"Failed: {e}")
+                else:
+                    st.error("Enter an email.")
+
+        # ---------- 4) WAITLIST ----------
+        with _tabs[3]:
+            st.markdown("#### Waitlist signups")
+            try:
+                _wl = _db.table("waitlist").select("*").order("created_at", desc=True).execute().data or []
+                if _wl:
+                    # breakdown by level
+                    _by_level = _AdminCounter(w.get("level","(unknown)") for w in _wl)
+                    st.write("**By level:** " + ", ".join(f"{k}: {v}" for k, v in _by_level.items()))
+                    st.dataframe(_wl, use_container_width=True)
+                    # simple copy-paste export of emails
+                    _emails = "\n".join(w.get("email","") for w in _wl)
+                    st.text_area("All waitlist emails (copy to clipboard)", _emails, height=150)
+                else:
+                    st.info("No waitlist signups yet.")
+            except Exception as e:
+                st.error(f"Couldn't load waitlist: {e}")
+
+        # ---------- 5) DELETE USER (GDPR) ----------
+        with _tabs[4]:
+            st.markdown("#### Delete a user's data (GDPR)")
+            st.caption("Removes the user from paid_users and login_events. This is permanent.")
+            _de = st.text_input("Email to delete", key="delete_email")
+            _confirm = st.checkbox("I understand this permanently deletes their data")
+            if st.button("Delete user data"):
+                _e = _de.strip().lower()
+                if not _e:
+                    st.error("Enter an email.")
+                elif not _confirm:
+                    st.error("Tick the confirmation box first.")
+                else:
+                    try:
+                        _db.table("paid_users").delete().eq("email", _e).execute()
+                        _db.table("login_events").delete().eq("email", _e).execute()
+                        _db.table("waitlist").delete().eq("email", _e).execute()
+                        st.success(f"Deleted all data for {_e}")
+                    except Exception as e:
+                        st.error(f"Delete failed: {e}")
