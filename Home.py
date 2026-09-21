@@ -363,6 +363,7 @@ SUBTOPICS = {
         "Product Rule",
         "Quotient Rule",
         "Natural Log Functions",
+        "Trigonometric Functions",
         "Inverse Trigonometric Functions",
         "Second Derivative",
         "Local Maximum and Minimum",
