@@ -374,25 +374,90 @@ SUBTOPICS = {
 }
 
 # -----------------------------
+# SUBTOPIC SCOPE RULES
+# Keeps a subtopic from drifting into a neighbouring one the student
+# hasn't selected. If the student DOES select the avoided subtopic too
+# (or uses Lucky Dip), the restriction is lifted automatically.
+# To add more: add an entry to SUBTOPIC_RULES, describe the avoided
+# subtopic in AVOID_DESCRIPTIONS, and list template keywords in
+# TEMPLATE_BLOCKLIST.
+# -----------------------------
+SUBTOPIC_RULES = {
+    "Polar Form of Complex Numbers": {
+        "scope": ("converting between $a+bi$ and $r(\\cos\\theta + i\\sin\\theta)$, "
+                  "finding modulus and argument (correct quadrant), "
+                  "multiplying and dividing numbers already in polar form, "
+                  "and representing them on an Argand diagram"),
+        "avoid": ["De Moivres Theorem"],
+    },
+}
+
+# What each "avoided" subtopic means, for the prompt
+AVOID_DESCRIPTIONS = {
+    "De Moivres Theorem": ("De Moivre's theorem, raising a complex number to a power "
+                           "$n \\geq 3$, finding nth roots of a complex number, "
+                           "or proof by induction"),
+}
+
+# Words that mark a past-paper template as belonging to that subtopic
+TEMPLATE_BLOCKLIST = {
+    "De Moivres Theorem": ["moivre", "nth root", "cube root", "induction"],
+}
+
+
+def scope_rules(subtopics):
+    """Returns (prompt text, list of blocked template keywords)."""
+    lines, blocked = [], []
+    for s in subtopics:
+        rule = SUBTOPIC_RULES.get(s)
+        if not rule:
+            continue
+        lines.append(f"- For '{s}': only test {rule['scope']}.")
+        for a in rule["avoid"]:
+            if a in subtopics:  # student selected it too, so allow it
+                continue
+            lines.append(
+                f"- Do NOT write any question, or any part of a question, involving "
+                f"{AVOID_DESCRIPTIONS[a]}. That is a separate subsection the student has "
+                f"not selected. If a question would naturally lead there, stop before that step."
+            )
+            blocked += TEMPLATE_BLOCKLIST.get(a, [])
+    return "\n".join(lines), blocked
+
+
+def add_scope_rules(system_prompt, rules):
+    """Append scope rules AFTER the examples so they take priority."""
+    if rules:
+        system_prompt += f"\n\nSCOPE RULES (these override the examples above):\n{rules}"
+    return system_prompt
+
+# -----------------------------
 # EXAM INDEX HELPERS
 # -----------------------------
-def find_template_questions(topic, difficulty=None):
+def find_template_questions(topic, difficulty=None, blocked=()):
     """Find relevant template questions from the exam index"""
     if not EXAM_INDEX:
         return []
-    
+
     matching = []
     for q in EXAM_INDEX.get('questions', []):
         # Check if any topic matches
-        topic_match = any(topic.lower() in t.lower() for t in q.get('topics', []))
-        
-        if topic_match:
-            if difficulty:
-                if q.get('difficulty', '').lower() == difficulty.lower():
-                    matching.append(q)
-            else:
-                matching.append(q)
-    
+        if not any(topic.lower() in t.lower() for t in q.get('topics', [])):
+            continue
+
+        # Skip templates that belong to a subtopic the student hasn't selected
+        if blocked:
+            text = " ".join([q.get('description', ''),
+                             *q.get('topics', []),
+                             *q.get('concepts', [])]).lower()
+            if any(b in text for b in blocked):
+                continue
+
+        if difficulty and q.get('difficulty', '').lower() != difficulty.lower():
+            continue
+
+        matching.append(q)
+
     return matching[:5]  # Return up to 5 templates
 
 def format_template_for_prompt(templates):
@@ -482,9 +547,10 @@ def parse_numbered_questions(text):
 def generate_worksheet(topic, subtopics, difficulty):
     subtopics = resolve_subtopics(topic, subtopics)
     chosen = ", ".join(subtopics)
+    rules, blocked = scope_rules(subtopics)
     
     # Get template questions from exam index
-    templates = find_template_questions(topic, difficulty)
+    templates = find_template_questions(topic, difficulty, blocked)
     template_context = format_template_for_prompt(templates)
 
     system_prompt = (
@@ -503,6 +569,7 @@ def generate_worksheet(topic, subtopics, difficulty):
         "Study their style, structure, and difficulty level, then create NEW questions inspired by this format."
         f"{template_context}"
     )
+    system_prompt = add_scope_rules(system_prompt, rules)
 
     user_prompt = (
         f"Create a {difficulty} worksheet on {topic}. "
@@ -518,9 +585,10 @@ def generate_worksheet(topic, subtopics, difficulty):
 def generate_balanced_worksheet(topic, subtopics):
     subtopics = resolve_subtopics(topic, subtopics)
     chosen = ", ".join(subtopics)
+    rules, blocked = scope_rules(subtopics)
     
     # Get mixed difficulty templates
-    templates = find_template_questions(topic)
+    templates = find_template_questions(topic, blocked=blocked)
     template_context = format_template_for_prompt(templates)
 
     system_prompt = (
@@ -535,6 +603,7 @@ def generate_balanced_worksheet(topic, subtopics):
         "Return a numbered list, no solutions."
         f"{template_context}"
     )
+    system_prompt = add_scope_rules(system_prompt, rules)
 
     user_prompt = f"Topic: {topic}\nSubtopics: {chosen}\n\nCreate NEW questions matching LC exam style."
 
@@ -559,9 +628,12 @@ def generate_answer(question, topic, difficulty):
     return call_claude(system_prompt, user_prompt)
 
 
-def generate_similar_question(question, topic, difficulty):
+def generate_similar_question(question, topic, difficulty, subtopics=None):
+    # Scope rules only apply when we know which subtopics were selected
+    rules, blocked = scope_rules(resolve_subtopics(topic, subtopics or []))
+
     # Get templates for better context
-    templates = find_template_questions(topic, difficulty)
+    templates = find_template_questions(topic, difficulty, blocked)
     template_context = format_template_for_prompt(templates[:2])  # Just 2 examples
     
     system_prompt = (
@@ -576,6 +648,7 @@ def generate_similar_question(question, topic, difficulty):
         "No solution."
         f"{template_context}"
     )
+    system_prompt = add_scope_rules(system_prompt, rules)
 
     user_prompt = f"Topic: {topic}\nOriginal question: {question}\n\nCreate a NEW similar question."
 
@@ -585,9 +658,10 @@ def generate_similar_question(question, topic, difficulty):
 def generate_exam_style_worksheet(topic, subtopics):
     subtopics = resolve_subtopics(topic, subtopics)
     chosen = ", ".join(subtopics)
+    rules, blocked = scope_rules(subtopics)
     
     # Get exam templates
-    templates = find_template_questions(topic)
+    templates = find_template_questions(topic, blocked=blocked)
     template_context = format_template_for_prompt(templates)
 
     system_prompt = (
@@ -608,6 +682,7 @@ def generate_exam_style_worksheet(topic, subtopics):
         "Return exactly 3 exam‑style questions, each possibly multi‑part, no solutions."
         f"{template_context}"
     )
+    system_prompt = add_scope_rules(system_prompt, rules)
 
     user_prompt = (
         f"Topic: {topic}\n"
@@ -622,9 +697,10 @@ def generate_exam_style_worksheet(topic, subtopics):
 def generate_examPaper(topic, subtopics):
     subtopics = resolve_subtopics(topic, subtopics)
     chosen = ", ".join(subtopics)
+    rules, blocked = scope_rules(subtopics)
     
     # Get exam templates for authentic style
-    templates = find_template_questions(topic)
+    templates = find_template_questions(topic, blocked=blocked)
     template_context = format_template_for_prompt(templates)
 
     system_prompt = (
@@ -645,6 +721,7 @@ def generate_examPaper(topic, subtopics):
         "- Do NOT include solutions "
         f"{template_context}"
     )
+    system_prompt = add_scope_rules(system_prompt, rules)
 
     user_prompt = (
         f"Topic: {topic}\n"
@@ -667,8 +744,9 @@ def generate_examPaper(topic, subtopics):
 def generate_multipart_questions(topic, subtopics):
     subtopics = resolve_subtopics(topic, subtopics)
     chosen = ", ".join(subtopics)
+    rules, blocked = scope_rules(subtopics)
 
-    templates = find_template_questions(topic)
+    templates = find_template_questions(topic, blocked=blocked)
     template_context = format_template_for_prompt(templates)
 
     system_prompt = (
@@ -687,6 +765,7 @@ def generate_multipart_questions(topic, subtopics):
         "Do not use any other separator. Each question must be complete with all its parts intact."
         f"{template_context}"
     )
+    system_prompt = add_scope_rules(system_prompt, rules)
 
     user_prompt = (
         f"Topic: {topic}\n"
@@ -954,7 +1033,7 @@ with main_tab1:
                 st.markdown(ans)
 
             if show_sim:
-                sim = generate_similar_question(q, topic, difficulty)
+                sim = generate_similar_question(q, topic, difficulty, subtopics)
                 st.markdown("**Another question like this:**")
                 st.markdown(sim)
 
