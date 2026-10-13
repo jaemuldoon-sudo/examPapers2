@@ -354,7 +354,6 @@ SUBTOPICS = {
         "Addition and Subtraction of Complex Numbers",
         "Multiplication of Complex Numbers",
         "Division of Complex Numbers",
-        "Roots of complex equations",
         "Polar Form of Complex Numbers",
         "De Moivres Theorem"
     ],
