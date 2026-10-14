@@ -6,6 +6,8 @@ from anthropic import Anthropic
 import random
 from datetime import datetime, timezone, timedelta
 import requests
+import html
+import time
 from supabase import create_client
 
 #PAGE CONFIG (MUST BE FIRST ST COMMAND)
@@ -79,6 +81,63 @@ def _send_admin_code(code):
         return r.status_code in (200, 201)
     except Exception:
         return False
+
+
+_APP_URL = os.getenv("APP_URL", "https://aimaths.ie")
+_WORKSHEET_FROM = os.getenv("WORKSHEET_FROM", _ADMIN_CODE_FROM)
+
+
+def _worksheet_link(ws_id):
+    """Direct link to one shared worksheet, e.g. https://aimaths.ie/?worksheet=12"""
+    return f"{_APP_URL.rstrip('/')}/?worksheet={ws_id}"
+
+
+def _send_worksheet_emails(recipients, title, link=None):
+    """Email each student individually (nobody sees anyone else's address).
+    Uses Resend's batch endpoint: up to 100 emails per request.
+    Returns (number sent, list of failed addresses)."""
+    safe_title = html.escape(title)
+    link = link or _APP_URL
+    body = (
+        "<p>Hi,</p>"
+        f"<p>A new worksheet is ready for you on aimaths.ie: <b>{safe_title}</b></p>"
+        f"<p><a href='{html.escape(link)}' style='display:inline-block;padding:12px 20px;"
+        "background:#2b59c3;color:#fff;border-radius:8px;text-decoration:none;'>"
+        "Open the worksheet</a></p>"
+        "<p>You may need to log in first. The worksheet then opens at the top of the page, "
+        "and each question has a worked solution.</p>"
+        "<p style='color:#888;font-size:12px;'>You're getting this because you have an "
+        "aimaths.ie account. To stop these emails, just reply 'unsubscribe'.</p>"
+    )
+    sent, failed = 0, []
+    for i in range(0, len(recipients), 100):
+        chunk = recipients[i:i + 100]
+        payload = []
+        for r in chunk:
+            msg = {
+                "from": f"aimaths.ie <{_WORKSHEET_FROM}>",
+                "to": [r],
+                "subject": f"New worksheet: {title}",
+                "html": body,
+            }
+            if _ADMIN_NOTIFY_EMAIL:
+                msg["reply_to"] = _ADMIN_NOTIFY_EMAIL
+            payload.append(msg)
+        try:
+            resp = requests.post(
+                "https://api.resend.com/emails/batch",
+                headers={"Authorization": f"Bearer {_RESEND_API_KEY}"},
+                json=payload,
+                timeout=30,
+            )
+            if resp.status_code in (200, 201):
+                sent += len(chunk)
+            else:
+                failed += chunk
+        except Exception:
+            failed += chunk
+        time.sleep(0.6)  # stay under Resend's rate limit
+    return sent, failed
 
 
 st.session_state.setdefault("email", None)
@@ -459,6 +518,36 @@ def find_template_questions(topic, difficulty=None, blocked=()):
         matching.append(q)
 
     return matching[:5]  # Return up to 5 templates
+
+
+@st.cache_data(ttl=300)
+def load_shared_worksheets(n=5):
+    """Latest worksheets the admin has sent to all students."""
+    try:
+        return _auth_supabase.rpc("get_shared_worksheets", {"n": n}).execute().data or []
+    except Exception:
+        return []
+
+
+@st.cache_data(ttl=300)
+def load_shared_worksheet(ws_id):
+    """One worksheet by id (used by the direct link in the email)."""
+    try:
+        rows = _auth_supabase.rpc("get_shared_worksheet", {"ws_id": int(ws_id)}).execute().data or []
+        return rows[0] if rows else None
+    except Exception:
+        return None
+
+
+def show_shared_worksheet(ws, key_prefix):
+    """Render a shared worksheet with Show Answer buttons."""
+    st.caption(f"{ws['topic']} · {ws['difficulty']}")
+    for i, q in enumerate(ws.get("questions") or []):
+        st.markdown(f"**Question {i + 1}**")
+        st.markdown(q)
+        if st.button("Show Answer", key=f"{key_prefix}_{ws['id']}_{i}"):
+            with st.spinner("Working it out..."):
+                st.markdown(generate_answer(q, ws["topic"], ws["difficulty"]))
 
 def format_template_for_prompt(templates):
     """Format template questions for inclusion in AI prompt"""
@@ -905,7 +994,32 @@ else:
 # MAIN NAVIGATION TABS
 # -----------------------------
 
-main_tab1, = st.tabs(["🎯 Generate New Questions"])
+# -----------------------------
+# WORKSHEET OPENED FROM AN EMAIL LINK (?worksheet=<id>)
+# The link survives the login screen, so it opens straight after logging in.
+# -----------------------------
+_linked_id = st.query_params.get("worksheet")
+if _linked_id and str(_linked_id).isdigit():
+    _linked = load_shared_worksheet(int(_linked_id))
+    if _linked:
+        st.markdown(
+            f"""
+            <div style="background:#eef7ee;padding:16px;border-radius:10px;
+                        border:1px solid #b9dcb9;margin-bottom:10px;">
+                <h3 style="margin:0;">📬 {html.escape(_linked['title'])}</h3>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        show_shared_worksheet(_linked, "link_ans")
+        if st.button("Close worksheet", key="close_linked_ws"):
+            del st.query_params["worksheet"]
+            st.rerun()
+        st.markdown("---")
+    else:
+        st.warning("Sorry, that worksheet couldn't be found.")
+
+main_tab1, main_tab2 = st.tabs(["🎯 Generate New Questions", "📬 Shared Worksheets"])
 
 with main_tab1:
     # -----------------------------
@@ -1040,6 +1154,18 @@ with main_tab1:
     else:
         st.info("Choose a topic, pick subtopics, and select mode to begin.")
 
+# -----------------------------
+# SHARED WORKSHEETS (sent to all students from the admin panel)
+# -----------------------------
+with main_tab2:
+    _sheets = load_shared_worksheets()
+    if not _sheets:
+        st.info("No shared worksheets yet. Check back soon!")
+    for _n, _ws in enumerate(_sheets):
+        _when = str(_ws.get("created_at", ""))[:10]
+        with st.expander(f"📄 {_ws['title']} ({_when})", expanded=(_n == 0)):
+            show_shared_worksheet(_ws, "ws_ans")
+
 # ===========================================================================
 # ADMIN DASHBOARD  (two-factor: logged in as ADMIN_EMAIL + magic code to
 # ADMIN_NOTIFY_EMAIL). Uses the service-role key, created ONLY inside the
@@ -1096,7 +1222,7 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
 
         _tabs = st.tabs([
             "📊 Stats", "🔎 Look up user", "🎁 Free access",
-            "📝 Waitlist", "🗑️ Delete user"
+            "📝 Waitlist", "🗑️ Delete user", "📤 Send worksheet"
         ])
 
         # ---------- 1) STATS ----------
@@ -1222,3 +1348,80 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
                         st.success(f"Deleted all data for {_e}")
                     except Exception as e:
                         st.error(f"Delete failed: {e}")
+
+        # ---------- 6) SEND WORKSHEET TO ALL STUDENTS ----------
+        with _tabs[5]:
+            st.markdown("#### Send a worksheet to every student")
+            st.caption("Generate, edit, then send. Students see it in the 📬 Shared Worksheets "
+                       "tab and get an email telling them it's there.")
+
+            _bt = st.selectbox("Topic", TOPICS, key="bc_topic")
+            _bs = st.multiselect("Subtopics", get_subtopics(_bt), key="bc_subtopics")
+            _bd = st.radio("Difficulty", ["Easy", "Medium", "Hard"],
+                           horizontal=True, key="bc_difficulty")
+
+            if st.button("Generate worksheet", key="bc_generate"):
+                if not _bs:
+                    st.error("Pick at least one subtopic (or Lucky Dip).")
+                else:
+                    with st.spinner("Generating..."):
+                        _gen = generate_worksheet(_bt, _bs, _bd)
+                    st.session_state.bc_text = "\n\n".join(_gen)
+                    st.session_state.bc_title = f"{_bt} ({_bd})"
+
+            _title = st.text_input("Worksheet title", key="bc_title")
+            _text = st.text_area(
+                "Questions: leave a blank line between questions. Edit freely.",
+                key="bc_text", height=350,
+            )
+            _bqs = [q.strip() for q in re.split(r"\n\s*\n", _text or "") if q.strip()]
+
+            if _bqs:
+                with st.expander(f"Preview as students will see it ({len(_bqs)} questions)"):
+                    for _i, _q in enumerate(_bqs, 1):
+                        st.markdown(f"**Question {_i}**")
+                        st.markdown(_q)
+
+            if st.button("Send a test email to me first", key="bc_test"):
+                if not _ADMIN_NOTIFY_EMAIL:
+                    st.error("ADMIN_NOTIFY_EMAIL isn't set.")
+                else:
+                    _ok, _bad = _send_worksheet_emails([_ADMIN_NOTIFY_EMAIL], _title or "Test worksheet")
+                    if _ok:
+                        st.success(f"Test sent to {_ADMIN_NOTIFY_EMAIL}")
+                    else:
+                        st.error("Test email failed. Check RESEND_API_KEY and WORKSHEET_FROM.")
+
+            _bc_confirm = st.checkbox(
+                "I've checked the questions and want to send this to ALL students",
+                key="bc_confirm",
+            )
+            if st.button("Save & email all students", key="bc_send", type="primary"):
+                if not _bqs or not (_title or "").strip():
+                    st.error("Add a title and at least one question first.")
+                elif not _bc_confirm:
+                    st.error("Tick the confirmation box first.")
+                else:
+                    try:
+                        _saved = _db.table("shared_worksheets").insert({
+                            "title": _title.strip(),
+                            "topic": _bt,
+                            "subtopics": resolve_subtopics(_bt, _bs),
+                            "difficulty": _bd,
+                            "questions": _bqs,
+                        }).execute()
+                        _link = _worksheet_link(_saved.data[0]["id"])
+                        load_shared_worksheets.clear()  # show it to students straight away
+                    except Exception as e:
+                        st.error(f"Couldn't save the worksheet: {e}")
+                    else:
+                        _all = _db.table("paid_users").select("*").execute().data or []
+                        _to = sorted({u["email"] for u in _all
+                                      if u.get("email") and not u.get("email_opt_out")})
+                        with st.spinner(f"Emailing {len(_to)} students..."):
+                            _ok, _bad = _send_worksheet_emails(_to, _title.strip(), _link)
+                        st.success(f"Saved. Emailed {_ok} of {len(_to)} students.")
+                        st.write(f"Direct link: {_link}")
+                        if _bad:
+                            st.warning(f"{len(_bad)} emails failed:")
+                            st.text_area("Failed addresses", "\n".join(_bad), height=120)
