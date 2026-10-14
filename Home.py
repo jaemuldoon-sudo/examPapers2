@@ -522,11 +522,9 @@ def find_template_questions(topic, difficulty=None, blocked=()):
 
 @st.cache_data(ttl=300)
 def load_shared_worksheets(n=5):
-    """Latest worksheets the admin has sent to all students."""
-    try:
-        return _auth_supabase.rpc("get_shared_worksheets", {"n": n}).execute().data or []
-    except Exception:
-        return []
+    """Latest worksheets the admin has sent to all students.
+    Errors are raised (not cached) so the tab can show what went wrong."""
+    return _auth_supabase.rpc("get_shared_worksheets", {"n": n}).execute().data or []
 
 
 @st.cache_data(ttl=300)
@@ -825,6 +823,27 @@ def generate_examPaper(topic, subtopics):
 
     questions = [q.strip() for q in text.split("\n\n") if q.strip()]
     return questions[:3]
+
+
+def generate_from_descriptions(topic, descriptions, difficulty):
+    """Write exactly one exam-style question for each description the admin typed."""
+    numbered = "\n".join(f"{i}. {d}" for i, d in enumerate(descriptions, 1))
+    system_prompt = (
+        "You are a Leaving Certificate Higher Level Maths examiner. "
+        "You will be given a numbered list of descriptions. For EACH description, write "
+        "exactly ONE new, original exam-style question that tests exactly what it describes, "
+        "in the same order. A question may have parts (a), (b), (c) written on the same line. "
+        f"Difficulty: {difficulty}. "
+        "Use LaTeX for ALL maths, inline with single dollar signs: $ ... $. "
+        "Never use $$ ... $$ or plain-text maths such as x^2 or sqrt(x). "
+        "Do NOT include solutions, marks, titles or the description itself. "
+        "Separate the questions ONLY with the exact text: ---QUESTION BREAK---"
+    )
+    user_prompt = f"Topic: {topic}\n\nDescriptions:\n{numbered}"
+    text = call_claude(system_prompt, user_prompt)
+    qs = [q.strip() for q in text.split("---QUESTION BREAK---") if q.strip()]
+    # keep each question as one block so blank-line splitting stays correct
+    return [re.sub(r"\n\s*\n", "\n", q) for q in qs]
 
 
 # -----------------------------
@@ -1158,7 +1177,14 @@ with main_tab1:
 # SHARED WORKSHEETS (sent to all students from the admin panel)
 # -----------------------------
 with main_tab2:
-    _sheets = load_shared_worksheets()
+    try:
+        _sheets = load_shared_worksheets()
+    except Exception as e:
+        _sheets = []
+        if st.session_state.get("email") == _ADMIN_EMAIL:
+            st.error(f"Couldn't load shared worksheets (only you see this): {e}")
+        else:
+            st.warning("Shared worksheets are unavailable right now. Please try again later.")
     if not _sheets:
         st.info("No shared worksheets yet. Check back soon!")
     for _n, _ws in enumerate(_sheets):
@@ -1360,6 +1386,7 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
             _bd = st.radio("Difficulty", ["Easy", "Medium", "Hard"],
                            horizontal=True, key="bc_difficulty")
 
+            st.markdown("**Option A:** generate 10 questions from the subtopics above")
             if st.button("Generate worksheet", key="bc_generate"):
                 if not _bs:
                     st.error("Pick at least one subtopic (or Lucky Dip).")
@@ -1368,6 +1395,29 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
                         _gen = generate_worksheet(_bt, _bs, _bd)
                     st.session_state.bc_text = "\n\n".join(_gen)
                     st.session_state.bc_title = f"{_bt} ({_bd})"
+
+            st.markdown("**Option B:** describe the questions you want, one per line")
+            _briefs_text = st.text_area(
+                "Descriptions (one question is written for each line)",
+                key="bc_briefs", height=150,
+                placeholder="Complex number addition and subtraction\n"
+                            "Find real and complex roots of a cubic",
+            )
+            if st.button("Generate from my descriptions", key="bc_generate_briefs"):
+                _briefs = [re.sub(r"^\s*\d+\s*[\.\)]\s*", "", l).strip()
+                           for l in (_briefs_text or "").splitlines() if l.strip()]
+                if not _briefs:
+                    st.error("Type at least one description.")
+                else:
+                    with st.spinner(f"Writing {len(_briefs)} questions..."):
+                        _gen = generate_from_descriptions(_bt, _briefs, _bd)
+                    st.session_state.bc_text = "\n\n".join(_gen)
+                    st.session_state.bc_title = f"{_bt} ({_bd})"
+                    if len(_gen) != len(_briefs):
+                        st.warning(f"Asked for {len(_briefs)} questions but got {len(_gen)}. "
+                                   "Check them below before sending.")
+
+            st.markdown("**Then:** check and edit the questions below before sending")
 
             _title = st.text_input("Worksheet title", key="bc_title")
             _text = st.text_area(
