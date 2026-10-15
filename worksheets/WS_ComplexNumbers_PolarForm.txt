@@ -1,0 +1,8 @@
+q1 Write the complex number 2+2i in Polar form
+q2 Write the complex number -1+i in Polar form
+q3 Write the complex number -6-2(sqroot3)i in Polar form
+q4 Write the complex number 1 -(sqroot3)i in Polar form
+q5 Write the complex number 4 in Polar form
+q6 Write the complex number 3i in Polar form
+q7 Write the complex number -7  in Polar form
+q8 Write the complex number -21  in Polar form

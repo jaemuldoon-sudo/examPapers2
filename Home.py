@@ -172,7 +172,7 @@ def _send_worksheet_emails(recipients, title, ws_id=None):
             msg = {
                 "from": f"aimaths.ie <{_WORKSHEET_FROM}>",
                 "to": [r],
-                "subject": f"New worksheet: {title}",
+                "subject": title,
                 "html": body_for(r),
             }
             if _ADMIN_NOTIFY_EMAIL:
@@ -588,7 +588,7 @@ def find_template_questions(topic, difficulty=None, blocked=()):
 
 
 @st.cache_data(ttl=300)
-def load_shared_worksheets(n=5):
+def load_shared_worksheets(n=20):
     """Latest worksheets the admin has sent to all students.
     Errors are raised (not cached) so the tab can show what went wrong."""
     return _auth_supabase.rpc("get_shared_worksheets", {"n": n}).execute().data or []
@@ -1311,7 +1311,7 @@ with main_tab2:
         st.info("No shared worksheets yet. Check back soon!")
     for _n, _ws in enumerate(_sheets):
         _when = str(_ws.get("created_at", ""))[:10]
-        with st.expander(f"📄 {_ws['title']} ({_when})", expanded=(_n == 0)):
+        with st.expander(f"📄 {_ws['title']} ({_when})", expanded=False):
             show_shared_worksheet(_ws, "ws_ans")
 
 # ===========================================================================
@@ -1517,7 +1517,7 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
                     with st.spinner("Generating..."):
                         _gen = generate_worksheet(_bt, _bs, _bd)
                     st.session_state.bc_text = "\n\n".join(_gen)
-                    st.session_state.bc_title = f"{_bt} ({_bd})"
+                    st.session_state.bc_title = _bt
 
             st.markdown("**Option B:** describe the questions you want, one per line")
             _briefs_text = st.text_area(
@@ -1535,7 +1535,7 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
                     with st.spinner(f"Writing {len(_briefs)} questions..."):
                         _gen = generate_from_descriptions(_bt, _briefs, _bd)
                     st.session_state.bc_text = "\n\n".join(_gen)
-                    st.session_state.bc_title = f"{_bt} ({_bd})"
+                    st.session_state.bc_title = _bt
                     if len(_gen) != len(_briefs):
                         st.warning(f"Asked for {len(_briefs)} questions but got {len(_gen)}. "
                                    "Check them below before sending.")
