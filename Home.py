@@ -596,12 +596,10 @@ def load_shared_worksheets(n=20):
 
 @st.cache_data(ttl=300)
 def load_shared_worksheet(ws_id):
-    """One worksheet by id (used by the direct link in the email)."""
-    try:
-        rows = _auth_supabase.rpc("get_shared_worksheet", {"ws_id": int(ws_id)}).execute().data or []
-        return rows[0] if rows else None
-    except Exception:
-        return None
+    """One worksheet by id (used by the direct link in the email).
+    Returns None if it doesn't exist; raises on a database error (not cached)."""
+    rows = _auth_supabase.rpc("get_shared_worksheet", {"ws_id": int(ws_id)}).execute().data or []
+    return rows[0] if rows else None
 
 
 def show_shared_worksheet(ws, key_prefix):
@@ -1137,26 +1135,46 @@ else:
 # WORKSHEET OPENED FROM AN EMAIL LINK (?worksheet=<id>)
 # The link survives the login screen, so it opens straight after logging in.
 # -----------------------------
+# Shows ONLY that worksheet (no tabs), with a button back to the full site.
+# -----------------------------
+def _leave_linked_worksheet():
+    if "worksheet" in st.query_params:
+        del st.query_params["worksheet"]
+
+
 _linked_id = st.query_params.get("worksheet")
-if _linked_id and str(_linked_id).isdigit():
-    _linked = load_shared_worksheet(int(_linked_id))
+if _linked_id:
+    try:
+        _linked = load_shared_worksheet(int(_linked_id)) if str(_linked_id).isdigit() else None
+        _link_error = None
+    except Exception as e:
+        _linked, _link_error = None, e
+
+    st.button("← Back to all questions", key="back_from_ws_top",
+              on_click=_leave_linked_worksheet)
+
     if _linked:
         st.markdown(
             f"""
             <div style="background:#eef7ee;padding:16px;border-radius:10px;
-                        border:1px solid #b9dcb9;margin-bottom:10px;">
+                        border:1px solid #b9dcb9;margin:10px 0;">
                 <h3 style="margin:0;">📬 {html.escape(_linked['title'])}</h3>
             </div>
             """,
             unsafe_allow_html=True,
         )
         show_shared_worksheet(_linked, "link_ans")
-        if st.button("Close worksheet", key="close_linked_ws"):
-            del st.query_params["worksheet"]
-            st.rerun()
         st.markdown("---")
+        st.button("← Back to all questions", key="back_from_ws_bottom",
+                  on_click=_leave_linked_worksheet)
+    elif _link_error and st.session_state.get("email") == _ADMIN_EMAIL:
+        st.error(f"Couldn't load worksheet #{_linked_id} (only you see this): {_link_error}")
     else:
-        st.warning("Sorry, that worksheet couldn't be found.")
+        st.warning("Sorry, that worksheet couldn't be found. It may have been removed. "
+                   "You'll find all current worksheets in the 📬 Shared Worksheets tab.")
+
+    # worksheet view only: don't draw the rest of the page underneath
+    st.stop()
 
 main_tab1, main_tab2 = st.tabs(["🎯 Generate New Questions", "📬 Shared Worksheets"])
 
