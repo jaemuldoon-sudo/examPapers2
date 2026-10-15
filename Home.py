@@ -8,6 +8,9 @@ from datetime import datetime, timezone, timedelta
 import requests
 import html
 import time
+import hmac
+import hashlib
+import base64
 from supabase import create_client
 
 #PAGE CONFIG (MUST BE FIRST ST COMMAND)
@@ -87,28 +90,80 @@ _APP_URL = os.getenv("APP_URL", "https://aimaths.ie")
 _WORKSHEET_FROM = os.getenv("WORKSHEET_FROM", _ADMIN_CODE_FROM)
 
 
-def _worksheet_link(ws_id):
-    """Direct link to one shared worksheet, e.g. https://aimaths.ie/?worksheet=12"""
-    return f"{_APP_URL.rstrip('/')}/?worksheet={ws_id}"
+# ---------------------------------------------------------------------------
+# ONE-CLICK LOGIN LINKS
+# Each student's email link carries a signed, time-limited key (?t=...).
+# Opening it logs them in, in any browser or tab, without a login code.
+# Needs LINK_SECRET on Railway (any long random string). Without it, links
+# still work but students log in the normal way.
+# ---------------------------------------------------------------------------
+_LINK_SECRET = os.getenv("LINK_SECRET", "")
+_LINK_DAYS = 14  # how long an email link keeps logging the student in
 
 
-def _send_worksheet_emails(recipients, title, link=None):
-    """Email each student individually (nobody sees anyone else's address).
+def _b64(data):
+    return base64.urlsafe_b64encode(data).decode().rstrip("=")
+
+
+def _unb64(text):
+    return base64.urlsafe_b64decode(text + "=" * (-len(text) % 4))
+
+
+def _make_login_token(email):
+    exp = int(time.time()) + _LINK_DAYS * 86400
+    payload = f"{email}|{exp}".encode()
+    sig = hmac.new(_LINK_SECRET.encode(), payload, hashlib.sha256).digest()
+    return f"{_b64(payload)}.{_b64(sig)}"
+
+
+def _check_login_token(token):
+    """Return the email inside a valid, unexpired token, otherwise None."""
+    if not _LINK_SECRET or not token or "." not in token:
+        return None
+    try:
+        p, s = token.split(".", 1)
+        payload = _unb64(p)
+        good = hmac.new(_LINK_SECRET.encode(), payload, hashlib.sha256).digest()
+        if not hmac.compare_digest(good, _unb64(s)):
+            return None
+        email, exp = payload.decode().rsplit("|", 1)
+        if int(exp) < time.time():
+            return None
+        return email
+    except Exception:
+        return None
+
+
+def _worksheet_link(ws_id, email=None):
+    """Link to one shared worksheet, e.g. https://aimaths.ie/?worksheet=12&t=...
+    With an email (and LINK_SECRET set), the link also logs that student in."""
+    url = f"{_APP_URL.rstrip('/')}/?worksheet={ws_id}"
+    if email and _LINK_SECRET:
+        url += f"&t={_make_login_token(email)}"
+    return url
+
+
+def _send_worksheet_emails(recipients, title, ws_id=None):
+    """Email each student individually (nobody sees anyone else's address),
+    each with their own one-click login link.
     Uses Resend's batch endpoint: up to 100 emails per request.
     Returns (number sent, list of failed addresses)."""
     safe_title = html.escape(title)
-    link = link or _APP_URL
-    body = (
-        "<p>Hi,</p>"
-        f"<p>A new worksheet is ready for you on aimaths.ie: <b>{safe_title}</b></p>"
-        f"<p><a href='{html.escape(link)}' style='display:inline-block;padding:12px 20px;"
-        "background:#2b59c3;color:#fff;border-radius:8px;text-decoration:none;'>"
-        "Open the worksheet</a></p>"
-        "<p>You may need to log in first. The worksheet then opens at the top of the page, "
-        "and each question has a worked solution.</p>"
-        "<p style='color:#888;font-size:12px;'>You're getting this because you have an "
-        "aimaths.ie account. To stop these emails, just reply 'unsubscribe'.</p>"
-    )
+
+    def body_for(r):
+        link = _worksheet_link(ws_id, r) if ws_id else _APP_URL
+        return (
+            "<p>Hi,</p>"
+            f"<p>A new worksheet is ready for you on aimaths.ie: <b>{safe_title}</b></p>"
+            f"<p><a href='{html.escape(link)}' style='display:inline-block;padding:12px 20px;"
+            "background:#2b59c3;color:#fff;border-radius:8px;text-decoration:none;'>"
+            "Open the worksheet</a></p>"
+            f"<p>This button logs you straight in for the next {_LINK_DAYS} days, "
+            "so please don't forward this email. Each question has a worked solution.</p>"
+            "<p style='color:#888;font-size:12px;'>You're getting this because you have an "
+            "aimaths.ie account. To stop these emails, just reply 'unsubscribe'.</p>"
+        )
+
     sent, failed = 0, []
     for i in range(0, len(recipients), 100):
         chunk = recipients[i:i + 100]
@@ -118,7 +173,7 @@ def _send_worksheet_emails(recipients, title, link=None):
                 "from": f"aimaths.ie <{_WORKSHEET_FROM}>",
                 "to": [r],
                 "subject": f"New worksheet: {title}",
-                "html": body,
+                "html": body_for(r),
             }
             if _ADMIN_NOTIFY_EMAIL:
                 msg["reply_to"] = _ADMIN_NOTIFY_EMAIL
@@ -142,6 +197,18 @@ def _send_worksheet_emails(recipients, title, link=None):
 
 st.session_state.setdefault("email", None)
 st.session_state.setdefault("code_sent", False)
+
+# one-click login from an email link (?t=...)
+_link_token = st.query_params.get("t")
+if _link_token:
+    _link_email = _check_login_token(_link_token)
+    del st.query_params["t"]  # keep the key out of the address bar / bookmarks
+    if _link_email and st.session_state.email is None:
+        st.session_state.email = _link_email
+        st.session_state.code_sent = False
+        st.session_state.login_time = datetime.now(timezone.utc)
+        _log_login(_link_email)
+    st.rerun()
 
 # session expiry
 if st.session_state.email is not None:
@@ -541,11 +608,37 @@ def show_shared_worksheet(ws, key_prefix):
     """Render a shared worksheet with Show Answer buttons."""
     st.caption(f"{ws['topic']} · {ws['difficulty']}")
     for i, q in enumerate(ws.get("questions") or []):
+        k = f"{key_prefix}_{ws['id']}_{i}"
         st.markdown(f"**Question {i + 1}**")
         st.markdown(q)
-        if st.button("Show Answer", key=f"{key_prefix}_{ws['id']}_{i}"):
+
+        b1, b2 = st.columns(2)
+        with b1:
+            show_ans = st.button("Show Answer", key=f"{k}_ans", use_container_width=True)
+        with b2:
+            more = st.button("More Like This", key=f"{k}_more", use_container_width=True)
+
+        if show_ans:
             with st.spinner("Working it out..."):
                 st.markdown(generate_answer(q, ws["topic"], ws["difficulty"]))
+
+        # keep the extra question on screen so its answer can be shown too
+        if more:
+            with st.spinner("Writing another question..."):
+                st.session_state[f"{k}_sim"] = generate_similar_question(
+                    q, ws["topic"], ws["difficulty"], ws.get("subtopics") or []
+                )
+        sim = st.session_state.get(f"{k}_sim")
+        if sim:
+            st.markdown(
+                "<div style='background:#f7f9fc;padding:10px 14px;border-radius:8px;"
+                "border:1px solid #e3e6eb;margin-top:6px;'><b>Another question like this:</b></div>",
+                unsafe_allow_html=True,
+            )
+            st.markdown(sim)
+            if st.button("Show Answer to this one", key=f"{k}_sim_ans"):
+                with st.spinner("Working it out..."):
+                    st.markdown(generate_answer(sim, ws["topic"], ws["difficulty"]))
 
 def format_template_for_prompt(templates):
     """Format template questions for inclusion in AI prompt"""
@@ -1248,7 +1341,8 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
 
         _tabs = st.tabs([
             "📊 Stats", "🔎 Look up user", "🎁 Free access",
-            "📝 Waitlist", "🗑️ Delete user", "📤 Send worksheet"
+            "📝 Waitlist", "🗑️ Delete user", "📤 Send worksheet",
+            "🗂️ Manage worksheets"
         ])
 
         # ---------- 1) STATS ----------
@@ -1460,7 +1554,8 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
                             "difficulty": _bd,
                             "questions": _bqs,
                         }).execute()
-                        _link = _worksheet_link(_saved.data[0]["id"])
+                        _ws_id = _saved.data[0]["id"]
+                        _link = _worksheet_link(_ws_id)  # plain link (no login key) to share elsewhere
                         load_shared_worksheets.clear()  # show it to students straight away
                     except Exception as e:
                         st.error(f"Couldn't save the worksheet: {e}")
@@ -1469,9 +1564,47 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
                         _to = sorted({u["email"] for u in _all
                                       if u.get("email") and not u.get("email_opt_out")})
                         with st.spinner(f"Emailing {len(_to)} students..."):
-                            _ok, _bad = _send_worksheet_emails(_to, _title.strip(), _link)
+                            _ok, _bad = _send_worksheet_emails(_to, _title.strip(), _ws_id)
                         st.success(f"Saved. Emailed {_ok} of {len(_to)} students.")
                         st.write(f"Direct link: {_link}")
                         if _bad:
                             st.warning(f"{len(_bad)} emails failed:")
                             st.text_area("Failed addresses", "\n".join(_bad), height=120)
+
+        # ---------- 7) MANAGE (DELETE) SHARED WORKSHEETS ----------
+        with _tabs[6]:
+            st.markdown("#### Shared worksheets")
+            st.caption("Deleting a worksheet removes it from the 📬 Shared Worksheets tab, and "
+                       "its email link will say it can't be found. Emails already sent can't "
+                       "be recalled.")
+            try:
+                _all_ws = (_db.table("shared_worksheets")
+                           .select("id, created_at, title, topic, difficulty, questions")
+                           .order("created_at", desc=True).execute().data or [])
+            except Exception as e:
+                _all_ws = []
+                st.error(f"Couldn't load worksheets: {e}")
+
+            if not _all_ws:
+                st.info("No worksheets sent yet.")
+            for _ws in _all_ws:
+                _when = str(_ws.get("created_at", ""))[:16].replace("T", " ")
+                with st.expander(f"#{_ws['id']} · {_ws['title']} · {_when}"):
+                    st.caption(f"{_ws['topic']} · {_ws['difficulty']} · "
+                               f"{len(_ws.get('questions') or [])} questions")
+                    for _i, _q in enumerate(_ws.get("questions") or [], 1):
+                        st.markdown(f"**Q{_i}.** {_q}")
+                    _sure = st.checkbox("Yes, delete this worksheet permanently",
+                                        key=f"ws_del_ok_{_ws['id']}")
+                    if st.button("Delete worksheet", key=f"ws_del_{_ws['id']}"):
+                        if not _sure:
+                            st.error("Tick the confirmation box first.")
+                        else:
+                            try:
+                                _db.table("shared_worksheets").delete().eq("id", _ws["id"]).execute()
+                                load_shared_worksheets.clear()  # students stop seeing it at once
+                                load_shared_worksheet.clear()
+                                st.success(f"Deleted worksheet #{_ws['id']}.")
+                                st.rerun()
+                            except Exception as e:
+                                st.error(f"Delete failed: {e}")

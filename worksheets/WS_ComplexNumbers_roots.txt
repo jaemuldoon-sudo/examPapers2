@@ -1,0 +1,8 @@
+q1  Solve z^2 -6z +25=0
+q2 If 1/2 - 1/2i isa root of 2z^ + bz + c=0 where b,c eR, fint the values of b and c 
+q3 Show that (1+i) is a root of z^2 - (3-i)z +4=0 and find the other root. 
+q4  Solve the equation z^2 + (2-i)z + (1-i) =0
+q5 Find the cubic equation with roots 1+i, 1-i and 5 
+q6 -2, z1 and z2 are the roots of the equation  z^3 + 8 =0. Find z1 and z2 in the form of a+bi
+q7 If -1+31 is a root of z^3 +3z^2 +kz -10 =0 where keR find the value of k and the other 2 roots.
+q8  Verify that z^2+9 is a factor of z^3- (2-i)z^2 + 9z -18 + 9i
