@@ -624,10 +624,13 @@ def show_shared_worksheet(ws, key_prefix):
 
         # keep the extra question on screen so its answer can be shown too
         if more:
+            hist = similar_history(k)
             with st.spinner("Writing another question..."):
-                st.session_state[f"{k}_sim"] = generate_similar_question(
-                    q, ws["topic"], ws["difficulty"], ws.get("subtopics") or []
+                new_q = generate_similar_question(
+                    q, ws["topic"], ws["difficulty"], ws.get("subtopics") or [], avoid=hist
                 )
+            hist.append(new_q)
+            st.session_state[f"{k}_sim"] = new_q
         sim = st.session_state.get(f"{k}_sim")
         if sim:
             st.markdown(
@@ -808,7 +811,22 @@ def generate_answer(question, topic, difficulty):
     return call_claude(system_prompt, user_prompt)
 
 
-def generate_similar_question(question, topic, difficulty, subtopics=None):
+SIMILAR_VARIATIONS = [
+    "Use completely different numbers from the original.",
+    "Set it in a different context or wording from the original.",
+    "Reverse the direction: give what the original asked for and ask for what it gave.",
+    "Ask for the answer in a different form from the original.",
+    "Add one short follow-up part that extends the same skill.",
+    "Use numbers that land in a different case (e.g. different sign, quadrant or type of answer).",
+]
+
+
+def similar_history(key):
+    """Questions already given for one 'More Like This' button (per student session)."""
+    return st.session_state.setdefault(f"{key}_hist", [])
+
+
+def generate_similar_question(question, topic, difficulty, subtopics=None, avoid=None):
     # Scope rules only apply when we know which subtopics were selected
     rules, blocked = scope_rules(resolve_subtopics(topic, subtopics or []))
 
@@ -830,7 +848,16 @@ def generate_similar_question(question, topic, difficulty, subtopics=None):
     )
     system_prompt = add_scope_rules(system_prompt, rules)
 
-    user_prompt = f"Topic: {topic}\nOriginal question: {question}\n\nCreate a NEW similar question."
+    user_prompt = (
+        f"Topic: {topic}\nOriginal question: {question}\n\n"
+        f"Create a NEW similar question. {random.choice(SIMILAR_VARIATIONS)}"
+    )
+    if avoid:
+        previous = "\n".join(f"- {a}" for a in avoid[-5:])
+        user_prompt += (
+            "\n\nThe student has ALREADY been given these, so yours must be clearly "
+            f"different from all of them (different numbers and setup):\n{previous}"
+        )
 
     return call_claude(system_prompt, user_prompt)
 
@@ -1259,7 +1286,9 @@ with main_tab1:
                 st.markdown(ans)
 
             if show_sim:
-                sim = generate_similar_question(q, topic, difficulty, subtopics)
+                _hist = similar_history("main_" + hashlib.md5(q.encode()).hexdigest())
+                sim = generate_similar_question(q, topic, difficulty, subtopics, avoid=_hist)
+                _hist.append(sim)
                 st.markdown("**Another question like this:**")
                 st.markdown(sim)
 
