@@ -809,52 +809,38 @@ def generate_answer(question, topic, difficulty):
     return call_claude(system_prompt, user_prompt)
 
 
-SIMILAR_VARIATIONS = [
-    "Use completely different numbers from the original.",
-    "Set it in a different context or wording from the original.",
-    "Reverse the direction: give what the original asked for and ask for what it gave.",
-    "Ask for the answer in a different form from the original.",
-    "Add one short follow-up part that extends the same skill.",
-    "Use numbers that land in a different case (e.g. different sign, quadrant or type of answer).",
-]
-
-
 def similar_history(key):
     """Questions already given for one 'More Like This' button (per student session)."""
     return st.session_state.setdefault(f"{key}_hist", [])
 
 
 def generate_similar_question(question, topic, difficulty, subtopics=None, avoid=None):
+    """Same question, same wording and parts: only the numbers change."""
     # Scope rules only apply when we know which subtopics were selected
-    rules, blocked = scope_rules(resolve_subtopics(topic, subtopics or []))
+    rules, _ = scope_rules(resolve_subtopics(topic, subtopics or []))
 
-    # Get templates for better context
-    templates = find_template_questions(topic, difficulty, blocked)
-    template_context = format_template_for_prompt(templates[:2])  # Just 2 examples
-    
     system_prompt = (
         "You are a Leaving Cert Higher Level Maths tutor. "
-        "Generate ONE new question similar in style and difficulty but not identical. "
-        "Follow authentic LC exam question format. "
-        "Use LaTeX formatting wrapped in $ ... $. "
-        "Use ONLY inline LaTeX with single dollar signs: $ ... $. "
-        "Never use $$ ... $$ under any circumstances. "
-        "Never output plain text maths such as x^2, 1/6, sqrt(x), etc. "
-        "Every mathematical expression must be inside $ ... $. "
-        "No solution."
-        f"{template_context}"
+        "Rewrite the student's question with NEW NUMERICAL VALUES ONLY. "
+        "Keep everything else the same: the same wording, the same parts (a), (b), (c) "
+        "in the same order, the same structure and the same instructions. "
+        "Change only the numbers (coefficients, constants, lengths, angles, data values). "
+        "Choose values that keep the question working the same way: the same type of "
+        "answer and the same case (for example the same quadrant, the same type of roots, "
+        "the same sign of the result), with answers that come out cleanly at the same "
+        "difficulty. Check that every part can still be answered with the new values. "
+        "Use LaTeX for ALL maths, inline with single dollar signs: $ ... $. "
+        "Never use $$ ... $$ or plain text maths such as x^2, 1/6, sqrt(x). "
+        "Output ONLY the rewritten question: no solution, no heading, no commentary."
     )
     system_prompt = add_scope_rules(system_prompt, rules)
 
-    user_prompt = (
-        f"Topic: {topic}\nOriginal question: {question}\n\n"
-        f"Create a NEW similar question. {random.choice(SIMILAR_VARIATIONS)}"
-    )
+    user_prompt = f"Topic: {topic}\nDifficulty: {difficulty}\n\nOriginal question:\n{question}"
     if avoid:
         previous = "\n".join(f"- {a}" for a in avoid[-5:])
         user_prompt += (
-            "\n\nThe student has ALREADY been given these, so yours must be clearly "
-            f"different from all of them (different numbers and setup):\n{previous}"
+            "\n\nThe student has ALREADY been given these versions, so use a different "
+            f"set of numbers from all of them:\n{previous}"
         )
 
     return call_claude(system_prompt, user_prompt)
