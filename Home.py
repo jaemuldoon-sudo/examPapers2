@@ -1604,7 +1604,7 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
                             st.warning(f"{len(_bad)} emails failed:")
                             st.text_area("Failed addresses", "\n".join(_bad), height=120)
 
-        # ---------- 7) MANAGE (DELETE) SHARED WORKSHEETS ----------
+        # ---------- 7) MANAGE SHARED WORKSHEETS (share / delete) ----------
         with _tabs[6]:
             st.markdown("#### Shared worksheets")
             st.caption("Deleting a worksheet removes it from the 📬 Shared Worksheets tab, and "
@@ -1627,6 +1627,35 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
                                f"{len(_ws.get('questions') or [])} questions")
                     for _i, _q in enumerate(_ws.get("questions") or [], 1):
                         st.markdown(f"**Q{_i}.** {_q}")
+                    # ---- share this worksheet with one student ----
+                    st.markdown("**Share this worksheet**")
+                    st.caption("Link (the student logs in as normal):")
+                    st.code(_worksheet_link(_ws["id"]), language=None)
+                    _one = st.text_input("Email it to one student (their email gets a "
+                                         "one-click login link)",
+                                         key=f"ws_share_to_{_ws['id']}",
+                                         placeholder="student@example.com")
+                    if st.button("Send to this student", key=f"ws_share_{_ws['id']}"):
+                        _addr = (_one or "").strip().lower()
+                        if not _addr or "@" not in _addr:
+                            st.error("Enter a valid email address.")
+                        else:
+                            try:
+                                _has = _db.table("paid_users").select("email") \
+                                          .eq("email", _addr).execute().data
+                            except Exception:
+                                _has = None
+                            if not _has:
+                                st.warning(f"{_addr} doesn't have access yet, so the link will "
+                                           "take them to the payment page. Grant access in the "
+                                           "🎁 Free access tab first if that's not what you want.")
+                            _ok, _bad = _send_worksheet_emails([_addr], _ws["title"], _ws["id"])
+                            if _ok:
+                                st.success(f"Sent '{_ws['title']}' to {_addr}.")
+                            else:
+                                st.error("Sending failed. Check RESEND_API_KEY and WORKSHEET_FROM.")
+
+                    st.markdown("---")
                     _sure = st.checkbox("Yes, delete this worksheet permanently",
                                         key=f"ws_del_ok_{_ws['id']}")
                     if st.button("Delete worksheet", key=f"ws_del_{_ws['id']}"):
