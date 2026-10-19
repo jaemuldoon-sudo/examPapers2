@@ -1,0 +1,6 @@
+q1 Write z = 2(cos π/3 + i sin π/3) in rectangular form.
+q2 Write z = 100(cos 25π +isin 25π) in rectangular form.
+q3 Write z = 6(cos 2π/3 + i Sin 2π/3) in rectangular form.
+q4 Write z = 2(cos 11π/6 + i Sin 11π/6) in rectangular form.
+q5 Write z = 4(cos 7π/6 + i Sin 7π/6) in rectangular form.
+q6 Write z = 3(cos 3π/2 + i Sin 3π/2) in rectangular form.

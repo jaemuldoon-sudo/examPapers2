@@ -1457,6 +1457,22 @@ from collections import Counter as _AdminCounter
 def _admin_service_client():
     return create_client(_SUPABASE_URL, os.getenv("SUPABASE_SERVICE_KEY"))
 
+def _email_worksheet_to_all(db, ws_id, title):
+    """Email a saved worksheet to every student who hasn't opted out, and show the result."""
+    _all = db.table("paid_users").select("*").execute().data or []
+    _to = sorted({u["email"] for u in _all
+                  if u.get("email") and not u.get("email_opt_out")})
+    if not _to:
+        st.warning("No students to email.")
+        return
+    with st.spinner(f"Emailing {len(_to)} students..."):
+        _ok, _bad = _send_worksheet_emails(_to, title, ws_id)
+    st.success(f"Emailed '{title}' to {_ok} of {len(_to)} students.")
+    if _bad:
+        st.warning(f"{len(_bad)} emails failed:")
+        st.text_area("Failed addresses", "\n".join(_bad), height=120,
+                     key=f"failed_{ws_id}")
+
 if st.session_state.get("email") == _ADMIN_EMAIL:
     st.divider()
     st.subheader("🔒 Admin")
@@ -1671,6 +1687,7 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
                         _gen = generate_worksheet(_bt, _bs, _bd)
                     st.session_state.bc_text = "\n\n".join(_gen)
                     st.session_state.bc_title = _bt
+                    st.session_state.bc_saved_id = None  # new questions = new worksheet
 
             st.markdown("**Option B:** describe the questions you want, one per line")
             _briefs_text = st.text_area(
@@ -1689,6 +1706,7 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
                         _gen = generate_from_descriptions(_bt, _briefs, _bd)
                     st.session_state.bc_text = "\n\n".join(_gen)
                     st.session_state.bc_title = _bt
+                    st.session_state.bc_saved_id = None  # new questions = new worksheet
                     if len(_gen) != len(_briefs):
                         st.warning(f"Asked for {len(_briefs)} questions but got {len(_gen)}. "
                                    "Check them below before sending.")
@@ -1718,45 +1736,69 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
                     else:
                         st.error("Test email failed. Check RESEND_API_KEY and WORKSHEET_FROM.")
 
+            # Saving twice (or saving then sending) updates the same worksheet
+            # instead of creating duplicates. It starts fresh after new questions are generated.
+            def _bc_save():
+                """Save (or update) this worksheet. Returns its id, or None on failure."""
+                _row = {
+                    "title": _title.strip(),
+                    "topic": _bt,
+                    "subtopics": resolve_subtopics(_bt, _bs),
+                    "difficulty": _bd,
+                    "questions": _bqs,
+                }
+                _sig = repr(_row)
+                _id = st.session_state.get("bc_saved_id")
+                try:
+                    if _id and st.session_state.get("bc_saved_sig") == _sig:
+                        return _id  # already saved, nothing changed
+                    if _id:
+                        _db.table("shared_worksheets").update(_row).eq("id", _id).execute()
+                    else:
+                        _id = _db.table("shared_worksheets").insert(_row).execute().data[0]["id"]
+                    load_shared_worksheets.clear()  # show it to students straight away
+                    load_shared_worksheet.clear()
+                except Exception as e:
+                    st.error(f"Couldn't save the worksheet: {e}")
+                    return None
+                st.session_state.bc_saved_id = _id
+                st.session_state.bc_saved_sig = _sig
+                return _id
+
+            if st.session_state.get("bc_saved_id"):
+                st.caption(f"This worksheet is saved as #{st.session_state.bc_saved_id}. "
+                           "Saving again updates it rather than making a copy.")
+
+            if st.button("💾 Save worksheet", key="bc_save"):
+                if not _bqs or not (_title or "").strip():
+                    st.error("Add a title and at least one question first.")
+                else:
+                    _ws_id = _bc_save()
+                    if _ws_id:
+                        st.success(f"Saved as worksheet #{_ws_id}. Students can see it in "
+                                   "📬 Shared Worksheets. No emails were sent.")
+                        st.write(f"Direct link: {_worksheet_link(_ws_id)}")
+
+            st.markdown("---")
             _bc_confirm = st.checkbox(
                 "I've checked the questions and want to send this to ALL students",
                 key="bc_confirm",
             )
-            if st.button("Save & email all students", key="bc_send", type="primary"):
+            if st.button("📧 Send to all students", key="bc_send", type="primary"):
                 if not _bqs or not (_title or "").strip():
                     st.error("Add a title and at least one question first.")
                 elif not _bc_confirm:
                     st.error("Tick the confirmation box first.")
                 else:
-                    try:
-                        _saved = _db.table("shared_worksheets").insert({
-                            "title": _title.strip(),
-                            "topic": _bt,
-                            "subtopics": resolve_subtopics(_bt, _bs),
-                            "difficulty": _bd,
-                            "questions": _bqs,
-                        }).execute()
-                        _ws_id = _saved.data[0]["id"]
-                        _link = _worksheet_link(_ws_id)  # plain link (no login key) to share elsewhere
-                        load_shared_worksheets.clear()  # show it to students straight away
-                    except Exception as e:
-                        st.error(f"Couldn't save the worksheet: {e}")
-                    else:
-                        _all = _db.table("paid_users").select("*").execute().data or []
-                        _to = sorted({u["email"] for u in _all
-                                      if u.get("email") and not u.get("email_opt_out")})
-                        with st.spinner(f"Emailing {len(_to)} students..."):
-                            _ok, _bad = _send_worksheet_emails(_to, _title.strip(), _ws_id)
-                        st.success(f"Saved. Emailed {_ok} of {len(_to)} students.")
-                        st.write(f"Direct link: {_link}")
-                        if _bad:
-                            st.warning(f"{len(_bad)} emails failed:")
-                            st.text_area("Failed addresses", "\n".join(_bad), height=120)
+                    _ws_id = _bc_save()  # saves first if needed, so the link works
+                    if _ws_id:
+                        _email_worksheet_to_all(_db, _ws_id, _title.strip())
+                        st.write(f"Direct link: {_worksheet_link(_ws_id)}")
 
         # ---------- 7) MANAGE SHARED WORKSHEETS (share / delete) ----------
         with _tabs[6]:
             st.markdown("#### Shared worksheets")
-            st.caption("Deleting a worksheet removes it from the 📬 Shared Worksheets tab, and "
+            st.caption("Every saved worksheet is listed here, whether or not it has been emailed. Deleting a worksheet removes it from the 📬 Shared Worksheets tab, and "
                        "its email link will say it can't be found. Emails already sent can't "
                        "be recalled.")
             try:
@@ -1768,7 +1810,7 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
                 st.error(f"Couldn't load worksheets: {e}")
 
             if not _all_ws:
-                st.info("No worksheets sent yet.")
+                st.info("No worksheets saved yet.")
             for _ws in _all_ws:
                 _when = str(_ws.get("created_at", ""))[:16].replace("T", " ")
                 with st.expander(f"#{_ws['id']} · {_ws['title']} · {_when}"):
@@ -1803,6 +1845,17 @@ if st.session_state.get("email") == _ADMIN_EMAIL:
                                 st.success(f"Sent '{_ws['title']}' to {_addr}.")
                             else:
                                 st.error("Sending failed. Check RESEND_API_KEY and WORKSHEET_FROM.")
+
+                    # ---- email this worksheet to every student ----
+                    st.markdown("---")
+                    st.markdown("**Send to all students**")
+                    _all_ok = st.checkbox("Yes, email this worksheet to ALL students",
+                                          key=f"ws_all_ok_{_ws['id']}")
+                    if st.button("📧 Send to all students", key=f"ws_all_{_ws['id']}"):
+                        if not _all_ok:
+                            st.error("Tick the confirmation box first.")
+                        else:
+                            _email_worksheet_to_all(_db, _ws["id"], _ws["title"])
 
                     st.markdown("---")
                     _sure = st.checkbox("Yes, delete this worksheet permanently",
