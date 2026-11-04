@@ -1,0 +1,8 @@
+q1 Use de Moivres Theorem to write (2+2i)^8 in the form x+yi
+q2 Use de Moivres Theorem to write (1/2-rt3/2i)^60 in the form x+yi
+q3 Use de Moivres Theorem to find four solutions to the equation z^4= -2 -2rt3i
+q4 Use de Moivres Theorem to solve z^2=-9i
+q5 Use de Moivres Theorem to find the solutions to the equation z^4 + 1 = 0 
+q6 if (a+bi)^2 = -5 -12i, find the two possible values for the complex number a+bi
+
+

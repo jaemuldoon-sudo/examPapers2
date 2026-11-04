@@ -1,0 +1,17 @@
+q1 Find the equation of the tangent to the curve y = (2x+3)^3 at (-1,1)
+q2 Find the coordinates of the local maximum, local minimum and point of inflection of the curve y=x^3 -3x^2 +5 
+q3 A particle moves along a straight line such that, after t seconds, the distance moved, s meters, is given by s=t^3 - 9t^2 +15t -3 
+	i) Find the velocity and acceleration of the particle in terms of t
+	ii) Find the value of t when its velocity is zero
+	iii) Find the acceleration after 3 seconds
+	iv) Find the time at which the acceleration is 6m/s and the velocity at this time
+q4 A spherical snowball melts at a rate of 20 cm^3/h. What is the rate of change of the radius when 
+	i) the radius is r 
+	ii) the radius is 2cm 
+	iii) What is the rate of change of the surface area when the radius is 5cm
+q5 Differentiate y = ((x^2-1) / (2x+1)) ^(1/3)
+q6 Differntiate  y = tan ^-1 (x/2)
+q7 Differntiate  y = Cos^4 2x
+q8 Differntiate  y = sin 3/x
+q9 Differntiate y = x^2 + 1 from first principles 
+q10 Differentiate y = loge ((x^2)/(x2+1))^1/2

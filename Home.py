@@ -325,11 +325,23 @@ def _send_welcome_email(to_email):
 st.session_state.setdefault("email", None)
 st.session_state.setdefault("code_sent", False)
 
+# Capture the worksheet id on arrival so it survives the whole login flow
+# (both the one-click link and the email-code login).
+if st.query_params.get("worksheet") and not st.session_state.get("pending_worksheet"):
+    st.session_state["pending_worksheet"] = st.query_params.get("worksheet")
+
 # one-click login from an email link (?t=...)
 _link_token = st.query_params.get("t")
 if _link_token:
     _link_email = _check_login_token(_link_token)
-    del st.query_params["t"]  # keep the key out of the address bar / bookmarks
+    # remember which worksheet they were opening, so it survives the rerun
+    _ws_param = st.query_params.get("worksheet")
+    if _ws_param:
+        st.session_state["pending_worksheet"] = _ws_param
+    # rebuild the query string: drop t, keep worksheet if present
+    st.query_params.clear()
+    if _ws_param:
+        st.query_params["worksheet"] = _ws_param
     if _link_email and st.session_state.email is None:
         st.session_state.email = _link_email
         st.session_state.code_sent = False
@@ -1255,7 +1267,7 @@ def _leave_linked_worksheet():
         del st.query_params["worksheet"]
 
 
-_linked_id = st.query_params.get("worksheet")
+_linked_id = st.query_params.get("worksheet") or st.session_state.pop("pending_worksheet", None)
 if _linked_id:
     try:
         _linked = load_shared_worksheet(int(_linked_id)) if str(_linked_id).isdigit() else None
