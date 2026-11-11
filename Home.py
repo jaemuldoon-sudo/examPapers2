@@ -1475,15 +1475,32 @@ with main_tab1:
                 show_sim = st.button(f"More Like This", key=f"more_{i}", use_container_width=True)
 
             if show_ans:
-                ans = generate_answer(q, topic, difficulty)
+                with st.spinner("Working it out..."):
+                    ans = generate_answer(q, topic, difficulty)
                 st.markdown(ans)
 
+            # stable per-question key so the similar question persists across reruns
+            _qkey = "main_" + hashlib.md5(q.encode()).hexdigest()
+
             if show_sim:
-                _hist = similar_history("main_" + hashlib.md5(q.encode()).hexdigest())
-                sim = generate_similar_question(q, topic, difficulty, subtopics, avoid=_hist)
+                _hist = similar_history(_qkey)
+                with st.spinner("Writing another question..."):
+                    sim = generate_similar_question(q, topic, difficulty, subtopics, avoid=_hist)
                 _hist.append(sim)
-                st.markdown("**Another question like this:**")
-                st.markdown(sim)
+                st.session_state[f"{_qkey}_sim"] = sim
+
+            # keep the extra question (and its own Show Answer button) on screen
+            _sim = st.session_state.get(f"{_qkey}_sim")
+            if _sim:
+                st.markdown(
+                    "<div style='background:#f7f9fc;padding:10px 14px;border-radius:8px;"
+                    "border:1px solid #e3e6eb;margin-top:6px;'><b>Another question like this:</b></div>",
+                    unsafe_allow_html=True,
+                )
+                st.markdown(_sim)
+                if st.button("Show Answer to this one", key=f"{_qkey}_sim_ans"):
+                    with st.spinner("Working it out..."):
+                        st.markdown(generate_answer(_sim, topic, difficulty))
 
     else:
         st.info("Choose a topic, pick subtopics, and select mode to begin.")
