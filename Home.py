@@ -634,7 +634,7 @@ SUBTOPICS = {
         "Second Derivative",
         "Local Maximum and Minimum",
         "Rates Of Change",
-        "Differential Equations"
+        "Firat and Second Order Differential Equations"
     ],
     
 }
