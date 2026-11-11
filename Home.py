@@ -847,7 +847,7 @@ def format_template_for_prompt(templates):
 def call_claude(system_prompt, user_prompt):
     response = client.messages.create(
         model="claude-sonnet-5",
-        max_tokens=4096,
+        max_tokens=8192,
         system=system_prompt,
         messages=[
             {"role": "user", "content": user_prompt}
