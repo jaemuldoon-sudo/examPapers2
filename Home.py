@@ -633,7 +633,8 @@ SUBTOPICS = {
         "Inverse Trigonometric Functions",
         "Second Derivative",
         "Local Maximum and Minimum",
-        "Rates Of Change"
+        "Rates Of Change",
+        "Differential Equations"
     ],
     
 }
