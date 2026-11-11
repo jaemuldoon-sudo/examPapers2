@@ -634,7 +634,7 @@ SUBTOPICS = {
         "Second Derivative",
         "Local Maximum and Minimum",
         "Rates Of Change",
-        "Firat and Second Order Differential Equations"
+        "First and Second Order Differential Equations"
     ],
     
 }
@@ -669,6 +669,49 @@ AVOID_DESCRIPTIONS = {
 TEMPLATE_BLOCKLIST = {
     "De Moivres Theorem": ["moivre", "nth root", "cube root", "induction"],
 }
+
+
+# -----------------------------
+# SUBTOPIC EXAMPLES / STYLE STEERING
+# For subtopics where the generic prompt drifts off the LC style, give the
+# AI an explicit instruction plus worked example questions to copy the STYLE of.
+# When such a subtopic is selected, this text is injected into the prompt.
+# To steer another subtopic: add an entry {subtopic name: guidance string}.
+# -----------------------------
+SUBTOPIC_EXAMPLES = {
+    "First and Second Order Differential Equations": (
+        "For 'First and Second Order Differential Equations', generate ONLY "
+        "Leaving Cert 'show that' verification questions of this exact type: the student is "
+        "GIVEN a function $y = f(x)$, and must differentiate it (first and, where needed, "
+        "second derivative), substitute into a GIVEN differential equation, and show it "
+        "equals zero. Do NOT ask students to solve differential equations, and do NOT ask "
+        "them to merely 'differentiate' a function. Every question MUST follow the form: "
+        "'Given $y = f(x)$, show that [differential equation] $= 0$.' "
+        "Choose $f(x)$ so the differential equation genuinely holds (verify it yourself "
+        "before writing the question). Use realistic LC-style functions such as $e^{kx}$, "
+        "$x e^{kx}$, $\\sin kx$, $\\cos kx$, $e^{kx}\\sin kx$, or combinations. "
+        "Follow the STYLE of these real examples exactly, but create NEW ones (do not copy): "
+        "(1) Given $y = x e^{-2x}$, show that $\\frac{d^2y}{dx^2} + 4\\frac{dy}{dx} + 4y = 0$. "
+        "(2) Given $y = \\sin 2x$, show that $\\frac{d^2y}{dx^2} + 4y = 0$. "
+        "(3) Given $y = e^{3x}$, show that $\\frac{d^2y}{dx^2} - 9y = 0$."
+    ),
+}
+
+
+def subtopic_examples(subtopics):
+    """Return any style-steering guidance for the selected subtopics."""
+    parts = [SUBTOPIC_EXAMPLES[s] for s in (subtopics or []) if s in SUBTOPIC_EXAMPLES]
+    return "\n\n".join(parts)
+
+
+def add_subtopic_examples(system_prompt, guidance):
+    """Append subtopic style guidance AFTER everything else so it takes priority."""
+    if guidance:
+        system_prompt += (
+            "\n\nSUBTOPIC STYLE REQUIREMENTS (these take priority over the "
+            "general instructions and examples above):\n" + guidance
+        )
+    return system_prompt
 
 
 def scope_rules(subtopics):
@@ -891,6 +934,7 @@ def generate_worksheet(topic, subtopics, difficulty):
         f"{template_context}"
     )
     system_prompt = add_scope_rules(system_prompt, rules)
+    system_prompt = add_subtopic_examples(system_prompt, subtopic_examples(subtopics))
 
     user_prompt = (
         f"Create a {difficulty} worksheet on {topic}. "
@@ -925,6 +969,7 @@ def generate_balanced_worksheet(topic, subtopics):
         f"{template_context}"
     )
     system_prompt = add_scope_rules(system_prompt, rules)
+    system_prompt = add_subtopic_examples(system_prompt, subtopic_examples(subtopics))
 
     user_prompt = f"Topic: {topic}\nSubtopics: {chosen}\n\nCreate NEW questions matching LC exam style."
 
@@ -974,6 +1019,7 @@ def generate_similar_question(question, topic, difficulty, subtopics=None, avoid
         "Output ONLY the rewritten question: no solution, no heading, no commentary."
     )
     system_prompt = add_scope_rules(system_prompt, rules)
+    system_prompt = add_subtopic_examples(system_prompt, subtopic_examples(subtopics))
 
     user_prompt = f"Topic: {topic}\nDifficulty: {difficulty}\n\nOriginal question:\n{question}"
     if avoid:
@@ -1014,6 +1060,7 @@ def generate_exam_style_worksheet(topic, subtopics):
         f"{template_context}"
     )
     system_prompt = add_scope_rules(system_prompt, rules)
+    system_prompt = add_subtopic_examples(system_prompt, subtopic_examples(subtopics))
 
     user_prompt = (
         f"Topic: {topic}\n"
@@ -1053,6 +1100,7 @@ def generate_examPaper(topic, subtopics):
         f"{template_context}"
     )
     system_prompt = add_scope_rules(system_prompt, rules)
+    system_prompt = add_subtopic_examples(system_prompt, subtopic_examples(subtopics))
 
     user_prompt = (
         f"Topic: {topic}\n"
@@ -1118,6 +1166,7 @@ def generate_multipart_questions(topic, subtopics):
         f"{template_context}"
     )
     system_prompt = add_scope_rules(system_prompt, rules)
+    system_prompt = add_subtopic_examples(system_prompt, subtopic_examples(subtopics))
 
     user_prompt = (
         f"Topic: {topic}\n"
