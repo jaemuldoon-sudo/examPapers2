@@ -278,6 +278,31 @@ def _send_worksheet_emails(recipients, title, ws_id=None):
             .replace("{{DAYS}}", str(_LINK_DAYS))
         )
 
+    def text_for(r):
+        # Plain-text version sent alongside the HTML (helps inbox placement)
+        link = _worksheet_link(ws_id, r) if ws_id else _APP_URL
+        return (
+            "Hi,\n\n"
+            "A new worksheet is ready for you on aiMATHS. Every question comes "
+            "with a full step-by-step solution.\n\n"
+            f"WORKSHEET: {title}\n\n"
+            "How to get the most out of it:\n"
+            "1. Open the worksheet with the link below. It logs you straight in, with no code needed.\n"
+            "2. Try each question first, on paper, before you tap Show Answer.\n"
+            "3. Check the step-by-step solution, and if you got one wrong, practise that skill again until it sticks.\n\n"
+            f"Open worksheet: {link}\n\n"
+            f"This link logs you straight in for the next {_LINK_DAYS} days, "
+            "so please don't forward this email.\n\n"
+            "If you get stuck or anything doesn't work, just reply to this email and I'll help you out.\n\n"
+            "Best of luck with it!\n\n"
+            "The aiMATHS Team\n"
+            "https://aimaths.ie\n\n"
+            "--\n"
+            "aiMATHS · Unlimited maths practice for Leaving & Junior Cert\n"
+            "You're getting this because you have an aiMATHS account. "
+            "To stop these emails, just reply 'unsubscribe'.\n"
+        )
+
     sent, failed = 0, []
     for i in range(0, len(recipients), 100):
         chunk = recipients[i:i + 100]
@@ -286,8 +311,9 @@ def _send_worksheet_emails(recipients, title, ws_id=None):
             msg = {
                 "from": f"aiMATHS <{_WORKSHEET_FROM}>",
                 "to": [r],
-                "subject": title,
+                "subject": f"New worksheet: {title}",
                 "html": body_for(r),
+                "text": text_for(r),
             }
             if _ADMIN_NOTIFY_EMAIL:
                 msg["reply_to"] = _ADMIN_NOTIFY_EMAIL
@@ -390,6 +416,7 @@ _WELCOME_HTML = """<!DOCTYPE html>
               <p style="margin:0 0 18px 0; background-color:#eef3f8; padding:14px 16px; border-radius:10px;">
                 Your access runs until the <strong>end of the current academic year</strong>, so you can practise as much as you like between now and your exams.
               </p>
+              <p style="margin:0 0 18px 0;">📥 <strong>Quick tip:</strong> add <strong>{{FROM}}</strong> to your contacts, so your worksheet emails land in your main inbox.</p>
               <p style="margin:0 0 18px 0;">If you have any questions or run into any trouble, just reply to this email and I'll help you out.</p>
               <p style="margin:0 0 6px 0;">Best of luck with the maths!</p>
               <p style="margin:0; color:#5b6b7c;">The aiMATHS Team<br><a href="https://aimaths.ie" style="color:#0074d4; text-decoration:none;">aimaths.ie</a></p>
@@ -414,13 +441,41 @@ _WELCOME_HTML = """<!DOCTYPE html>
 """
 
 
+_WELCOME_TEXT = """Hi,
+
+Thanks for joining aiMATHS. You're all set up and ready to go!
+
+Here's how to get started:
+1. Go to aimaths.ie and choose your level: Leaving Cert or Junior Cert, Higher or Ordinary.
+2. Log in with this email address. Just enter it, and we'll send you a 6-digit code to type in. No password to remember.
+3. Pick a topic (or try a lucky dip) and start practising. Every question comes with a full step-by-step solution.
+
+Start practising: https://aimaths.ie
+
+Your access runs until the end of the current academic year, so you can practise as much as you like between now and your exams.
+
+Quick tip: add {{FROM}} to your contacts, so your worksheet emails land in your main inbox.
+
+If you have any questions or run into any trouble, just reply to this email and I'll help you out.
+
+Best of luck with the maths!
+
+The aiMATHS Team
+https://aimaths.ie
+
+--
+aiMATHS · Unlimited maths practice for Leaving & Junior Cert
+"""
+
+
 def _send_welcome_email(to_email):
     """Send the branded welcome email to one person. Returns True on success."""
     msg = {
         "from": f"aiMATHS <{_WORKSHEET_FROM}>",
         "to": [to_email],
         "subject": _WELCOME_SUBJECT,
-        "html": _WELCOME_HTML,
+        "html": _WELCOME_HTML.replace("{{FROM}}", html.escape(_WORKSHEET_FROM or "")),
+        "text": _WELCOME_TEXT.replace("{{FROM}}", _WORKSHEET_FROM or ""),
     }
     if _ADMIN_NOTIFY_EMAIL:
         msg["reply_to"] = _ADMIN_NOTIFY_EMAIL
