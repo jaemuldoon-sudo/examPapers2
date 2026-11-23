@@ -1,0 +1,10 @@
+q1 Differentiate y=2x-Sin2x
+q2 Differentiate y=Cos^-1 10x^2
+q3 Differentiate y=(e^x + e^-x) /2
+q4 Differentiate y=1/sqroot(x^2+2x+1)
+q5 Differentiate y=loge(tanx)
+q6 Differentiate y = e^(1-Sinx)
+q7 Differentiate y= loge((x^2 / x^2 +1))^1/2
+q8 Differentiate y= tan^-1(1/x)
+q9 Differentiate y= (e^2x)Cos^4(3x)
+q10 Differentiate y= (Sinx / (1-Cosx))^1/2
