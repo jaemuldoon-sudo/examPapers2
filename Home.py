@@ -143,125 +143,6 @@ def _worksheet_link(ws_id, email=None):
     return url
 
 
-# ---------------------------------------------------------------------------
-# WORKSHEET EMAIL (same branded design as the welcome email below)
-# Placeholders filled in per student: {{TITLE}}, {{LINK}}, {{DAYS}}
-# ---------------------------------------------------------------------------
-_WORKSHEET_HTML = """<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body style="margin:0; padding:0; background-color:#f6f8fb; font-family:Arial, Helvetica, sans-serif;">
-
-  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">Your new worksheet is ready: {{TITLE}}. Every question has a full step-by-step solution.</div>
-
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f6f8fb; padding:24px 12px;">
-    <tr>
-      <td align="center">
-
-        <!-- Card -->
-        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px; width:100%; background-color:#ffffff; border-radius:16px; overflow:hidden; box-shadow:0 4px 18px rgba(18,50,79,0.08);">
-
-          <!-- Header -->
-          <tr>
-            <td style="background:linear-gradient(135deg,#12324f 0%,#0074d4 100%); background-color:#12324f; padding:36px 30px; text-align:center;">
-              <div style="font-size:32px; font-weight:bold; color:#ffffff; letter-spacing:1px;">aiMATHS</div>
-              <div style="font-size:16px; color:#ffffff; opacity:0.9; margin-top:6px;">Your new worksheet is ready 📝</div>
-            </td>
-          </tr>
-
-          <!-- Body -->
-          <tr>
-            <td style="padding:34px 34px 10px 34px; color:#1f2d3d; font-size:16px; line-height:1.6;">
-              <p style="margin:0 0 18px 0;">Hi,</p>
-              <p style="margin:0 0 18px 0;">A new worksheet is ready for you on <strong>aiMATHS</strong>. Every question comes with a full step-by-step solution.</p>
-
-              <!-- Worksheet box -->
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 22px 0; border:1px solid #e3e9f0; border-radius:12px;">
-                <tr>
-                  <td style="padding:16px 18px; color:#1f2d3d; font-size:15px; line-height:1.6;">
-                    <div style="font-size:12px; font-weight:bold; letter-spacing:1px; color:#0074d4; text-transform:uppercase; margin-bottom:4px;">Worksheet</div>
-                    <div style="font-size:18px; font-weight:bold; color:#12324f;">{{TITLE}}</div>
-                  </td>
-                </tr>
-              </table>
-
-              <p style="margin:0 0 10px 0; font-weight:bold; color:#12324f; font-size:17px;">How to get the most out of it:</p>
-            </td>
-          </tr>
-
-          <!-- Steps -->
-          <tr>
-            <td style="padding:0 34px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td style="padding:10px 0; vertical-align:top; width:42px;">
-                    <div style="width:30px; height:30px; background-color:#0074d4; color:#ffffff; border-radius:50%; text-align:center; line-height:30px; font-weight:bold;">1</div>
-                  </td>
-                  <td style="padding:10px 0; color:#1f2d3d; font-size:15px; line-height:1.5;">
-                    <strong>Tap the button below</strong> to open the worksheet. It logs you straight in, with no code needed.
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:10px 0; vertical-align:top;">
-                    <div style="width:30px; height:30px; background-color:#0074d4; color:#ffffff; border-radius:50%; text-align:center; line-height:30px; font-weight:bold;">2</div>
-                  </td>
-                  <td style="padding:10px 0; color:#1f2d3d; font-size:15px; line-height:1.5;">
-                    <strong>Try each question first</strong>, on paper, before you tap <em>Show Answer</em>. That's where the learning happens.
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:10px 0; vertical-align:top;">
-                    <div style="width:30px; height:30px; background-color:#0074d4; color:#ffffff; border-radius:50%; text-align:center; line-height:30px; font-weight:bold;">3</div>
-                  </td>
-                  <td style="padding:10px 0; color:#1f2d3d; font-size:15px; line-height:1.5;">
-                    <strong>Check the step-by-step solution</strong>, and if you got one wrong, practise that skill again until it sticks.
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- CTA button -->
-          <tr>
-            <td style="padding:26px 34px 10px 34px; text-align:center;">
-              <a href="{{LINK}}" style="display:inline-block; background-color:#ffd23f; color:#12324f; font-size:17px; font-weight:bold; text-decoration:none; padding:15px 40px; border-radius:10px;">Open worksheet →</a>
-            </td>
-          </tr>
-
-          <!-- Note + sign-off -->
-          <tr>
-            <td style="padding:16px 34px 10px 34px; color:#1f2d3d; font-size:15px; line-height:1.6;">
-              <p style="margin:0 0 18px 0; background-color:#eef3f8; padding:14px 16px; border-radius:10px;">
-                This button logs you straight in for the next <strong>{{DAYS}} days</strong>, so please <strong>don't forward this email</strong>.
-              </p>
-              <p style="margin:0 0 18px 0;">If you get stuck or anything doesn't work, just reply to this email and I'll help you out.</p>
-              <p style="margin:0 0 6px 0;">Best of luck with it!</p>
-              <p style="margin:0; color:#5b6b7c;">The aiMATHS Team<br><a href="https://aimaths.ie" style="color:#0074d4; text-decoration:none;">aimaths.ie</a></p>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="padding:24px 34px; text-align:center; color:#9aa7b4; font-size:12px; line-height:1.6; border-top:1px solid #eef3f8;">
-              aiMATHS · Unlimited maths practice for Leaving &amp; Junior Cert<br>
-              You're getting this because you have an aiMATHS account. To stop these emails, just reply 'unsubscribe'.
-            </td>
-          </tr>
-
-        </table>
-
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
-"""
-
-
 def _send_worksheet_emails(recipients, title, ws_id=None):
     """Email each student individually (nobody sees anyone else's address),
     each with their own one-click login link.
@@ -272,35 +153,15 @@ def _send_worksheet_emails(recipients, title, ws_id=None):
     def body_for(r):
         link = _worksheet_link(ws_id, r) if ws_id else _APP_URL
         return (
-            _WORKSHEET_HTML
-            .replace("{{TITLE}}", safe_title)
-            .replace("{{LINK}}", html.escape(link))
-            .replace("{{DAYS}}", str(_LINK_DAYS))
-        )
-
-    def text_for(r):
-        # Plain-text version sent alongside the HTML (helps inbox placement)
-        link = _worksheet_link(ws_id, r) if ws_id else _APP_URL
-        return (
-            "Hi,\n\n"
-            "A new worksheet is ready for you on aiMATHS. Every question comes "
-            "with a full step-by-step solution.\n\n"
-            f"WORKSHEET: {title}\n\n"
-            "How to get the most out of it:\n"
-            "1. Open the worksheet with the link below. It logs you straight in, with no code needed.\n"
-            "2. Try each question first, on paper, before you tap Show Answer.\n"
-            "3. Check the step-by-step solution, and if you got one wrong, practise that skill again until it sticks.\n\n"
-            f"Open worksheet: {link}\n\n"
-            f"This link logs you straight in for the next {_LINK_DAYS} days, "
-            "so please don't forward this email.\n\n"
-            "If you get stuck or anything doesn't work, just reply to this email and I'll help you out.\n\n"
-            "Best of luck with it!\n\n"
-            "The aiMATHS Team\n"
-            "https://aimaths.ie\n\n"
-            "--\n"
-            "aiMATHS · Unlimited maths practice for Leaving & Junior Cert\n"
-            "You're getting this because you have an aiMATHS account. "
-            "To stop these emails, just reply 'unsubscribe'.\n"
+            "<p>Hi,</p>"
+            f"<p>A new worksheet is ready for you on aimaths.ie: <b>{safe_title}</b></p>"
+            f"<p><a href='{html.escape(link)}' style='display:inline-block;padding:12px 20px;"
+            "background:#2b59c3;color:#fff;border-radius:8px;text-decoration:none;'>"
+            "Open the worksheet</a></p>"
+            f"<p>This button logs you straight in for the next {_LINK_DAYS} days, "
+            "so please don't forward this email. Each question has a worked solution.</p>"
+            "<p style='color:#888;font-size:12px;'>You're getting this because you have an "
+            "aimaths.ie account. To stop these emails, just reply 'unsubscribe'.</p>"
         )
 
     sent, failed = 0, []
@@ -309,11 +170,10 @@ def _send_worksheet_emails(recipients, title, ws_id=None):
         payload = []
         for r in chunk:
             msg = {
-                "from": f"aiMATHS <{_WORKSHEET_FROM}>",
+                "from": f"aimaths.ie <{_WORKSHEET_FROM}>",
                 "to": [r],
-                "subject": f"New worksheet: {title}",
+                "subject": title,
                 "html": body_for(r),
-                "text": text_for(r),
             }
             if _ADMIN_NOTIFY_EMAIL:
                 msg["reply_to"] = _ADMIN_NOTIFY_EMAIL
@@ -416,7 +276,6 @@ _WELCOME_HTML = """<!DOCTYPE html>
               <p style="margin:0 0 18px 0; background-color:#eef3f8; padding:14px 16px; border-radius:10px;">
                 Your access runs until the <strong>end of the current academic year</strong>, so you can practise as much as you like between now and your exams.
               </p>
-              <p style="margin:0 0 18px 0;">📥 <strong>Quick tip:</strong> add <strong>{{FROM}}</strong> to your contacts, so your worksheet emails land in your main inbox.</p>
               <p style="margin:0 0 18px 0;">If you have any questions or run into any trouble, just reply to this email and I'll help you out.</p>
               <p style="margin:0 0 6px 0;">Best of luck with the maths!</p>
               <p style="margin:0; color:#5b6b7c;">The aiMATHS Team<br><a href="https://aimaths.ie" style="color:#0074d4; text-decoration:none;">aimaths.ie</a></p>
@@ -441,41 +300,13 @@ _WELCOME_HTML = """<!DOCTYPE html>
 """
 
 
-_WELCOME_TEXT = """Hi,
-
-Thanks for joining aiMATHS. You're all set up and ready to go!
-
-Here's how to get started:
-1. Go to aimaths.ie and choose your level: Leaving Cert or Junior Cert, Higher or Ordinary.
-2. Log in with this email address. Just enter it, and we'll send you a 6-digit code to type in. No password to remember.
-3. Pick a topic (or try a lucky dip) and start practising. Every question comes with a full step-by-step solution.
-
-Start practising: https://aimaths.ie
-
-Your access runs until the end of the current academic year, so you can practise as much as you like between now and your exams.
-
-Quick tip: add {{FROM}} to your contacts, so your worksheet emails land in your main inbox.
-
-If you have any questions or run into any trouble, just reply to this email and I'll help you out.
-
-Best of luck with the maths!
-
-The aiMATHS Team
-https://aimaths.ie
-
---
-aiMATHS · Unlimited maths practice for Leaving & Junior Cert
-"""
-
-
 def _send_welcome_email(to_email):
     """Send the branded welcome email to one person. Returns True on success."""
     msg = {
         "from": f"aiMATHS <{_WORKSHEET_FROM}>",
         "to": [to_email],
         "subject": _WELCOME_SUBJECT,
-        "html": _WELCOME_HTML.replace("{{FROM}}", html.escape(_WORKSHEET_FROM or "")),
-        "text": _WELCOME_TEXT.replace("{{FROM}}", _WORKSHEET_FROM or ""),
+        "html": _WELCOME_HTML,
     }
     if _ADMIN_NOTIFY_EMAIL:
         msg["reply_to"] = _ADMIN_NOTIFY_EMAIL
