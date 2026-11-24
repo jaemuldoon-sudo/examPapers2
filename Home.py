@@ -1508,6 +1508,13 @@ def _free_answer(question, topic, difficulty):
     return generate_answer(question, topic, difficulty)
 
 
+@st.cache_data(ttl=None, show_spinner=False)
+def _free_similar(question, topic, difficulty, subtopics):
+    # One "More Like This" question per free question, shared by all visitors,
+    # so the demo costs one AI call per question in total.
+    return generate_similar_question(question, topic, difficulty, list(subtopics))
+
+
 def _save_free_signup(email, source, ws_id):
     """Store the lead (needs the add_free_signup function in Supabase) and
     tell the admin. Never blocks the visitor if either step fails."""
@@ -1542,7 +1549,7 @@ def _free_offer_box(email=None, key="offer"):
           <div style="font-size:20px;font-weight:bold;margin-bottom:6px;">Want more like this?</div>
           <div style="font-size:16px;line-height:1.5;opacity:.92;">
             Members get <b>unlimited fresh questions</b> on every topic, each with a full
-            step-by-step solution, plus <b>More Like This</b> on every question.
+            step-by-step solution, and a fresh question every time they tap <b>More Like This</b>.
             <b>&euro;49 once</b>, no subscription.
           </div>
         </div>
@@ -1593,7 +1600,8 @@ if _FREE_MODE:
 
     if not _free_email:
         with st.container(border=True):
-            st.markdown("**Enter your email to unlock the step-by-step solutions (free).**")
+            st.markdown("**Enter your email to unlock the step-by-step solutions "
+                        "and More Like This (free).**")
             with st.form("free_unlock"):
                 _fe = st.text_input("Email address", placeholder="you@example.com")
                 _go = st.form_submit_button("Unlock solutions", use_container_width=True)
@@ -1614,15 +1622,41 @@ if _FREE_MODE:
         st.markdown(f"**Question {_i + 1}**")
         st.markdown(_q)
         _k = f"free_{_free_ws['id']}_{_i}"
+        _topic, _diff = _free_ws["topic"], _free_ws["difficulty"]
         if _free_email:
-            if st.button("Show Answer", key=f"{_k}_ans", use_container_width=True) \
-                    or st.session_state.get(f"{_k}_open"):
-                st.session_state[f"{_k}_open"] = True
+            _b1, _b2 = st.columns(2)
+            with _b1:
+                if st.button("Show Answer", key=f"{_k}_ans", use_container_width=True):
+                    st.session_state[f"{_k}_open"] = True
+            with _b2:
+                if st.button("More Like This", key=f"{_k}_more", use_container_width=True):
+                    st.session_state[f"{_k}_sim"] = True
+            if st.session_state.get(f"{_k}_open"):
                 with st.spinner("Working it out..."):
-                    st.markdown(_free_answer(_q, _free_ws["topic"], _free_ws["difficulty"]))
+                    st.markdown(_free_answer(_q, _topic, _diff))
+            if st.session_state.get(f"{_k}_sim"):
+                with st.spinner("Writing another question..."):
+                    _sim = _free_similar(_q, _topic, _diff, tuple(_free_ws.get("subtopics") or []))
+                st.markdown(
+                    "<div style='background:#f7f9fc;padding:10px 14px;border-radius:8px;"
+                    "border:1px solid #e3e6eb;margin-top:6px;'><b>Another question like this:</b></div>",
+                    unsafe_allow_html=True,
+                )
+                st.markdown(_sim)
+                if st.button("Show Answer to this one", key=f"{_k}_sim_ans"):
+                    st.session_state[f"{_k}_sim_open"] = True
+                if st.session_state.get(f"{_k}_sim_open"):
+                    with st.spinner("Working it out..."):
+                        st.markdown(_free_answer(_sim, _topic, _diff))
+                st.caption("🔓 Members get a brand-new question every time they tap More Like This.")
         else:
-            st.button("🔒 Show Answer (enter your email above)", key=f"{_k}_locked",
-                      disabled=True, use_container_width=True)
+            _b1, _b2 = st.columns(2)
+            with _b1:
+                st.button("🔒 Show Answer", key=f"{_k}_locked",
+                          disabled=True, use_container_width=True)
+            with _b2:
+                st.button("🔒 More Like This", key=f"{_k}_more_locked",
+                          disabled=True, use_container_width=True)
         st.markdown("---")
 
     _free_offer_box(_free_email, key="offer_bottom")
