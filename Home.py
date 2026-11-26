@@ -48,15 +48,6 @@ _ADMIN_CODE_FROM = os.getenv("ADMIN_CODE_FROM", "noreply@aimaths.ie")
 
 _auth_supabase = create_client(_SUPABASE_URL, _SUPABASE_ANON_KEY)
 
-# ---------------------------------------------------------------------------
-# FREE TASTER MODE  (?free  or  ?free=<worksheet id>, optional &src=ig/fb/tt)
-# Anyone can open it without logging in or paying. Only worksheets listed in
-# the FREE_WORKSHEET_IDS env var (comma-separated, e.g. "5" or "5,10") can be
-# opened this way; the first one is shown for a plain ?free link.
-# ---------------------------------------------------------------------------
-_FREE_IDS = [s.strip() for s in os.getenv("FREE_WORKSHEET_IDS", "").split(",") if s.strip().isdigit()]
-_FREE_MODE = "free" in st.query_params and bool(_FREE_IDS)
-
 
 def _has_paid(email):
     res = _auth_supabase.rpc("check_paid", {"user_email": email}).execute()
@@ -152,125 +143,6 @@ def _worksheet_link(ws_id, email=None):
     return url
 
 
-# ---------------------------------------------------------------------------
-# WORKSHEET EMAIL (same branded design as the welcome email below)
-# Placeholders filled in per student: {{TITLE}}, {{LINK}}, {{DAYS}}
-# ---------------------------------------------------------------------------
-_WORKSHEET_HTML = """<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body style="margin:0; padding:0; background-color:#f6f8fb; font-family:Arial, Helvetica, sans-serif;">
-
-  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">Your new worksheet is ready: {{TITLE}}. Every question has a full step-by-step solution.</div>
-
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f6f8fb; padding:24px 12px;">
-    <tr>
-      <td align="center">
-
-        <!-- Card -->
-        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px; width:100%; background-color:#ffffff; border-radius:16px; overflow:hidden; box-shadow:0 4px 18px rgba(18,50,79,0.08);">
-
-          <!-- Header -->
-          <tr>
-            <td style="background:linear-gradient(135deg,#12324f 0%,#0074d4 100%); background-color:#12324f; padding:36px 30px; text-align:center;">
-              <div style="font-size:32px; font-weight:bold; color:#ffffff; letter-spacing:1px;">aiMATHS</div>
-              <div style="font-size:16px; color:#ffffff; opacity:0.9; margin-top:6px;">Your new worksheet is ready 📝</div>
-            </td>
-          </tr>
-
-          <!-- Body -->
-          <tr>
-            <td style="padding:34px 34px 10px 34px; color:#1f2d3d; font-size:16px; line-height:1.6;">
-              <p style="margin:0 0 18px 0;">Hi,</p>
-              <p style="margin:0 0 18px 0;">A new worksheet is ready for you on <strong>aiMATHS</strong>. Every question comes with a full step-by-step solution.</p>
-
-              <!-- Worksheet box -->
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 22px 0; border:1px solid #e3e9f0; border-radius:12px;">
-                <tr>
-                  <td style="padding:16px 18px; color:#1f2d3d; font-size:15px; line-height:1.6;">
-                    <div style="font-size:12px; font-weight:bold; letter-spacing:1px; color:#0074d4; text-transform:uppercase; margin-bottom:4px;">Worksheet</div>
-                    <div style="font-size:18px; font-weight:bold; color:#12324f;">{{TITLE}}</div>
-                  </td>
-                </tr>
-              </table>
-
-              <p style="margin:0 0 10px 0; font-weight:bold; color:#12324f; font-size:17px;">How to get the most out of it:</p>
-            </td>
-          </tr>
-
-          <!-- Steps -->
-          <tr>
-            <td style="padding:0 34px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td style="padding:10px 0; vertical-align:top; width:42px;">
-                    <div style="width:30px; height:30px; background-color:#0074d4; color:#ffffff; border-radius:50%; text-align:center; line-height:30px; font-weight:bold;">1</div>
-                  </td>
-                  <td style="padding:10px 0; color:#1f2d3d; font-size:15px; line-height:1.5;">
-                    <strong>Tap the button below</strong> to open the worksheet. It logs you straight in, with no code needed.
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:10px 0; vertical-align:top;">
-                    <div style="width:30px; height:30px; background-color:#0074d4; color:#ffffff; border-radius:50%; text-align:center; line-height:30px; font-weight:bold;">2</div>
-                  </td>
-                  <td style="padding:10px 0; color:#1f2d3d; font-size:15px; line-height:1.5;">
-                    <strong>Try each question first</strong>, on paper, before you tap <em>Show Answer</em>. That's where the learning happens.
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:10px 0; vertical-align:top;">
-                    <div style="width:30px; height:30px; background-color:#0074d4; color:#ffffff; border-radius:50%; text-align:center; line-height:30px; font-weight:bold;">3</div>
-                  </td>
-                  <td style="padding:10px 0; color:#1f2d3d; font-size:15px; line-height:1.5;">
-                    <strong>Check the step-by-step solution</strong>, and if you got one wrong, practise that skill again until it sticks.
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- CTA button -->
-          <tr>
-            <td style="padding:26px 34px 10px 34px; text-align:center;">
-              <a href="{{LINK}}" style="display:inline-block; background-color:#ffd23f; color:#12324f; font-size:17px; font-weight:bold; text-decoration:none; padding:15px 40px; border-radius:10px;">Open worksheet →</a>
-            </td>
-          </tr>
-
-          <!-- Note + sign-off -->
-          <tr>
-            <td style="padding:16px 34px 10px 34px; color:#1f2d3d; font-size:15px; line-height:1.6;">
-              <p style="margin:0 0 18px 0; background-color:#eef3f8; padding:14px 16px; border-radius:10px;">
-                This button logs you straight in for the next <strong>{{DAYS}} days</strong>, so please <strong>don't forward this email</strong>.
-              </p>
-              <p style="margin:0 0 18px 0;">If you get stuck or anything doesn't work, just reply to this email and I'll help you out.</p>
-              <p style="margin:0 0 6px 0;">Best of luck with it!</p>
-              <p style="margin:0; color:#5b6b7c;">The aiMATHS Team<br><a href="https://aimaths.ie" style="color:#0074d4; text-decoration:none;">aimaths.ie</a></p>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="padding:24px 34px; text-align:center; color:#9aa7b4; font-size:12px; line-height:1.6; border-top:1px solid #eef3f8;">
-              aiMATHS · Unlimited maths practice for Leaving &amp; Junior Cert<br>
-              You're getting this because you have an aiMATHS account. To stop these emails, just reply 'unsubscribe'.
-            </td>
-          </tr>
-
-        </table>
-
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
-"""
-
-
 def _send_worksheet_emails(recipients, title, ws_id=None):
     """Email each student individually (nobody sees anyone else's address),
     each with their own one-click login link.
@@ -280,37 +152,41 @@ def _send_worksheet_emails(recipients, title, ws_id=None):
 
     def body_for(r):
         link = _worksheet_link(ws_id, r) if ws_id else _APP_URL
-        return (
-            _WORKSHEET_HTML
-            .replace("{{TITLE}}", safe_title)
-            .replace("{{LINK}}", html.escape(link))
-            .replace("{{DAYS}}", str(_LINK_DAYS))
-        )
-
-    def text_for(r):
-        # Plain-text version sent alongside the HTML (helps inbox placement)
-        link = _worksheet_link(ws_id, r) if ws_id else _APP_URL
-        return (
-            "Hi,\n\n"
-            "A new worksheet is ready for you on aiMATHS. Every question comes "
-            "with a full step-by-step solution.\n\n"
-            f"WORKSHEET: {title}\n\n"
-            "How to get the most out of it:\n"
-            "1. Open the worksheet with the link below. It logs you straight in, with no code needed.\n"
-            "2. Try each question first, on paper, before you tap Show Answer.\n"
-            "3. Check the step-by-step solution, and if you got one wrong, practise that skill again until it sticks.\n\n"
-            f"Open worksheet: {link}\n\n"
-            f"This link logs you straight in for the next {_LINK_DAYS} days, "
-            "so please don't forward this email.\n\n"
-            "If you get stuck or anything doesn't work, just reply to this email and I'll help you out.\n\n"
-            "Best of luck with it!\n\n"
-            "The aiMATHS Team\n"
-            "https://aimaths.ie\n\n"
-            "--\n"
-            "aiMATHS · Unlimited maths practice for Leaving & Junior Cert\n"
-            "You're getting this because you have an aiMATHS account. "
-            "To stop these emails, just reply 'unsubscribe'.\n"
-        )
+        safe_link = html.escape(link)
+        return f"""\
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background-color:#f6f8fb;font-family:Arial,Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f6f8fb;padding:24px 12px;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 18px rgba(18,50,79,0.08);">
+        <tr><td style="background-color:#12324f;padding:30px;text-align:center;">
+          <div style="font-size:30px;font-weight:bold;color:#ffffff;letter-spacing:1px;">aiMATHS</div>
+          <div style="font-size:15px;color:#ffd23f;font-weight:bold;margin-top:6px;letter-spacing:0.5px;">WEEKLY MOCK-PREP WORKSHEET</div>
+        </td></tr>
+        <tr><td style="padding:32px 34px 8px 34px;color:#1f2d3d;font-size:16px;line-height:1.6;">
+          <p style="margin:0 0 16px 0;">Hi,</p>
+          <p style="margin:0 0 16px 0;">Your worksheet for this week is ready:</p>
+          <p style="margin:0 0 20px 0;font-size:19px;font-weight:bold;color:#12324f;">{safe_title}</p>
+          <p style="margin:0 0 8px 0;">A new worksheet lands every week between now and the end of January, to build you up for the mock exams. Little and often is what makes it stick.</p>
+        </td></tr>
+        <tr><td style="padding:16px 34px 8px 34px;text-align:center;">
+          <a href="{safe_link}" style="display:inline-block;background-color:#ffd23f;color:#12324f;font-size:17px;font-weight:bold;text-decoration:none;padding:15px 40px;border-radius:10px;">Open the worksheet →</a>
+        </td></tr>
+        <tr><td style="padding:12px 34px 8px 34px;color:#1f2d3d;font-size:15px;line-height:1.6;">
+          <p style="margin:0 0 16px 0;background-color:#eef3f8;padding:14px 16px;border-radius:10px;">Every question comes with a full worked solution.</p>
+          <p style="margin:0 0 6px 0;">Best of luck with the practice!</p>
+          <p style="margin:0;color:#5b6b7c;">The aiMATHS Team<br><a href="https://aimaths.ie" style="color:#0074d4;text-decoration:none;">aimaths.ie</a></p>
+        </td></tr>
+        <tr><td style="padding:20px 34px;text-align:center;color:#9aa7b4;font-size:12px;border-top:1px solid #eef3f8;">
+          You're getting this because you have an aiMATHS account. To stop these emails, just reply 'unsubscribe'.
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>"""
 
     sent, failed = 0, []
     for i in range(0, len(recipients), 100):
@@ -318,11 +194,10 @@ def _send_worksheet_emails(recipients, title, ws_id=None):
         payload = []
         for r in chunk:
             msg = {
-                "from": f"aiMATHS <{_WORKSHEET_FROM}>",
+                "from": f"aimaths.ie <{_WORKSHEET_FROM}>",
                 "to": [r],
-                "subject": f"New worksheet: {title}",
+                "subject": f"aiMATHS Weekly Mock-Prep: {title}",
                 "html": body_for(r),
-                "text": text_for(r),
             }
             if _ADMIN_NOTIFY_EMAIL:
                 msg["reply_to"] = _ADMIN_NOTIFY_EMAIL
@@ -425,7 +300,6 @@ _WELCOME_HTML = """<!DOCTYPE html>
               <p style="margin:0 0 18px 0; background-color:#eef3f8; padding:14px 16px; border-radius:10px;">
                 Your access runs until the <strong>end of the current academic year</strong>, so you can practise as much as you like between now and your exams.
               </p>
-              <p style="margin:0 0 18px 0;">📥 <strong>Quick tip:</strong> add <strong>{{FROM}}</strong> to your contacts, so your worksheet emails land in your main inbox.</p>
               <p style="margin:0 0 18px 0;">If you have any questions or run into any trouble, just reply to this email and I'll help you out.</p>
               <p style="margin:0 0 6px 0;">Best of luck with the maths!</p>
               <p style="margin:0; color:#5b6b7c;">The aiMATHS Team<br><a href="https://aimaths.ie" style="color:#0074d4; text-decoration:none;">aimaths.ie</a></p>
@@ -450,41 +324,13 @@ _WELCOME_HTML = """<!DOCTYPE html>
 """
 
 
-_WELCOME_TEXT = """Hi,
-
-Thanks for joining aiMATHS. You're all set up and ready to go!
-
-Here's how to get started:
-1. Go to aimaths.ie and choose your level: Leaving Cert or Junior Cert, Higher or Ordinary.
-2. Log in with this email address. Just enter it, and we'll send you a 6-digit code to type in. No password to remember.
-3. Pick a topic (or try a lucky dip) and start practising. Every question comes with a full step-by-step solution.
-
-Start practising: https://aimaths.ie
-
-Your access runs until the end of the current academic year, so you can practise as much as you like between now and your exams.
-
-Quick tip: add {{FROM}} to your contacts, so your worksheet emails land in your main inbox.
-
-If you have any questions or run into any trouble, just reply to this email and I'll help you out.
-
-Best of luck with the maths!
-
-The aiMATHS Team
-https://aimaths.ie
-
---
-aiMATHS · Unlimited maths practice for Leaving & Junior Cert
-"""
-
-
 def _send_welcome_email(to_email):
     """Send the branded welcome email to one person. Returns True on success."""
     msg = {
         "from": f"aiMATHS <{_WORKSHEET_FROM}>",
         "to": [to_email],
         "subject": _WELCOME_SUBJECT,
-        "html": _WELCOME_HTML.replace("{{FROM}}", html.escape(_WORKSHEET_FROM or "")),
-        "text": _WELCOME_TEXT.replace("{{FROM}}", _WORKSHEET_FROM or ""),
+        "html": _WELCOME_HTML,
     }
     if _ADMIN_NOTIFY_EMAIL:
         msg["reply_to"] = _ADMIN_NOTIFY_EMAIL
@@ -538,7 +384,7 @@ if st.session_state.email is not None:
 # LOGIN GATE  (mobile-friendly, larger inputs & buttons)
 # Replaces the LOGIN GATE section of your gate block.
 # ---------------------------------------------------------------------------
-if st.session_state.email is None and not _FREE_MODE:
+if st.session_state.email is None:
 
     # --- mobile-friendly styling for the login screen ---
     st.markdown("""
@@ -632,8 +478,8 @@ if st.session_state.email is None and not _FREE_MODE:
             st.rerun()
     st.stop()
 
-# PAYWALL GATE  (the free taster page skips it)
-if not _FREE_MODE and not _has_paid(st.session_state.email):
+# PAYWALL GATE
+if not _has_paid(st.session_state.email):
     st.title("One-time access - EUR 49")
     st.write("Get lifetime access to all of aimaths.ie (all four levels).")
     _pay_url = f"{_STRIPE_PAYMENT_LINK}?prefilled_email={st.session_state.email}"
@@ -644,12 +490,11 @@ if not _FREE_MODE and not _has_paid(st.session_state.email):
     st.stop()
 
 # small logged-in bar
-if not _FREE_MODE:
-    _c1, _c2 = st.columns([4, 1])
-    with _c2:
-        if st.button("Log out"):
-            _auth_logout()
-            st.rerun()
+_c1, _c2 = st.columns([4, 1])
+with _c2:
+    if st.button("Log out"):
+        _auth_logout()
+        st.rerun()
 # ===========================================================================
 # END GATE — your normal app runs below, only for logged-in + paid users
 # ===========================================================================
@@ -1463,8 +1308,7 @@ st.markdown("""
 # -----------------------------
 # BRAND HEADER
 # -----------------------------
-if not _FREE_MODE:  # the free taster page has its own shorter header
-  st.markdown(
+st.markdown(
     """
     <div style="text-align:center; padding: 10px 0 20px 0;">
         <h1 style="margin-bottom:0;">📘 Leaving Certificate Honours Maths</h1>
@@ -1477,9 +1321,7 @@ if not _FREE_MODE:  # the free taster page has its own shorter header
 )
 
 # Show index status
-if _FREE_MODE:
-    pass
-elif EXAM_INDEX:
+if EXAM_INDEX:
     st.success(f"✅ Questions Loaded: {EXAM_INDEX.get('total_questions', 0)}")
 else:
     st.warning("⚠️ Exam index not loaded - questions will be generated without LC past paper templates")
@@ -1494,175 +1336,6 @@ else:
 # -----------------------------
 # Shows ONLY that worksheet (no tabs), with a button back to the full site.
 # -----------------------------
-# -----------------------------
-# FREE TASTER PAGE (?free)
-# Questions are visible to everyone; an email unlocks the step-by-step
-# solutions. Answers are cached, so each question costs one AI call in total,
-# not one per visitor. "More Like This" is replaced by the sign-up offer.
-# -----------------------------
-_FREE_EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
-
-
-@st.cache_data(ttl=None, show_spinner=False)
-def _free_answer(question, topic, difficulty):
-    return generate_answer(question, topic, difficulty)
-
-
-@st.cache_data(ttl=None, show_spinner=False)
-def _free_similar(question, topic, difficulty, subtopics):
-    # One "More Like This" question per free question, shared by all visitors,
-    # so the demo costs one AI call per question in total.
-    return generate_similar_question(question, topic, difficulty, list(subtopics))
-
-
-def _save_free_signup(email, source, ws_id):
-    """Store the lead (needs the add_free_signup function in Supabase) and
-    tell the admin. Never blocks the visitor if either step fails."""
-    try:
-        _auth_supabase.rpc("add_free_signup", {
-            "p_email": email, "p_source": source, "p_ws": int(ws_id),
-        }).execute()
-    except Exception:
-        pass
-    if _RESEND_API_KEY and _ADMIN_NOTIFY_EMAIL:
-        try:
-            requests.post(
-                "https://api.resend.com/emails",
-                headers={"Authorization": f"Bearer {_RESEND_API_KEY}"},
-                json={
-                    "from": f"aiMATHS <{_WORKSHEET_FROM}>",
-                    "to": [_ADMIN_NOTIFY_EMAIL],
-                    "subject": f"New free taster sign-up: {email}",
-                    "text": (f"{email} unlocked the free taster worksheet #{ws_id}.\n"
-                             f"Source: {source or 'not tagged'}"),
-                },
-                timeout=10,
-            )
-        except Exception:
-            pass
-
-
-def _free_offer_box(email=None, key="offer"):
-    st.markdown(
-        """
-        <div style="background:#12324f;color:#fff;padding:20px 22px;border-radius:14px;margin:18px 0 8px 0;">
-          <div style="font-size:20px;font-weight:bold;margin-bottom:6px;">Want more like this?</div>
-          <div style="font-size:16px;line-height:1.5;opacity:.92;">
-            Members get <b>unlimited fresh questions</b> on every topic, each with a full
-            step-by-step solution, and a fresh question every time they tap <b>More Like This</b>.
-            <b>&euro;49 once</b>, no subscription.
-          </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    _url = _STRIPE_PAYMENT_LINK or _APP_URL
-    if email and _STRIPE_PAYMENT_LINK:
-        _url = f"{_STRIPE_PAYMENT_LINK}?prefilled_email={requests.utils.quote(email)}"
-    st.link_button("Get full access for €49 →", _url, use_container_width=True, type="primary")
-    st.caption("After paying, log in on this site with the same email address.")
-
-
-if _FREE_MODE:
-    _req = str(st.query_params.get("free") or "")
-    _free_id = _req if _req in _FREE_IDS else _FREE_IDS[0]
-    _free_src = (st.query_params.get("src") or "").strip()[:30]
-    try:
-        _free_ws = load_shared_worksheet(int(_free_id))
-    except Exception:
-        _free_ws = None
-
-    st.markdown(
-        """
-        <div style="text-align:center;margin:0 0 14px 0;">
-          <div style="display:inline-block;background:#ffd23f;color:#12324f;font-weight:bold;
-                      padding:6px 14px;border-radius:999px;font-size:14px;letter-spacing:1px;">
-            FREE · NO CARD NEEDED
-          </div>
-          <h2 style="margin:12px 0 4px 0;">Try aiMATHS free</h2>
-          <p style="color:#4a4a4a;font-size:17px;margin:0;">
-            Real exam-style questions with full step-by-step solutions.
-          </p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    if not _free_ws:
-        st.warning("The free worksheet isn't available right now. Please check back soon.")
-        _free_offer_box(key="offer_none")
-        st.stop()
-
-    _free_email = st.session_state.get("free_email") or st.session_state.get("email")
-
-    st.markdown(f"### {html.escape(_free_ws['title'])}")
-    st.caption(f"{_free_ws['topic']} · {_free_ws['difficulty']}")
-
-    if not _free_email:
-        with st.container(border=True):
-            st.markdown("**Enter your email to unlock the step-by-step solutions "
-                        "and More Like This (free).**")
-            with st.form("free_unlock"):
-                _fe = st.text_input("Email address", placeholder="you@example.com")
-                _go = st.form_submit_button("Unlock solutions", use_container_width=True)
-            st.caption("We'll also send you a free practice question now and then. "
-                       "Reply 'unsubscribe' to any email to stop.")
-            if _go:
-                _fe = (_fe or "").strip().lower()
-                if not _FREE_EMAIL_RE.match(_fe):
-                    st.error("Please enter a valid email address.")
-                else:
-                    st.session_state["free_email"] = _fe
-                    _save_free_signup(_fe, _free_src, _free_id)
-                    st.rerun()
-    else:
-        st.success("Solutions unlocked. Tap **Show Answer** under any question.")
-
-    for _i, _q in enumerate(_free_ws.get("questions") or []):
-        st.markdown(f"**Question {_i + 1}**")
-        st.markdown(_q)
-        _k = f"free_{_free_ws['id']}_{_i}"
-        _topic, _diff = _free_ws["topic"], _free_ws["difficulty"]
-        if _free_email:
-            _b1, _b2 = st.columns(2)
-            with _b1:
-                if st.button("Show Answer", key=f"{_k}_ans", use_container_width=True):
-                    st.session_state[f"{_k}_open"] = True
-            with _b2:
-                if st.button("More Like This", key=f"{_k}_more", use_container_width=True):
-                    st.session_state[f"{_k}_sim"] = True
-            if st.session_state.get(f"{_k}_open"):
-                with st.spinner("Working it out..."):
-                    st.markdown(_free_answer(_q, _topic, _diff))
-            if st.session_state.get(f"{_k}_sim"):
-                with st.spinner("Writing another question..."):
-                    _sim = _free_similar(_q, _topic, _diff, tuple(_free_ws.get("subtopics") or []))
-                st.markdown(
-                    "<div style='background:#f7f9fc;padding:10px 14px;border-radius:8px;"
-                    "border:1px solid #e3e6eb;margin-top:6px;'><b>Another question like this:</b></div>",
-                    unsafe_allow_html=True,
-                )
-                st.markdown(_sim)
-                if st.button("Show Answer to this one", key=f"{_k}_sim_ans"):
-                    st.session_state[f"{_k}_sim_open"] = True
-                if st.session_state.get(f"{_k}_sim_open"):
-                    with st.spinner("Working it out..."):
-                        st.markdown(_free_answer(_sim, _topic, _diff))
-                st.caption("🔓 Members get a brand-new question every time they tap More Like This.")
-        else:
-            _b1, _b2 = st.columns(2)
-            with _b1:
-                st.button("🔒 Show Answer", key=f"{_k}_locked",
-                          disabled=True, use_container_width=True)
-            with _b2:
-                st.button("🔒 More Like This", key=f"{_k}_more_locked",
-                          disabled=True, use_container_width=True)
-        st.markdown("---")
-
-    _free_offer_box(_free_email, key="offer_bottom")
-    st.stop()
-
-
 def _leave_linked_worksheet():
     if "worksheet" in st.query_params:
         del st.query_params["worksheet"]
