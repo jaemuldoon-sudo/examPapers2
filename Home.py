@@ -152,41 +152,17 @@ def _send_worksheet_emails(recipients, title, ws_id=None):
 
     def body_for(r):
         link = _worksheet_link(ws_id, r) if ws_id else _APP_URL
-        safe_link = html.escape(link)
-        return f"""\
-<!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
-<body style="margin:0;padding:0;background-color:#f6f8fb;font-family:Arial,Helvetica,sans-serif;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f6f8fb;padding:24px 12px;">
-    <tr><td align="center">
-      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 18px rgba(18,50,79,0.08);">
-        <tr><td style="background-color:#12324f;padding:30px;text-align:center;">
-          <div style="font-size:30px;font-weight:bold;color:#ffffff;letter-spacing:1px;">aiMATHS</div>
-          <div style="font-size:15px;color:#ffd23f;font-weight:bold;margin-top:6px;letter-spacing:0.5px;">WEEKLY MOCK-PREP WORKSHEET</div>
-        </td></tr>
-        <tr><td style="padding:32px 34px 8px 34px;color:#1f2d3d;font-size:16px;line-height:1.6;">
-          <p style="margin:0 0 16px 0;">Hi,</p>
-          <p style="margin:0 0 16px 0;">Your worksheet for this week is ready:</p>
-          <p style="margin:0 0 20px 0;font-size:19px;font-weight:bold;color:#12324f;">{safe_title}</p>
-          <p style="margin:0 0 8px 0;">A new worksheet lands every week between now and the end of January, to build you up for the mock exams. Little and often is what makes it stick.</p>
-        </td></tr>
-        <tr><td style="padding:16px 34px 8px 34px;text-align:center;">
-          <a href="{safe_link}" style="display:inline-block;background-color:#ffd23f;color:#12324f;font-size:17px;font-weight:bold;text-decoration:none;padding:15px 40px;border-radius:10px;">Open the worksheet →</a>
-        </td></tr>
-        <tr><td style="padding:12px 34px 8px 34px;color:#1f2d3d;font-size:15px;line-height:1.6;">
-          <p style="margin:0 0 16px 0;background-color:#eef3f8;padding:14px 16px;border-radius:10px;">Every question comes with a full worked solution.</p>
-          <p style="margin:0 0 6px 0;">Best of luck with the practice!</p>
-          <p style="margin:0;color:#5b6b7c;">The aiMATHS Team<br><a href="https://aimaths.ie" style="color:#0074d4;text-decoration:none;">aimaths.ie</a></p>
-        </td></tr>
-        <tr><td style="padding:20px 34px;text-align:center;color:#9aa7b4;font-size:12px;border-top:1px solid #eef3f8;">
-          You're getting this because you have an aiMATHS account. To stop these emails, just reply 'unsubscribe'.
-        </td></tr>
-      </table>
-    </td></tr>
-  </table>
-</body>
-</html>"""
+        return (
+            "<p>Hi,</p>"
+            f"<p>A new worksheet is ready for you on aimaths.ie: <b>{safe_title}</b></p>"
+            f"<p><a href='{html.escape(link)}' style='display:inline-block;padding:12px 20px;"
+            "background:#2b59c3;color:#fff;border-radius:8px;text-decoration:none;'>"
+            "Open the worksheet</a></p>"
+            f"<p>This button logs you straight in for the next {_LINK_DAYS} days, "
+            "so please don't forward this email. Each question has a worked solution.</p>"
+            "<p style='color:#888;font-size:12px;'>You're getting this because you have an "
+            "aimaths.ie account. To stop these emails, just reply 'unsubscribe'.</p>"
+        )
 
     sent, failed = 0, []
     for i in range(0, len(recipients), 100):
@@ -196,7 +172,7 @@ def _send_worksheet_emails(recipients, title, ws_id=None):
             msg = {
                 "from": f"aimaths.ie <{_WORKSHEET_FROM}>",
                 "to": [r],
-                "subject": f"aiMATHS Weekly Mock-Prep: {title}",
+                "subject": title,
                 "html": body_for(r),
             }
             if _ADMIN_NOTIFY_EMAIL:
